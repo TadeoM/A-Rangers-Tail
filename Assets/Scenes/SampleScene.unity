@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPivot: {fileID: 1576582361}
+  player: {fileID: 1793122035}
 --- !u!4 &123185941
 Transform:
   m_ObjectHideFlags: 0

@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour {
 
-    public Vector2 position;
-    public float velocity;
+    public Vector3 position;
+    public Vector3 velocity;
+    public Vector3 direction;
+    public Vector3 axis;
     private float gravity;
-    public float acceleration;
+    public Vector3 acceleration;
     public float accelRate;
     private float maxSpeed;
-    private float jumpVelocity;
-    private float speed;
     private float jumpStrength;
-    private float health;
+    private int health;
     private bool inAir;
+    private Vector3 facing;
+
+    private Vector3 previousPosition;
+
+    public Vector3 PreviousPosition
+    {
+        get { return previousPosition; }
+        set { previousPosition = value; }
+    }
+
 
     public float Gravity
     {
@@ -26,22 +36,12 @@ public class Creature : MonoBehaviour {
         get { return maxSpeed; }
         set { maxSpeed = value; }
     }
-    public float JumpVelocity
-    {
-        get { return jumpVelocity; }
-        set { jumpVelocity = value; }
-    }
-    public float Speed
-    {
-        get { return speed; }
-        set { speed = value; }
-    }
     public float JumpStrength
     {
         get { return jumpStrength; }
         set { jumpStrength = value; }
     }
-    public float Health
+    public int Health
     {
         get { return health; }
         set { health = value; }
@@ -51,13 +51,17 @@ public class Creature : MonoBehaviour {
         get { return inAir; }
         set { inAir = value; }
     }
+    public Vector3 Facing
+    {
+        get { return facing; }
+        set { facing = value; }
+    }
 
     // Use this for initialization
     public virtual void Start()
     {
         health = 0;
         jumpStrength = 0;
-        speed = 0;
         maxSpeed = 0.0f;
         gravity = 0.01f;
         inAir = false;
@@ -68,24 +72,37 @@ public class Creature : MonoBehaviour {
     // Update is called once per frame
     public virtual void Update()
     {
-        Falling();
+        Move();
         GetComponent<Rigidbody>().MovePosition(position); 
     }
 
     /// <summary>
     /// moves creature in direction at whatever current speed
     /// direction should be 1 or -1
+    /// slowDown will be 1 unless the player must slow down
     /// </summary>
     /// <param name="direction"></param>
-    public void Move(int direction = 1)
+    public void Accelerate(int slowDown = 1)
     {
-        acceleration = accelRate * direction;
-        velocity += acceleration;
-        if ((velocity > MaxSpeed && direction == 1) || (velocity < -MaxSpeed && direction == -1))
+        acceleration = accelRate * direction * slowDown;
+        //facing = (position - previousPosition).normalized;
+        if ((velocity + acceleration).sqrMagnitude < velocity.sqrMagnitude && slowDown > 0)
         {
-            velocity = MaxSpeed * direction;
+            Debug.Log("Hit this place");
+            velocity *= 0.9f;
+            velocity.y *= 1 / 0.9f;
         }
-        position.x += velocity;
+
+
+        velocity += acceleration;
+
+        if (velocity.magnitude > MaxSpeed)
+            velocity = MaxSpeed * direction;
+    }
+    void Move()
+    {
+        Falling();
+        position += velocity;
     }
 
     /// <summary>
@@ -93,8 +110,7 @@ public class Creature : MonoBehaviour {
     /// </summary>
     public void Jump()
     {
-        JumpVelocity = JumpStrength;
-        position.y += JumpVelocity;
+        velocity.y = JumpStrength;
         InAir = true;
     }
 
@@ -105,10 +121,9 @@ public class Creature : MonoBehaviour {
     {
         if (InAir)
         {
-            position.y += JumpVelocity;
-            JumpVelocity -= Gravity;
-            if (JumpVelocity < -0.2f)
-                JumpVelocity = -0.15f;
+            position.y += velocity.y;
+            if (velocity.y < -0.2f)
+                velocity.y = -0.15f;
         }
     }
 

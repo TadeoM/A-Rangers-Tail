@@ -142,6 +142,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPivot: {fileID: 1576582361}
   player: {fileID: 1793122035}
+  locationOfPlatforms:
+  - {fileID: 1165890340}
+  - {fileID: 1509730078}
+  - {fileID: 827567910}
+  - {fileID: 759081207}
 --- !u!4 &123185941
 Transform:
   m_ObjectHideFlags: 0
@@ -470,6 +475,16 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 130d47a9b193ae745a8edc2600efa225, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &759081207 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1249971245640132, guid: 130d47a9b193ae745a8edc2600efa225,
+    type: 2}
+  m_PrefabInternal: {fileID: 609590027}
+--- !u!1 &827567910 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1249971245640132, guid: 130d47a9b193ae745a8edc2600efa225,
+    type: 2}
+  m_PrefabInternal: {fileID: 317441447}
 --- !u!1001 &929228972
 Prefab:
   m_ObjectHideFlags: 0
@@ -618,6 +633,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1165890340 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1249971245640132, guid: 130d47a9b193ae745a8edc2600efa225,
+    type: 2}
+  m_PrefabInternal: {fileID: 291689962}
+--- !u!1 &1509730078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1249971245640132, guid: 130d47a9b193ae745a8edc2600efa225,
+    type: 2}
+  m_PrefabInternal: {fileID: 929228972}
 --- !u!1 &1576582361
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +765,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
+  forward: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
   accelRate: 0.008
 --- !u!65 &1793122039

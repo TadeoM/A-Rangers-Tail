@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour {
 
+    // a creature will have type of creature, and have a certain amount of weaknesses!
+    public enum CreatureType { };
+
+    public CreatureType creatureType;
+
     // set attributes
     public Vector3 position;
     public Vector3 velocity;
@@ -17,15 +22,6 @@ public class Creature : MonoBehaviour {
     private float jumpStrength;
     private int health;
     private bool inAir;
-    private Vector3 facing;
-    private Vector3 previousPosition;
-
-    public Vector3 PreviousPosition
-    {
-        get { return previousPosition; }
-        set { previousPosition = value; }
-    }
-
 
     public float Gravity
     {
@@ -51,11 +47,6 @@ public class Creature : MonoBehaviour {
     {
         get { return inAir; }
         set { inAir = value; }
-    }
-    public Vector3 Facing
-    {
-        get { return facing; }
-        set { facing = value; }
     }
 
     // Use this for initialization
@@ -151,5 +142,14 @@ public class Creature : MonoBehaviour {
     public void SetPosition(Vector3 newPos)
     {
         position = newPos;
+    }
+    public virtual void DealDamage(int dmg, CreatureType type)
+    {
+
+    }
+
+    public virtual void TakeDamage(int dmg, CreatureType type)
+    {
+
     }
 }

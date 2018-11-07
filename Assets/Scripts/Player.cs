@@ -30,18 +30,29 @@ public class Player : Creature {
         // direction = new Vector3(-direction.x, direction.y, -direction.z);
         if (Input.GetKey(KeyCode.D))
         {
-            if (direction.x != 0)
-                direction.x = 1;
+            direction = forward;
+            if (Mathf.Round(direction.x) != 0)
+            {
+                velocity.z = 0;
+            }
             else
-                direction.z = 1;
+            {
+                direction = forward;
+                velocity.x = 0;
+            }
             Accelerate();
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            if (direction.x != 0)
-                direction.x = -1;
+            direction = -forward;
+            if (Mathf.Round(direction.x) != 0)
+            {
+                velocity.z = 0;
+            }
             else
-                direction.z = -1;
+            {
+                velocity.x = 0;
+            }
             Accelerate();
         }
         else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))

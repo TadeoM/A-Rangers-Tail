@@ -6,9 +6,11 @@ public class GameManager : MonoBehaviour {
 
     public GameObject cameraPivot;
     public GameObject player;
-    private Player playerScript;
     public GameObject[] locationOfPlatforms;    // [0] = rotation 0; [1] = rotation -90(90); [2] = rotation -180(180); [3] = rotation 90(270)
+    private Player playerScript;
     private int currentRotationStep;
+    private int desiredRotation;
+
 
     // Use this for initialization
     void Start () {
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         KeyboardCheck();
+        RotateScene();
     }
 
     void KeyboardCheck()
@@ -29,8 +32,11 @@ public class GameManager : MonoBehaviour {
             // Rotate the camera to the left when Q is pressed
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                cameraPivot.transform.rotation *= Quaternion.Euler(0, 90, 0);
-                player.transform.rotation *= Quaternion.Euler(0, 90, 0);
+                float tempRot = 0;
+                cameraPivot.transform.rotation *= Quaternion.Euler(0, tempRot, 0);
+                player.transform.rotation *= Quaternion.Euler(0, tempRot, 0);
+                tempRot += 1 * Time.deltaTime;
+                
                 currentRotationStep--;
                 
                 newPlayerPos = player.transform.position;
@@ -42,8 +48,6 @@ public class GameManager : MonoBehaviour {
                 player.transform.rotation *= Quaternion.Euler(0, -90, 0);
                 currentRotationStep++;
             }
-
-            if (currentRotationStep < 0) currentRotationStep = 3;
 
             currentRotationStep %= 4;
             newPlayerPos = player.transform.position;
@@ -72,5 +76,9 @@ public class GameManager : MonoBehaviour {
             playerScript.SetPosition(newPlayerPos);
         }
         
+    }
+    void RotateScene()
+    {
+
     }
 }

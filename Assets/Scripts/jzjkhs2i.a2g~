@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour {
                     }
                     break;
                 case 2:
-                    // 
+                    // raycasts from the back to the front and adds whatever it collides with to the backPlatforms
                     for (int x = lowestX; x <= highestX; x++)
                     {
                         for (int y = lowestY; y <= highestY; y++)
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour {
                     }
                     break;
                 case 3:
-                    // 
+                    // raycasts from right to left to the front and adds whatever it collides with to the backPlatforms
                     for (int z = lowestZ; z <= highestZ; z++)
                     {
                         for (int y = lowestY; y <= highestY; y++)

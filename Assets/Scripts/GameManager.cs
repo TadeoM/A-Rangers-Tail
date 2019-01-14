@@ -15,6 +15,11 @@ public class GameManager : MonoBehaviour {
     private int currentRotationStep;
     private int desiredRotation;
 
+    public float start = -1.0F;
+    public float end = 1.0F;
+    // starting value for the Lerp
+    static float t = 0.0f;
+
     // Use this for initialization
     void Start () {
         
@@ -79,7 +84,7 @@ public class GameManager : MonoBehaviour {
                             origin = new Vector3(x, y, lowestZ - 1);
                             direction = Vector3.forward;
 
-                            if (Physics.Raycast(origin, direction, out hit, 100, player.layer))
+                            if (Physics.Raycast(origin, direction, out hit, 100))
                             {
                                 frontPlatforms.Add(hit.collider.gameObject);
                             }
@@ -95,7 +100,7 @@ public class GameManager : MonoBehaviour {
                             origin = new Vector3(highestX + 1, y, z);
                             direction = Vector3.left;
 
-                            if (Physics.Raycast(origin, direction, out hit, 100, player.layer))
+                            if (Physics.Raycast(origin, direction, out hit, 100))
                             {
                                 rightPlatforms.Add(hit.collider.gameObject);
                             }
@@ -111,7 +116,7 @@ public class GameManager : MonoBehaviour {
                             origin = new Vector3(x, y, highestZ + 1);
                             direction = Vector3.back;
 
-                            if (Physics.Raycast(origin, direction, out hit, 100, player.layer))
+                            if (Physics.Raycast(origin, direction, out hit, 100))
                             {
                                 backPlatforms.Add(hit.collider.gameObject);
                             }
@@ -127,7 +132,7 @@ public class GameManager : MonoBehaviour {
                             origin = new Vector3(lowestX - 1, y, z);
                             direction = Vector3.right;
 
-                            if (Physics.Raycast(origin, direction, out hit, 100, player.layer))
+                            if (Physics.Raycast(origin, direction, out hit, 100))
                             {
                                 leftPlatforms.Add(hit.collider.gameObject);
                             }
@@ -158,24 +163,29 @@ public class GameManager : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 //float tempRot = 0;
-                cameraPivot.transform.rotation *= Quaternion.Euler(0, 90, 0);
-                player.transform.rotation *= Quaternion.Euler(0, 90, 0);
+                //cameraPivot.transform.rotation *= Quaternion.Euler(0, 90, 0);
+                //player.transform.rotation *= Quaternion.Euler(0, 90, 0);
+                start = currentRotationStep * 90;
                 //tempRot += 1 * Time.deltaTime;
                 currentRotationStep--;
                 if (currentRotationStep < 0)
                 {
                     currentRotationStep = 3;
+                    
                 }
+                
             }
             // Rotate the camera to the right when E is pressed
             else
             {
-                cameraPivot.transform.rotation *= Quaternion.Euler(0, -90, 0);
-                player.transform.rotation *= Quaternion.Euler(0, -90, 0);
+                //cameraPivot.transform.rotation *= Quaternion.Euler(0, -90, 0);
+                //player.transform.rotation *= Quaternion.Euler(0, -90, 0);
+                start = currentRotationStep * 90;
                 currentRotationStep++;
             }
 
             currentRotationStep %= 4;
+            end = currentRotationStep * 90;
             newPlayerPos = player.transform.position;
             Debug.Log(currentRotationStep);
 
@@ -207,6 +217,13 @@ public class GameManager : MonoBehaviour {
     }
     void RotateScene()
     {
-
+        t += 0.5f * Time.deltaTime;
+        Vector3 pos = new Vector3(0, Mathf.Lerp(start, end, t), 0);
+        cameraPivot.transform.rotation *= Quaternion.Euler(0, pos.y, 0);
+        player.transform.rotation *= Quaternion.Euler(0, pos.y, 0);
+        if(t >= 1.0f)
+        {
+            t = 1;
+        }
     }
 }

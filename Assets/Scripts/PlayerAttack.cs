@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour {
     //Attacks
     float attkTimer;
-    float coolDown = 0.5f;
+    float coolDown = 0.75f;
    
     bool attacking;
 
@@ -28,7 +28,6 @@ public class PlayerAttack : MonoBehaviour {
         {
             attacking = true;
             attkTimer = coolDown;
-            Debug.Log("Enable Hitbox");
             swordHitBox.enabled = true;
         }
 
@@ -41,9 +40,12 @@ public class PlayerAttack : MonoBehaviour {
             else
             {
                 attacking = false;
+                
                 swordHitBox.enabled = false;
             }
         }
-	}
+        playerAnimator.SetBool("isPlayerAttacking", attacking);
+       
+    }
 
 }

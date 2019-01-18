@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Player : Creature {
 
+    //Movement
+    bool running;
+    bool jump;
     int maxJump;
     int timesJumped;
     //Attacks
     float attkTimer;
     float coolDown;
     bool isCoolDown;
+
+
     public GameObject swordHitBox;
     //Player Animation
     private Animator playerAnimator;
@@ -28,7 +33,7 @@ public class Player : Creature {
         coolDown = 0.75f;
         playerRenderer = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
-        isCoolDown = false;
+        jump = false;
 	}
 	
 	// Update is called once per frame
@@ -101,7 +106,12 @@ public class Player : Creature {
         {
             Jump();
             timesJumped++;
+            jump = true;
+            playerAnimator.SetBool("isPlayerJump", jump);
         }
+        playerAnimator.SetFloat("Speed", velocity.x);
+        Debug.Log(jump);
+        Debug.Log(InAir);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -111,6 +121,9 @@ public class Player : Creature {
         {
             timesJumped = 0;
             InAir = false;
+            jump = false;
+            playerAnimator.SetBool("isPlayerJump", jump);
+            playerAnimator.SetBool("Grounded", InAir);
         }
         if(collision.gameObject.tag=="enemy")
         {

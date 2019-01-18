@@ -238,6 +238,8 @@ public class GameManager : MonoBehaviour
             if(rotateNeeded == true)
             {
                 xStart = Mathf.Lerp(xStart, xEnd, xTime);
+                xEnd = 15.0f;
+                swapped = false;
             }
 
             xTime = 0.0f;

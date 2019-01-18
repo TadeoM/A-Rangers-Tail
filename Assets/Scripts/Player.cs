@@ -6,9 +6,18 @@ public class Player : Creature {
 
     int maxJump;
     int timesJumped;
+    //Attacks
+    float attkTimer;
+    float coolDown;
+    bool isCoolDown;
+    public GameObject swordHitBox;
+    //Player Animation
+    private Animator playerAnimator;
+    private SpriteRenderer playerRenderer;
 
 	// Use this for initialization
-	public override void Start () {
+	public override void Start ()
+    {
         base.Start();
         MaxSpeed = 0.1f;
         acceleration = new Vector3(0.0f, 0.0f, 0.0f);
@@ -16,6 +25,10 @@ public class Player : Creature {
         JumpStrength = 0.2f;
         maxJump = 1;
         timesJumped = 0;
+        coolDown = 0.75f;
+        playerRenderer = GetComponent<SpriteRenderer>();
+        playerAnimator = GetComponent<Animator>();
+        isCoolDown = false;
 	}
 	
 	// Update is called once per frame
@@ -24,9 +37,16 @@ public class Player : Creature {
         KeyboardCheck();
 	}
 
+ 
     void KeyboardCheck()
     {
-
+        /*
+        bool flipSprite = (playerRenderer.flipX ? (velocity.x > 0.01f) : (velocity.x < 0.01f));
+        if(flipSprite)
+        {
+            playerRenderer.flipX = !playerRenderer.flipX;
+        }
+        */
         // direction = new Vector3(-direction.x, direction.y, -direction.z);
         if (Input.GetKey(KeyCode.D))
         {
@@ -86,10 +106,17 @@ public class Player : Creature {
 
     private void OnCollisionEnter(Collision collision)
     {
+       
         if (collision.gameObject.tag == "ground")
         {
             timesJumped = 0;
             InAir = false;
         }
+        if(collision.gameObject.tag=="enemy")
+        {
+
+        }
     }
+
+    
 }

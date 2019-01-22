@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public float yEnd;
     public int currentRotationStep;
     private List<char> rotateQue = new List<char>();
-    private Player playerScript;
+    private Player_v2 playerScript;
     private int desiredRotation;    // where we should be rotating to 
     private int highestX;
     private int lowestX;
@@ -38,11 +38,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        playerScript = player.GetComponent<Player>();
+        playerScript = player.GetComponent<Player_v2>();
         currentRotationStep = 0;
         unCheckedlatforms = GameObject.FindGameObjectsWithTag("ground");
         Vector3 firstObject = transform.TransformPoint(unCheckedlatforms[0].GetComponent<Transform>().position);
-        Debug.Log(player.layer);
         // set all highest and lowest points to first box
         highestX = (int)firstObject.x;
         lowestX = (int)firstObject.x;

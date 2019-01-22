@@ -24,10 +24,10 @@ public class Player : Creature {
 	public override void Start ()
     {
         base.Start();
-        MaxSpeed = 0.1f;
+        MaxSpeed = 10f;
         acceleration = new Vector3(0.0f, 0.0f, 0.0f);
         direction = new Vector3(1, 0, 0);
-        JumpStrength = 0.2f;
+        JumpStrength = 1f;
         maxJump = 1;
         timesJumped = 0;
         coolDown = 0.75f;
@@ -41,8 +41,37 @@ public class Player : Creature {
         base.Update();
         KeyboardCheck();
 	}
+    private void FixedUpdate()
+    {
+        M_Grounded = false;
 
- 
+        // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+        // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+        Collider[] colliders = Physics.OverlapBox(position, GetComponent<BoxCollider>().size, Quaternion.identity, whatIsGround);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+                M_Grounded = true;
+        }
+        //animator.SetBool("Ground", m_Grounded);
+
+        // Set the vertical animation
+        //m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+    }
+
+    public override void Move()
+    {
+        base.Move();
+        if (M_Grounded && jump )
+        {
+            // Add a vertical force to the player.
+            M_Grounded = false;
+            //m_Anim.SetBool("Ground", false);
+            creature.AddForce(new Vector3(0f, JumpStrength));
+        }
+    }
+
+
     void KeyboardCheck()
     {
         /*
@@ -87,18 +116,15 @@ public class Player : Creature {
         else if (direction.x == 1 && velocity.x > 0.002f 
             || direction.z == 1 && velocity.z > 0.002f)
         {
-            Debug.Log("Slowing Down at 1");
             Accelerate(-1);
         }
         else if (direction.x == -1 && velocity.x < -0.002f
             || direction.z == -1 && velocity.z < -0.002f)
         {
-            Debug.Log("Slowing down at -1");
             Accelerate(-1);
         }
         else if(velocity.magnitude != 0.0f)
         {
-            Debug.Log(velocity);
             velocity *= 0.0f;
         }
 
@@ -110,8 +136,6 @@ public class Player : Creature {
             playerAnimator.SetBool("isPlayerJump", jump);
         }
         playerAnimator.SetFloat("Speed", velocity.x);
-        Debug.Log(jump);
-        Debug.Log(InAir);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -120,16 +144,14 @@ public class Player : Creature {
         if (collision.gameObject.tag == "ground")
         {
             timesJumped = 0;
-            InAir = false;
+            M_Grounded = false;
             jump = false;
             playerAnimator.SetBool("isPlayerJump", jump);
-            playerAnimator.SetBool("Grounded", InAir);
+            playerAnimator.SetBool("Grounded", M_Grounded);
         }
         if(collision.gameObject.tag=="enemy")
         {
 
         }
     }
-
-    
 }

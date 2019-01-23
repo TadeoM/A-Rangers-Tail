@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponHitTrigger : MonoBehaviour
+public class WeaponHitTrigger : Weapon
 {
-    public int dmg;
+    public float dmg;
 
+    private void Awake()
+    {
+        dmg = WeaponDmg;
+    }
     // Use this for initialization
     void OnTriggerEnter2D(Collider2D col)
     {

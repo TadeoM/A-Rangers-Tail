@@ -7,7 +7,8 @@ public class Player_v2 : Creature_v2 {
     bool jump;
     int timesJumped;
     int maxJumps;
-    float jumpForce = 300;
+    float jumpForce = 500;
+    public bool notRotating;
 
     Animator playerAnimator;
     // Use this for initialization
@@ -15,24 +16,33 @@ public class Player_v2 : Creature_v2 {
     {
         base.Start();
         MaxSpeed = 5f;
-        acceleration = new Vector3(0.0f, 0.0f, 0.0f);
         direction = new Vector3(1, 0, 0);
         JumpStrength = 1f;
         maxJumps = 1;
         timesJumped = 0;
+        airControl = true;
+        jump = false;
+        notRotating = true;
         //coolDown = 0.75f;
         //playerRenderer = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
         jump = false;
     }
-    
+
     // Update is called once per frame
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        KeyboardCheck();
+        if(notRotating)
+        {
+            KeyboardCheck();
+        }
+        else
+        {
+            m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
+        }
 
-        if(Grounded)
+        if (Grounded)
         {
             jump = false;
             timesJumped = 0;
@@ -42,7 +52,7 @@ public class Player_v2 : Creature_v2 {
         Debug.Log(m_Rigidbody.velocity.x);
     }
 
-     void KeyboardCheck()
+    void KeyboardCheck()
     {
         /*
         bool flipSprite = (playerRenderer.flipX ? (velocity.x > 0.01f) : (velocity.x < 0.01f));
@@ -122,6 +132,8 @@ public class Player_v2 : Creature_v2 {
         if (Grounded && jump) // && m_Anim.GetBool("Ground")
         {
             // Add a vertical force to the player.
+            m_Rigidbody.constraints = RigidbodyConstraints.None;
+            m_Rigidbody.freezeRotation = true;
             Grounded = false;
             m_Rigidbody.AddForce(new Vector3(0f, jumpForce));
             

@@ -9,21 +9,20 @@ public class Creature_v2 : MonoBehaviour {
     public CreatureType creatureType;
     public LayerMask whatIsGround = 9;
 
-    public Rigidbody m_Rigidbody;
-    public Transform m_GroundCheck;
-    public Transform m_CeilingCheck;   // A position marking where to check for ceilings
+    protected Rigidbody m_Rigidbody;
+    protected Transform m_GroundCheck;
+    protected Transform m_CeilingCheck;   // A position marking where to check for ceilings
     public Vector3 position;
     public Vector3 velocity;
     public Vector3 direction;
     public Vector3 axis;
     public Vector3 forward;
-    public Vector3 acceleration;
-    public float accelRate;
     private float maxSpeed;
     private float gravity;
     private float jumpStrength;
     private int health;
-    public bool grounded;
+    private bool grounded;
+    public bool airControl;
     private bool facingRight = true;  // For determining which way the player is currently facing.
 
     public float Gravity
@@ -76,15 +75,22 @@ public class Creature_v2 : MonoBehaviour {
     public virtual void FixedUpdate()
     {
         grounded = false;
+        m_Rigidbody.constraints = RigidbodyConstraints.None;
+        m_Rigidbody.freezeRotation = true;
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider[] colliders = Physics.OverlapSphere(m_GroundCheck.position, 1f, whatIsGround);
+        Collider[] colliders = Physics.OverlapSphere(m_GroundCheck.position, .07f, whatIsGround);
 
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
+            {
                 grounded = true;
+                m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
+                m_Rigidbody.freezeRotation = true;
+            }
+                
         }
         //m_Anim.SetBool("Ground", m_Grounded);
 

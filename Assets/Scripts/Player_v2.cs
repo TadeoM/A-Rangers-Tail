@@ -14,7 +14,6 @@ public class Player_v2 : Creature_v2 {
     {
         base.Start();
         MaxSpeed = 5f;
-        acceleration = new Vector3(0.0f, 0.0f, 0.0f);
         direction = new Vector3(1, 0, 0);
         JumpStrength = 1f;
         maxJumps = 1;
@@ -116,6 +115,8 @@ public class Player_v2 : Creature_v2 {
         if (Grounded && jump) // && m_Anim.GetBool("Ground")
         {
             // Add a vertical force to the player.
+            m_Rigidbody.constraints = RigidbodyConstraints.None;
+            m_Rigidbody.freezeRotation = true;
             Grounded = false;
             //m_Anim.SetBool("Ground", false);
             m_Rigidbody.AddForce(new Vector3(0f, jumpForce));

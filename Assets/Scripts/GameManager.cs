@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
             RaycastHit hit;
             Vector3 origin;
             Vector3 direction;
-
+            Debug.Log(angle);
             switch (angle)
             {
                 case 0:
@@ -121,7 +121,6 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 1:
-                    Debug.Log(lowestZ);
                     for (int z = lowestZ; z <= highestZ; z++)
                     {
                         for (int y = lowestY; y <= highestY; y++)
@@ -225,11 +224,13 @@ public class GameManager : MonoBehaviour
             if (nextInput == 'Q')
             {
                 currentRotationStep++;
+                Debug.Log(currentRotationStep);
             }
             // Rotate the camera to the right when E is pressed
             else
             {
                 currentRotationStep--;
+                Debug.Log(currentRotationStep);
             }
 
             // changes where it is that pivot should rotate to
@@ -281,30 +282,33 @@ public class GameManager : MonoBehaviour
                 newPlayerPos = player.transform.position;
 
                 // changes what direction is to the right
-                switch (Mathf.Abs(currentRotationStep % 4))
+                switch (currentRotationStep % 4)
                 {
                     case 0:
                         playerScript.forward = new Vector3(1, 0, 0);
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, lowestZ);
-                        Debug.Log("Front: " + highestZ);
+                        //Debug.Log("Front: " + highestZ);
                         break;
                     case 1:
-                        playerScript.forward = new Vector3(0, 0, 1);
-                        newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
-                        Debug.Log("Right: " + highestX);
-                        break;
-                    case 2:
-                        playerScript.forward = new Vector3(-1, 0, 0);
-                        newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, highestZ);
-                        Debug.Log("Back: " + lowestZ);
-                        break;
-                    case 3:
+                    case -3:
                         playerScript.forward = new Vector3(0, 0, -1);
                         newPlayerPos = new Vector3(lowestX, player.transform.position.y, player.transform.position.z);
-                        Debug.Log("left: " + lowestX);
+                        //Debug.Log("Right: " + highestX);
+                        break;
+                    case 2:
+                    case -2:
+                        playerScript.forward = new Vector3(-1, 0, 0);
+                        newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, highestZ);
+                        //Debug.Log("Back: " + lowestZ);
+                        break;
+                    case -1:
+                    case 3:
+                        playerScript.forward = new Vector3(0, 0, 1);
+                        newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
+                        //Debug.Log("left: " + lowestX);
                         break;
                     default:
-                        Debug.Log("Default because: " + currentRotationStep % 4);
+                        //Debug.Log("Default because: " + currentRotationStep % 4);
                         break;
                 }
                 playerScript.SetPosition(newPlayerPos);

@@ -373,6 +373,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 175321826}
   m_Script: {fileID: 11500000, guid: c6f3b4326c78e364b854e4db36c8d252, type: 3}
+--- !u!114 &175321829 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11476888, guid: f20b609a435c33049b740eb36bf81258,
+    type: 2}
+  m_PrefabInternal: {fileID: 175321826}
+  m_Script: {fileID: 11500000, guid: bdfbe9ef49896794dbda9dee474fbfda, type: 3}
 --- !u!1 &254747541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3258,11 +3264,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22439212, guid: ed7d08339ae36af4ca13b1ab787f7528, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000061035156
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 22410128, guid: ed7d08339ae36af4ca13b1ab787f7528, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000061035156
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 22419380, guid: ed7d08339ae36af4ca13b1ab787f7528, type: 2}
       propertyPath: m_AnchorMin.y
@@ -4492,6 +4498,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 22402690, guid: 08f8916011c735549bc57853232605a3,
     type: 2}
   m_PrefabInternal: {fileID: 1266954885}
+--- !u!114 &1266954887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11481470, guid: 08f8916011c735549bc57853232605a3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1266954885}
+  m_Script: {fileID: 11500000, guid: c5aea79f4af4b6143a49743468121ab1, type: 3}
 --- !u!1 &1267575316
 GameObject:
   m_ObjectHideFlags: 0
@@ -6105,6 +6117,12 @@ MonoBehaviour:
   - {fileID: 1899893006}
   showWhenShown: 1
   hideWhenHidden: 1
+--- !u!114 &1496283840 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11445998, guid: f4879f629672bfb44840e1eedb9e82ca,
+    type: 2}
+  m_PrefabInternal: {fileID: 1496283835}
+  m_Script: {fileID: 11500000, guid: 422de6a7f89131d44bcb7ad4052996ef, type: 3}
 --- !u!1001 &1512326250
 Prefab:
   m_ObjectHideFlags: 0
@@ -8113,7 +8131,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22430452, guid: a606bc4516da9d541ab1be24bc3a2759, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000030517578
+      value: 0.000045776367
       objectReference: {fileID: 0}
     - target: {fileID: 22428226, guid: a606bc4516da9d541ab1be24bc3a2759, type: 2}
       propertyPath: m_AnchorMin.y
@@ -8640,6 +8658,8 @@ GameObject:
   - component: {fileID: 1802879778}
   - component: {fileID: 1802879784}
   - component: {fileID: 1802879785}
+  - component: {fileID: 1802879787}
+  - component: {fileID: 1802879786}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8801,6 +8821,45 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1802879786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802879777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be11717ae404fb48aae52a1f9baeaaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterUI: {fileID: 175321829}
+  _inventoryCollections:
+  - {fileID: 1496283840}
+  - {fileID: 1899893011}
+  _skillbarCollection: {fileID: 1266954887}
+  dynamicallyFindUIElements: 0
+  characterCollectionName: Character
+  inventoryCollectionNames:
+  - Inventory
+  skillbarCollectionName: Skillbar
+  _equipmentBinders: []
+  isPlayerDynamicallyInstantiated: 0
+  dontDestroyOnLoad: 1
+  _deathDropObjectPrefab: {fileID: 0}
+  _equipmentHandler: {fileID: 11400000, guid: fcd72d5a988613d4e9f518dbe4cd0a5d, type: 2}
+  _waitFramesBeforeInit: 0
+--- !u!114 &1802879787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1802879777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969b4628f00612c40bd9089989a20874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerSelector: {fileID: 0}
 --- !u!1 &1804555256
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,7 +41,6 @@ public class PlayerAttack : MonoBehaviour {
             else
             {
                 attacking = false;
-                
                 swordHitBox.enabled = false;
             }
         }

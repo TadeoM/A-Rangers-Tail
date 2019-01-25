@@ -118,9 +118,9 @@ public class Player_v2 : Creature_v2 {
             timesJumped++;
             jump = true;
             timesJumped++;
-           
-            Jump();
             playerAnimator.SetBool("IsPlayerJump", jump);
+            Jump();
+          
         }
         
   

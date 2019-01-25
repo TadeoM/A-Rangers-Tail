@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour {
    
     bool attacking;
 
-    public Collider2D swordHitBox;
+    public Collider swordHitBox;
     //Player Animation
     private Animator playerAnimator;
     private SpriteRenderer playerRenderer;
@@ -29,6 +29,7 @@ public class PlayerAttack : MonoBehaviour {
             attacking = true;
             attkTimer = coolDown;
             swordHitBox.enabled = true;
+            Debug.Log("Hitbox?");
         }
 
         if(attacking)

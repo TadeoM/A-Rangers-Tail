@@ -9,6 +9,7 @@ public class Player_v2 : Creature_v2 {
     int maxJumps;
     float jumpForce = 300;
 
+    Animator playerAnimator;
     // Use this for initialization
     public override void Start()
     {
@@ -21,7 +22,7 @@ public class Player_v2 : Creature_v2 {
         timesJumped = 0;
         //coolDown = 0.75f;
         //playerRenderer = GetComponent<SpriteRenderer>();
-        //playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponent<Animator>();
         jump = false;
     }
     
@@ -35,7 +36,10 @@ public class Player_v2 : Creature_v2 {
         {
             jump = false;
             timesJumped = 0;
+            playerAnimator.SetBool("IsPlayerJump", jump);
         }
+        playerAnimator.SetFloat("Speed", Mathf.Abs(m_Rigidbody.velocity.x));
+        Debug.Log(m_Rigidbody.velocity.x);
     }
 
      void KeyboardCheck()
@@ -104,10 +108,12 @@ public class Player_v2 : Creature_v2 {
             timesJumped++;
             jump = true;
             timesJumped++;
+           
             Jump();
-            //playerAnimator.SetBool("isPlayerJump", jump);
+            playerAnimator.SetBool("IsPlayerJump", jump);
         }
-        //playerAnimator.SetFloat("Speed", velocity.x);
+        
+  
     }
 
     public void Jump()
@@ -117,9 +123,10 @@ public class Player_v2 : Creature_v2 {
         {
             // Add a vertical force to the player.
             Grounded = false;
-            //m_Anim.SetBool("Ground", false);
             m_Rigidbody.AddForce(new Vector3(0f, jumpForce));
+            
             jump = false;
+
         }
     }
 }

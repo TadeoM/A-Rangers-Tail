@@ -96,7 +96,6 @@ public class GameManager : MonoBehaviour
             RaycastHit hit;
             Vector3 origin;
             Vector3 direction;
-            Debug.Log(angle);
             switch (angle)
             {
                 case 0:
@@ -205,7 +204,7 @@ public class GameManager : MonoBehaviour
             // add to the que of rotations
             if(Input.GetKeyDown(KeyCode.Q)) { rotateQue.Add('Q'); }
             else { rotateQue.Add('E'); }
-            
+            playerScript.notRotating = false;
         }
     }
 
@@ -224,13 +223,11 @@ public class GameManager : MonoBehaviour
             if (nextInput == 'Q')
             {
                 currentRotationStep++;
-                Debug.Log(currentRotationStep);
             }
             // Rotate the camera to the right when E is pressed
             else
             {
                 currentRotationStep--;
-                Debug.Log(currentRotationStep);
             }
 
             // changes where it is that pivot should rotate to
@@ -275,6 +272,7 @@ public class GameManager : MonoBehaviour
             swapped = false;
             xStart = OGxStart;
             xEnd = OGxEnd;
+            playerScript.notRotating = true;
 
             if (rotateQue.Count == 0)
             {

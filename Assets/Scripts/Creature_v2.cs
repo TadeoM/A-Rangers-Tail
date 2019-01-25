@@ -113,7 +113,7 @@ public class Creature_v2 : MonoBehaviour {
         // Set whether or not the character is crouching in the animator
         //m_Anim.SetBool("Crouch", crouch);
         //only control the player if grounded or airControl is turned on
-        if (grounded) // || m_AirControl
+        if (grounded||airControl) // || m_AirControl
         {
             // Reduce the speed if crouching by the crouchSpeed multiplier
             //move = (crouch ? move * m_CrouchSpeed : move);

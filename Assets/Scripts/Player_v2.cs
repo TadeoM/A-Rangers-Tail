@@ -7,7 +7,8 @@ public class Player_v2 : Creature_v2 {
     bool jump;
     int timesJumped;
     int maxJumps;
-    float jumpForce = 300;
+    float jumpForce = 500;
+    public bool notRotating;
 
     // Use this for initialization
     public override void Start()
@@ -18,26 +19,35 @@ public class Player_v2 : Creature_v2 {
         JumpStrength = 1f;
         maxJumps = 1;
         timesJumped = 0;
+        airControl = true;
+        jump = false;
+        notRotating = true;
         //coolDown = 0.75f;
         //playerRenderer = GetComponent<SpriteRenderer>();
         //playerAnimator = GetComponent<Animator>();
-        jump = false;
     }
-    
+
     // Update is called once per frame
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        KeyboardCheck();
+        if(notRotating)
+        {
+            KeyboardCheck();
+        }
+        else
+        {
+            m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
+        }
 
-        if(Grounded)
+        if (Grounded)
         {
             jump = false;
             timesJumped = 0;
         }
     }
 
-     void KeyboardCheck()
+    void KeyboardCheck()
     {
         /*
         bool flipSprite = (playerRenderer.flipX ? (velocity.x > 0.01f) : (velocity.x < 0.01f));

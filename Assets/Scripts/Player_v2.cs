@@ -26,8 +26,9 @@ public class Player_v2 : Creature_v2 {
     }
     
     // Update is called once per frame
-    void Update()
+    public override void FixedUpdate()
     {
+        base.FixedUpdate();
         KeyboardCheck();
 
         if(Grounded)

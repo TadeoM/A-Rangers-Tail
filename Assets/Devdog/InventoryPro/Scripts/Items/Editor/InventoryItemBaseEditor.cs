@@ -151,7 +151,7 @@ namespace Devdog.InventoryPro.Editors
                     var t = target;
                     if(t == null)
                     {
-                        t = PrefabUtility.GetPrefabParent(t);
+                        t = PrefabUtility.GetCorrespondingObjectFromSource(t);
                     }
 
                     string path = AssetDatabase.GetAssetPath(t);

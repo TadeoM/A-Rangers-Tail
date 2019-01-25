@@ -65,7 +65,7 @@ public class Creature_v2 : MonoBehaviour {
         grounded = false;
         jumpStrength = 0;
         position = transform.position;
-
+        m_Rigidbody = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
@@ -73,13 +73,13 @@ public class Creature_v2 : MonoBehaviour {
 		
 	}
 
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         grounded = false;
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider[] colliders = Physics.OverlapSphere(m_GroundCheck.position, .6f, whatIsGround);
+        Collider[] colliders = Physics.OverlapSphere(m_GroundCheck.position, 1f, whatIsGround);
 
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -116,7 +116,7 @@ public class Creature_v2 : MonoBehaviour {
             //m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
             // Move the character
-            m_Rigidbody.velocity = new Vector3(direction.x * MaxSpeed, m_Rigidbody.velocity.y +.06f, direction.z * MaxSpeed);
+            m_Rigidbody.velocity = new Vector3(direction.x * MaxSpeed, m_Rigidbody.velocity.y, direction.z * MaxSpeed);
             if(slowDown)
             {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);

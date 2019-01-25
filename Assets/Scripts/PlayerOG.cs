@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Creature {
+public class PlayerOG : Creature {
 
     //Movement
     bool running;

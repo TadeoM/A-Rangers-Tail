@@ -8,9 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78b75a309ff767a4bb3ede0d5c1d2f6f, type: 3}
-  m_Name: enUS
+  m_Script: {fileID: 11500000, guid: da5a4991545c02049bc41283ec6b6e3c, type: 3}
+  m_Name: BasicCollectionSorter
   m_EditorClassIdentifier: 
-  _serializedJsonString: '{"_lang":"en-US","_localizedStrings":{"NO_KEY":""},"_localizedObjects":{}}'
-  _objectReferences: []
-  _lang: en-US

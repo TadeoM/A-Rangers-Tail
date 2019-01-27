@@ -69,7 +69,6 @@ public class Player_v2 : Creature_v2 {
                 direction = forward;
                 velocity.x = 0;
             }
-            //Move();
             Move(false);
         }
         else if (Input.GetKey(KeyCode.A))
@@ -83,24 +82,20 @@ public class Player_v2 : Creature_v2 {
             {
                 velocity.x = 0;
             }
-            //Move();
             Move(false);
         }
         else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
         {
-            //Move(-1);
             Move(true);
         }
         /*else if (direction.x == 1 && velocity.x > 0.002f 
             || direction.z == 1 && velocity.z > 0.002f)
         {
-            //Move(-1);
             Move(false, false);
         }
         else if (direction.x == -1 && velocity.x < -0.002f
             || direction.z == -1 && velocity.z < -0.002f)
         {
-            //Move(-1);
             Move(false, false);
         }
         else if(velocity.magnitude != 0.0f)

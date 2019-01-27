@@ -781,7 +781,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 447426021}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 1.5, z: -0.3}
+  m_LocalPosition: {x: -2, y: 0.977, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 797353543}
@@ -993,7 +993,7 @@ Camera:
   far clip plane: 30
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3024,6 +3024,36 @@ Transform:
   m_Father: {fileID: 1576582362}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1069440755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 87a2357765801c34292d6718d8b4d770,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1069440756}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1069440756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 87a2357765801c34292d6718d8b4d770,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1069440755}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalScale: {x: 0.56448, y: 0.56448, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1605571666}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1106121537
 GameObject:
   m_ObjectHideFlags: 0
@@ -4342,8 +4372,11 @@ GameObject:
   - component: {fileID: 1605571669}
   - component: {fileID: 1605571668}
   - component: {fileID: 1605571667}
+  - component: {fileID: 1605571670}
+  - component: {fileID: 1605571671}
+  - component: {fileID: 1605571672}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Centipede
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4402,9 +4435,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1605571664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.56, y: 1.091, z: -0.115265414}
+  m_LocalPosition: {x: 3.653, y: 0.547, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1069440756}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4418,8 +4452,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06210339
-  m_Center: {x: -1, y: -0.5, z: 0}
+  m_Radius: 0.06
+  m_Center: {x: -2.5, y: 0, z: 0}
 --- !u!135 &1605571668
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4430,8 +4464,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06210339
-  m_Center: {x: 1, y: -0.5, z: 0}
+  m_Radius: 0.06
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!65 &1605571669
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4442,8 +4476,62 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.1, y: 1.1235042, z: 0.2}
-  m_Center: {x: 0, y: 0.025747895, z: 0}
+  m_Size: {x: 2.4, y: 1.1, z: 0.2}
+  m_Center: {x: -1.6, y: 0.55, z: 0}
+--- !u!95 &1605571670
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1605571664}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c203cc991a3bce645a717ffbddb8093d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1605571671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1605571664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18194c2283f6d1747a76aa14d8eae550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creatureType: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 512
+  position: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  axis: {x: 0, y: 0, z: 0}
+  forward: {x: 0, y: 0, z: 0}
+  airControl: 0
+--- !u!54 &1605571672
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1605571664}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 1
 --- !u!1 &1680288491
 GameObject:
   m_ObjectHideFlags: 0

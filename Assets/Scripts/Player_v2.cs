@@ -9,6 +9,9 @@ public class Player_v2 : Creature_v2 {
     int maxJumps;
     float jumpForce = 500;
     public bool notRotating;
+    private int staminaPoints;
+    private bool invincible;
+    private int invisTimer;
 
     // Use this for initialization
     public override void Start()
@@ -44,6 +47,11 @@ public class Player_v2 : Creature_v2 {
         {
             jump = false;
             timesJumped = 0;
+        }
+
+        if(invisTimer > 0)
+        {
+            invisTimer--;
         }
     }
 
@@ -127,5 +135,10 @@ public class Player_v2 : Creature_v2 {
             m_Rigidbody.AddForce(new Vector3(0f, jumpForce));
             jump = false;
         }
+    }
+    public override void TakeDamage(int dmg)
+    {
+        base.TakeDamage(dmg);
+        invincible = true;
     }
 }

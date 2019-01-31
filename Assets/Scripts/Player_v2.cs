@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Devdog.InventoryPro;
+using System.Linq;
+using Devdog.General;
 
 public class Player_v2 : Creature_v2 {
 
@@ -9,6 +12,8 @@ public class Player_v2 : Creature_v2 {
     int maxJumps;
     float jumpForce = 500;
     public bool notRotating;
+
+    public int  healthStat; //Drag the health definition file in here
 
     Animator playerAnimator;
     // Use this for initialization
@@ -27,6 +32,8 @@ public class Player_v2 : Creature_v2 {
         //playerRenderer = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
         jump = false;
+        var myPlayer = PlayerManager.instance.currentPlayer.inventoryPlayer;
+
     }
 
     // Update is called once per frame
@@ -141,4 +148,9 @@ public class Player_v2 : Creature_v2 {
 
         }
     }
+    private void Die()
+    {
+        //Logic to make the player die
+    }
+
 }

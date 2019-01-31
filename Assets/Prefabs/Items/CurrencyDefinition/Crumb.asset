@@ -17,7 +17,10 @@ MonoBehaviour:
   description: A small cheese crumb...
   icon: {fileID: 21300004, guid: bba01b71c3bb4d2478d56d33340dd469, type: 3}
   stringFormat: '{0} {3}'
-  currencyConversions: []
+  currencyConversions:
+  - factor: 0.1
+    currency: {fileID: 11400000, guid: 92ff14fe0270a794185cab7bd421d69e, type: 2}
+    useInAutoConversion: 1
   allowFractions: 0
   autoConvertOnMax: 1
   autoConvertOnMaxAmount: 10

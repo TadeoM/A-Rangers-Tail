@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee9c35122abd23458ddb18edd496d6a, type: 3}
+  m_Name: ItemDatabase
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 114738174361982678, guid: d5d903a6f31706240a0d8a583c3120e2, type: 2}
+  - {fileID: 114140761871889234, guid: f756b76bb0b254043831c901ab7926fd, type: 2}
+  rarities:
+  - {fileID: 11400000, guid: ec9526f5b6dddf140830e1d2f083221d, type: 2}
+  - {fileID: 11400000, guid: 427e5865f1277b4479c3bbed5f864347, type: 2}
+  - {fileID: 11400000, guid: 083399782026a5740be1e2bb7b484969, type: 2}
+  - {fileID: 11400000, guid: 94c8c642dcdfab549a9d2bdf134ba787, type: 2}
+  categories:
+  - {fileID: 11400000, guid: 0238dcedc7dccb94a816d7a544ee73e1, type: 2}
+  - {fileID: 11400000, guid: ae40d663e4e53f748aee8b6421e3a776, type: 2}
+  statDefinitions:
+  - {fileID: 11400000, guid: f8df779402214714488e25fbd701c017, type: 2}
+  equipmentTypes:
+  - {fileID: 11400000, guid: dc20c186f93416247bbc152f7034223a, type: 2}
+  - {fileID: 11400000, guid: 1a3e0519c63643b47b3d6f51478c90bb, type: 2}
+  - {fileID: 11400000, guid: 8cd4e67a536870e408d2a021b745ce4c, type: 2}
+  - {fileID: 11400000, guid: b4c51ac258966954ea6718bbc9fe5c2c, type: 2}
+  - {fileID: 11400000, guid: 2a07b69188355db4fbd401bf4cd50a8c, type: 2}
+  - {fileID: 11400000, guid: 41180ec1079c1ad48a51e2616a10fa5f, type: 2}
+  - {fileID: 11400000, guid: f6338d7b2d944ff4f9dc2a127f29e4e9, type: 2}
+  craftingCategories: []
+  currencies:
+  - {fileID: 11400000, guid: 35eda6093f64ab441a3305bfdcfaefb8, type: 2}
+  - {fileID: 11400000, guid: 098747ca1db89714cb347c06805a3580, type: 2}
+  - {fileID: 11400000, guid: 92ff14fe0270a794185cab7bd421d69e, type: 2}
+  - {fileID: 11400000, guid: a19179b69fa1ead4ebb179001510f345, type: 2}
+  itemRarities: []
+  itemCategories: []
+  itemProperties: []
+  equipTypes: []
+  inventoryCraftingCategories: []
+  inventoryCurrencies: []

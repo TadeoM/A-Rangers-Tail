@@ -20,7 +20,10 @@ MonoBehaviour:
   currencyConversions:
   - factor: 10
     currency: {fileID: 11400000, guid: 92ff14fe0270a794185cab7bd421d69e, type: 2}
-    useInAutoConversion: 0
+    useInAutoConversion: 1
+  - factor: 0.1
+    currency: {fileID: 11400000, guid: 35eda6093f64ab441a3305bfdcfaefb8, type: 2}
+    useInAutoConversion: 1
   allowFractions: 0
   autoConvertOnMax: 1
   autoConvertOnMaxAmount: 10

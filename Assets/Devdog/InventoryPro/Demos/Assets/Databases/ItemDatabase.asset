@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -11,27 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee9c35122abd23458ddb18edd496d6a, type: 3}
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
-  plyAttributes:
-  - ID:
-      savedIdent: dd6ecb7e8c344da49cf11373207d9729
-    show: 1
-    category: Default
-  - ID:
-      savedIdent: 187478513b71498e8b0ab25d45ab5e02
-    show: 1
-    category: Default
-  - ID:
-      savedIdent: 0e069f5dbef5488d9faab49730ce6357
-    show: 1
-    category: Default
-  - ID:
-      savedIdent: b0adf0e8ccdd467f82ab7b362c67bfee
-    show: 1
-    category: Default
-  - ID:
-      savedIdent: a4e3c43dc16d42d1b8e8e841968fd685
-    show: 1
-    category: Default
   items:
   - {fileID: 11476484, guid: 4f6c5d3910c9f024c8df75227f0ed4f3, type: 2}
   - {fileID: 11439538, guid: b855851bf49ee9142aa3aa1f57a70a2d, type: 2}
@@ -94,6 +73,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 217d349f8db10d74295be99a4a2a25fb, type: 2}
   - {fileID: 11400000, guid: 9a25e1df6d056284f87b4206b9d97e64, type: 2}
   - {fileID: 11400000, guid: 9c077c4a96b765e4ab7005b1f10f90e1, type: 2}
+  - {fileID: 11400000, guid: 77d394f3087ea0448aa089e634d137fb, type: 2}
   craftingCategories:
   - {fileID: 11400000, guid: c2340ccfa80a631449e9795624adce4c, type: 2}
   - {fileID: 11400000, guid: e862ed643d87113409befb3d1830538e, type: 2}

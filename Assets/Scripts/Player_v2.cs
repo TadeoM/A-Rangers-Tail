@@ -11,7 +11,11 @@ public class Player_v2 : Creature_v2 {
     public bool notRotating;
     private int staminaPoints;
     private bool invincible;
-    private int invisTimer;
+    private float invisTimer;
+    private float lerpTime;
+    private float invFlip;
+    int iStart = 0;
+    int iEnd = 1;
 
     // Use this for initialization
     public override void Start()
@@ -25,6 +29,7 @@ public class Player_v2 : Creature_v2 {
         airControl = true;
         jump = false;
         notRotating = true;
+        Health = 2;
         //coolDown = 0.75f;
         //playerRenderer = GetComponent<SpriteRenderer>();
         //playerAnimator = GetComponent<Animator>();
@@ -49,9 +54,28 @@ public class Player_v2 : Creature_v2 {
             timesJumped = 0;
         }
 
-        if(invisTimer > 0)
+        if (invisTimer > 0)
         {
-            invisTimer--;
+            Debug.Log("INVIS");
+            invisTimer -= Time.deltaTime;
+            lerpTime += 1.5f * (Time.deltaTime);
+            Color newColor = gameObject.GetComponent<SpriteRenderer>().color;
+
+
+            if (lerpTime > 1)
+            {
+                lerpTime = 0;
+                int temp = iStart;
+                iStart = iEnd;
+                iEnd = temp;
+            }
+            newColor = new Color(newColor.r, newColor.g, newColor.b, Mathf.Lerp(iStart, iEnd, lerpTime));
+            gameObject.GetComponent<SpriteRenderer>().color = newColor;
+        }
+        else
+        {
+            Color newColor = gameObject.GetComponent<SpriteRenderer>().color;
+            newColor = new Color(newColor.r, newColor.g, newColor.b, 1);
         }
     }
 
@@ -65,6 +89,7 @@ public class Player_v2 : Creature_v2 {
         }
         */
         // direction = new Vector3(-direction.x, direction.y, -direction.z);
+        
         if (Input.GetKey(KeyCode.D))
         {
             direction = forward;
@@ -140,5 +165,20 @@ public class Player_v2 : Creature_v2 {
     {
         base.TakeDamage(dmg);
         invincible = true;
+        invisTimer = 3;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.layer);
+        
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 11 && !invincible)
+        {
+            TakeDamage(1);
+            invisTimer = 3 * Time.deltaTime;
+        }
     }
 }

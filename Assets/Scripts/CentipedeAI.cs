@@ -32,26 +32,22 @@ public class CentipedeAI : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!inAttackState)
+		if(!inAttackState && attackTimer < -(Time.deltaTime * 60))
         {
             PerformAttack();
         }
         else
         {
             AdjustColliders();
-            if (attackTimer > 0)
-            {
-                attackTimer -= Time.deltaTime;
-            }
         }
         if(attackTimer <= 0)
         {
             animator.SetInteger("State", 0);
             inAttackState = false;
-            attackTimer = 0;
         }
-        
-	}
+
+        attackTimer -= Time.deltaTime;
+    }
 
     protected override void PerformAttack()
     {
@@ -65,8 +61,7 @@ public class CentipedeAI : Enemy {
         endAttackPos = new Vector3(-0.8f, -0.3f, 0);
         startHeight = 0.7f;
         endHeight = 2;
-        animSpeed = 5f * Time.deltaTime ;
-        Debug.Log(animSpeed);
+        animSpeed = 5f * Time.deltaTime;
         currTime = 0;
         timesSwapped = 0;
         AdjustColliders();
@@ -74,7 +69,7 @@ public class CentipedeAI : Enemy {
 
     private void AdjustColliders()
     {
-        if(attackTimer < 0.6)
+        if(attackTimer < 0.575)
             currTime += animSpeed;
 
         attackCollider.center = Vector3.Lerp(startAttackPos, endAttackPos, currTime);
@@ -88,6 +83,7 @@ public class CentipedeAI : Enemy {
             float tempStartHeight = startHeight;
             startHeight = endHeight;
             endHeight = tempStartHeight;
+            timesSwapped++;
         }
     }
 }

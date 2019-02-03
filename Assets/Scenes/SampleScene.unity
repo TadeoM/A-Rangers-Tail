@@ -3860,7 +3860,7 @@ Prefab:
     - target: {fileID: 65244481537073148, guid: ae71fb21bce396d4a86feaaf653e0544,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4474491410487244, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}
       propertyPath: m_RootOrder
@@ -3875,6 +3875,19 @@ Prefab:
       propertyPath: attackCollider
       value: 
       objectReference: {fileID: 1826031804}
+    - target: {fileID: 1353532187287358, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803849109929790, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 65244481537073148, guid: ae71fb21bce396d4a86feaaf653e0544,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}
   m_IsPrefabAsset: 0

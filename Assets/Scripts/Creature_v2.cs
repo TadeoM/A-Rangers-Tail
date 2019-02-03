@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Creature_v2 : MonoBehaviour {
 
-    public enum CreatureType { };
+    public enum CreatureType { Bug,Weasel };
 
     public CreatureType creatureType;
     public LayerMask whatIsGround = 9;
@@ -80,7 +80,8 @@ public class Creature_v2 : MonoBehaviour {
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider[] colliders = Physics.OverlapSphere(m_GroundCheck.position, .07f, whatIsGround);
+        Collider[] colliders;
+        colliders = Physics.OverlapSphere(m_GroundCheck.position, .02f, whatIsGround);
 
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -142,7 +143,6 @@ public class Creature_v2 : MonoBehaviour {
                 Flip();
             }
         }
-        
     }
 
 
@@ -159,5 +159,14 @@ public class Creature_v2 : MonoBehaviour {
     public void SetPosition(Vector3 newPos)
     {
         transform.position = newPos;
+    }
+
+    public virtual void TakeDamage(int dmg)
+    {
+        health -= dmg;
+        if(health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

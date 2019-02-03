@@ -16,8 +16,8 @@ TagManager:
   - 
   - Creature
   - ground
-  - 
-  - 
+  - Player
+  - enemyHitbox
   - 
   - 
   - 

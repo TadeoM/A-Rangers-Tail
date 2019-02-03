@@ -8,18 +8,19 @@ public class CentipedeAI : Enemy {
     {
         Lunge, Charge
     }
-    private float currTime;
-    private float animSpeed;
-    private Vector3 startAttackPos;
-    private Vector3 endAttackPos;
-    private float startHeight;
-    private float endHeight;
+    private Attacks attackChosen;
+    public GameObject player;
     public CapsuleCollider attackCollider;
-    private Attacks attackChosen; 
-    private bool inAttackState;
     public float attackTimer;
     private Animator animator;
+    private Vector3 startAttackPos;
+    private Vector3 endAttackPos;
     private int timesSwapped;
+    private float currTime;
+    private float animSpeed;
+    private float startHeight;
+    private float endHeight;
+    private bool inAttackState;
 
 	// Use this for initialization
 	public override void Start () {
@@ -27,6 +28,7 @@ public class CentipedeAI : Enemy {
         creatureType = CreatureType.Bug;
         inAttackState = false;
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player");
         //attackCollider = GetComponentInChildren<CapsuleCollider>();
     }
 	
@@ -34,7 +36,8 @@ public class CentipedeAI : Enemy {
 	void Update () {
 		if(!inAttackState && attackTimer < -(Time.deltaTime * 60))
         {
-            PerformAttack();
+            if (player.GetComponent<Player_v2>().side == side)
+                PerformAttack();
         }
         else
         {
@@ -51,20 +54,29 @@ public class CentipedeAI : Enemy {
 
     protected override void PerformAttack()
     {
-
-        inAttackState = true;
-        attackChosen = Attacks.Lunge;
-        animator.SetInteger("State", 2);
-        attackTimer = 38f * Time.deltaTime;
-        attackCollider.gameObject.SetActive(true);
-        startAttackPos = new Vector3(-0.14f, 0, 0);
-        endAttackPos = new Vector3(-0.8f, -0.3f, 0);
-        startHeight = 0.7f;
-        endHeight = 2;
-        animSpeed = 5f * Time.deltaTime;
-        currTime = 0;
-        timesSwapped = 0;
-        AdjustColliders();
+        Debug.Log(Vector3.Distance(player.transform.position, position));
+        if (Vector3.Distance(player.transform.position, position) <= 4.5f)
+        {
+            
+            inAttackState = true;
+            attackChosen = Attacks.Lunge;
+            animator.SetInteger("State", 2);
+            attackTimer = 38f * Time.deltaTime;
+            attackCollider.gameObject.SetActive(true);
+            startAttackPos = new Vector3(-0.14f, 0, 0);
+            endAttackPos = new Vector3(-0.8f, -0.3f, 0);
+            startHeight = 0.7f;
+            endHeight = 2;
+            animSpeed = 5f * Time.deltaTime;
+            currTime = 0;
+            timesSwapped = 0;
+            AdjustColliders();
+        }
+        else
+        {
+            inAttackState = true;
+            attackChosen = Attacks.Charge;
+        }
     }
 
     private void AdjustColliders()

@@ -17,6 +17,7 @@ public class Creature_v2 : MonoBehaviour {
     public Vector3 direction;
     public Vector3 axis;
     public Vector3 forward;
+    public int side;
     private float maxSpeed;
     private float gravity;
     private float jumpStrength;

@@ -13,7 +13,6 @@ public class Player_v2 : Creature_v2 {
     private bool invincible;
     private float invisTimer;
     private float lerpTime;
-    private float invFlip;
     int iStart = 0;
     int iEnd = 1;
 
@@ -29,7 +28,7 @@ public class Player_v2 : Creature_v2 {
         airControl = true;
         jump = false;
         notRotating = true;
-        Health = 2;
+        Health = 5;
         //coolDown = 0.75f;
         //playerRenderer = GetComponent<SpriteRenderer>();
         //playerAnimator = GetComponent<Animator>();
@@ -56,14 +55,14 @@ public class Player_v2 : Creature_v2 {
 
         if (invisTimer > 0)
         {
-            Debug.Log("INVIS");
             invisTimer -= Time.deltaTime;
-            lerpTime += 1.5f * (Time.deltaTime);
+            lerpTime += 4 * (Time.deltaTime);
             Color newColor = gameObject.GetComponent<SpriteRenderer>().color;
-
+            Debug.Log(lerpTime);
 
             if (lerpTime > 1)
             {
+                Debug.Log("swapping LErp");
                 lerpTime = 0;
                 int temp = iStart;
                 iStart = iEnd;
@@ -74,8 +73,10 @@ public class Player_v2 : Creature_v2 {
         }
         else
         {
+            invincible = false;
             Color newColor = gameObject.GetComponent<SpriteRenderer>().color;
             newColor = new Color(newColor.r, newColor.g, newColor.b, 1);
+            gameObject.GetComponent<SpriteRenderer>().color = newColor;
         }
     }
 
@@ -178,7 +179,7 @@ public class Player_v2 : Creature_v2 {
         if (other.gameObject.layer == 11 && !invincible)
         {
             TakeDamage(1);
-            invisTimer = 3 * Time.deltaTime;
+            invisTimer = 60 * Time.deltaTime;
         }
     }
 }

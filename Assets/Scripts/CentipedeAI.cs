@@ -57,7 +57,7 @@ public class CentipedeAI : Enemy {
         Debug.Log(Vector3.Distance(player.transform.position, position));
         if (Vector3.Distance(player.transform.position, position) <= 4.5f)
         {
-            
+            // needs change
             inAttackState = true;
             attackChosen = Attacks.Lunge;
             animator.SetInteger("State", 2);
@@ -76,6 +76,17 @@ public class CentipedeAI : Enemy {
         {
             inAttackState = true;
             attackChosen = Attacks.Charge;
+            animator.SetInteger("State", 2);
+            attackTimer = 38f * Time.deltaTime;
+            attackCollider.gameObject.SetActive(true);
+            startAttackPos = new Vector3(-0.14f, 0, 0);
+            endAttackPos = new Vector3(-0.8f, -0.3f, 0);
+            startHeight = 0.7f;
+            endHeight = 2;
+            animSpeed = 5f * Time.deltaTime;
+            currTime = 0;
+            timesSwapped = 0;
+            AdjustColliders();
         }
     }
 

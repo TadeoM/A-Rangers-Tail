@@ -8,9 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d8951c41b7c4e04e9e9f6580050c456, type: 3}
-  m_Name: 2H Spear
+  m_Script: {fileID: 11500000, guid: ae7141b66b0f06d4d8e89c61499f6c64, type: 3}
+  m_Name: Quest Items
   m_EditorClassIdentifier: 
-  name: 2H Spear
-  blockTypes: []
-  equipmentHandler: {fileID: 11400000, guid: 2f2da577889d2fb448fb5dff965d7026, type: 2}
+  ID: 4
+  name: Quest Items
+  icon: {fileID: 21300010, guid: 9c2c642c47b2fc344ab143e21aedaca9, type: 3}
+  cooldownTime: 0

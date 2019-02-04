@@ -34,7 +34,7 @@ MonoBehaviour:
   itemTriggerMouseClick: 1
   itemTriggerUseKeyCode: 0
   alwaysTriggerGoldItemPickupOnPlayerCollision: 0
-  itemTriggerOnPlayerCollision: 0
+  itemTriggerOnPlayerCollision: 1
   itemTriggerPickupSprite: {fileID: 0}
   useUnstackClick: 1
   useUnstackDrag: 1

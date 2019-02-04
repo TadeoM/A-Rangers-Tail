@@ -14,6 +14,8 @@ MonoBehaviour:
   items:
   - {fileID: 114738174361982678, guid: d5d903a6f31706240a0d8a583c3120e2, type: 2}
   - {fileID: 114140761871889234, guid: f756b76bb0b254043831c901ab7926fd, type: 2}
+  - {fileID: 114271211797639112, guid: ee104d6d240572448be940a9e691e40f, type: 2}
+  - {fileID: 114030511078559970, guid: 8351800d043232046a50589f58000d23, type: 2}
   rarities:
   - {fileID: 11400000, guid: ec9526f5b6dddf140830e1d2f083221d, type: 2}
   - {fileID: 11400000, guid: 427e5865f1277b4479c3bbed5f864347, type: 2}
@@ -22,6 +24,8 @@ MonoBehaviour:
   categories:
   - {fileID: 11400000, guid: 0238dcedc7dccb94a816d7a544ee73e1, type: 2}
   - {fileID: 11400000, guid: ae40d663e4e53f748aee8b6421e3a776, type: 2}
+  - {fileID: 11400000, guid: 2ba36a55af478204f89120bfde34b9e4, type: 2}
+  - {fileID: 11400000, guid: 1a7a478eb5a9c1d4abad06d445700240, type: 2}
   statDefinitions:
   - {fileID: 11400000, guid: f8df779402214714488e25fbd701c017, type: 2}
   equipmentTypes:
@@ -32,6 +36,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a07b69188355db4fbd401bf4cd50a8c, type: 2}
   - {fileID: 11400000, guid: 41180ec1079c1ad48a51e2616a10fa5f, type: 2}
   - {fileID: 11400000, guid: f6338d7b2d944ff4f9dc2a127f29e4e9, type: 2}
+  - {fileID: 11400000, guid: e6376b7830b41fa41ba824b99f109d80, type: 2}
+  - {fileID: 11400000, guid: 0c5d3938bbe366c4097d613becf5f1b3, type: 2}
+  - {fileID: 11400000, guid: f9b1383897026b349b598dd0b36db7d8, type: 2}
+  - {fileID: 11400000, guid: ab5b0b84696b29646add7da99f2a739e, type: 2}
+  - {fileID: 11400000, guid: a54dce6b25446404f8b1885e08293965, type: 2}
   craftingCategories: []
   currencies:
   - {fileID: 11400000, guid: 35eda6093f64ab441a3305bfdcfaefb8, type: 2}

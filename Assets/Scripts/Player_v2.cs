@@ -58,11 +58,9 @@ public class Player_v2 : Creature_v2 {
             invisTimer -= Time.deltaTime;
             lerpTime += 4 * (Time.deltaTime);
             Color newColor = gameObject.GetComponent<SpriteRenderer>().color;
-            Debug.Log(lerpTime);
 
             if (lerpTime > 1)
             {
-                Debug.Log("swapping LErp");
                 lerpTime = 0;
                 int temp = iStart;
                 iStart = iEnd;

@@ -10,7 +10,9 @@ public class CentipedeAI : Enemy {
     }
     private Attacks attackChosen;
     public GameObject player;
-    public CapsuleCollider attackCollider;
+    public GameObject lungeCollider;
+    public GameObject chargeCollider;
+    public GameObject attackCollider;
     public float attackTimer;
     private Animator animator;
     private Vector3 startAttackPos;
@@ -25,6 +27,25 @@ public class CentipedeAI : Enemy {
 	// Use this for initialization
 	public override void Start () {
         base.Start();
+        MaxSpeed = 2f;
+        switch (side)
+        {
+            case 0:
+                forward  = new Vector3(1, 0, 0);
+                break;
+            case 1:
+                forward = new Vector3(0, 0, 1);
+                break;
+            case 2:
+                forward = new Vector3(-1, 0, 0);
+                break;
+            case 3:
+                forward = new Vector3(0, 0, -1);
+                break;
+            default:
+                break;
+        }
+        
         creatureType = CreatureType.Bug;
         inAttackState = false;
         animator = GetComponent<Animator>();
@@ -54,15 +75,16 @@ public class CentipedeAI : Enemy {
 
     protected override void PerformAttack()
     {
-        Debug.Log(Vector3.Distance(player.transform.position, position));
-        if (Vector3.Distance(player.transform.position, position) <= 4.5f)
+        Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+        if (Vector3.Distance(player.transform.position, transform.position) <= 3f)
         {
             // needs change
             inAttackState = true;
             attackChosen = Attacks.Lunge;
             animator.SetInteger("State", 2);
-            attackTimer = 38f * Time.deltaTime;
-            attackCollider.gameObject.SetActive(true);
+            attackTimer = 80 * Time.deltaTime;
+            attackCollider = lungeCollider;
+            attackCollider.SetActive(true);
             startAttackPos = new Vector3(-0.14f, 0, 0);
             endAttackPos = new Vector3(-0.8f, -0.3f, 0);
             startHeight = 0.7f;
@@ -74,39 +96,95 @@ public class CentipedeAI : Enemy {
         }
         else
         {
+            Debug.Log("DOING THE CHARGE");
             inAttackState = true;
             attackChosen = Attacks.Charge;
-            animator.SetInteger("State", 2);
+            animator.SetInteger("State", 1);
             attackTimer = 38f * Time.deltaTime;
-            attackCollider.gameObject.SetActive(true);
-            startAttackPos = new Vector3(-0.14f, 0, 0);
-            endAttackPos = new Vector3(-0.8f, -0.3f, 0);
-            startHeight = 0.7f;
-            endHeight = 2;
+            attackCollider = chargeCollider;
+            attackCollider.SetActive(true);
             animSpeed = 5f * Time.deltaTime;
-            currTime = 0;
-            timesSwapped = 0;
-            AdjustColliders();
         }
     }
 
     private void AdjustColliders()
     {
+        m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
+        switch (attackChosen)
+        {
+            case Attacks.Lunge:
+                if (attackTimer < 0.575)
+                    currTime += animSpeed;
+
+                attackCollider.GetComponent<CapsuleCollider>().center = Vector3.Lerp(startAttackPos, endAttackPos, currTime);
+                attackCollider.GetComponent<CapsuleCollider>().height = Mathf.Lerp(startHeight, endHeight, currTime);
+
+                if (currTime > 1 && timesSwapped < 1)
+                {
+                    currTime = 0;
+                    Vector3 tempStartPos = startAttackPos;
+                    startAttackPos = endAttackPos;
+                    endAttackPos = tempStartPos;
+                    float tempStartHeight = startHeight;
+                    startHeight = endHeight;
+                    endHeight = tempStartHeight;
+                    timesSwapped++;
+                }
+                break;
+            case Attacks.Charge:
+                if(Vector3.Distance(player.transform.position, transform.position) > 3f)
+                {
+                    Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+                    Vector3 leftOrRight = player.transform.position - transform.position;
+                    switch (side)
+                    {
+                        case 0:
+                            if (leftOrRight.x > position.x)
+                                direction = forward;
+                            else
+                                direction = -forward;
+                            break;
+                        case 1:
+                            if (leftOrRight.z > position.z)
+                                direction = forward;
+                            else
+                                direction = -forward;
+                            break;
+                        case 2:
+                            if (leftOrRight.x < position.x)
+                                direction = forward;
+                            else
+                                direction = -forward;
+                            break;
+                        case 3:
+                            if (leftOrRight.z < position.z)
+                                direction = forward;
+                            else
+                                direction = -forward;
+                            break;
+                        default:
+                            Debug.Log("Boyyyy, you snuffed up");
+                            break;
+                    }
+                    if (Mathf.Round(direction.x) != 0)
+                    {
+                        velocity.z = 0;
+                    }
+                    else
+                    {
+                        direction = forward;
+                        velocity.x = 0;
+                    }
+                    Move(false);
+                }
+                break;
+            default:
+                break;
+        }
         if(attackTimer < 0.575)
             currTime += animSpeed;
 
-        attackCollider.center = Vector3.Lerp(startAttackPos, endAttackPos, currTime);
-        attackCollider.height = Mathf.Lerp(startHeight, endHeight, currTime);
-        if(currTime > 1 && timesSwapped < 1)
-        {
-            currTime = 0;
-            Vector3 tempStartPos = startAttackPos;
-            startAttackPos = endAttackPos;
-            endAttackPos = tempStartPos;
-            float tempStartHeight = startHeight;
-            startHeight = endHeight;
-            endHeight = tempStartHeight;
-            timesSwapped++;
-        }
+        
+        
     }
 }

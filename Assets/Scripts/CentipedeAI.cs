@@ -134,6 +134,7 @@ public class CentipedeAI : Enemy {
             case Attacks.Charge:
                 if(Vector3.Distance(player.transform.position, transform.position) > 3f)
                 {
+                    attackTimer = 0;
                     Debug.Log(Vector3.Distance(player.transform.position, transform.position));
                     Vector3 leftOrRight = player.transform.position - transform.position;
                     switch (side)

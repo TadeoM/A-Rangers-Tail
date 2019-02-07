@@ -22,7 +22,7 @@ public class Creature_v2 : MonoBehaviour {
     private float gravity;
     private float jumpStrength;
     private int health;
-    private bool grounded;
+    public bool grounded;
     public bool airControl;
     private bool facingRight = true;  // For determining which way the player is currently facing.
 

@@ -285,23 +285,27 @@ public class GameManager : MonoBehaviour
                     case 0:
                         playerScript.forward = new Vector3(1, 0, 0);
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, lowestZ);
+                        playerScript.side = 0;
                         //Debug.Log("Front: " + highestZ);
                         break;
                     case 1:
                     case -3:
                         playerScript.forward = new Vector3(0, 0, -1);
+                        playerScript.side = 1;
                         newPlayerPos = new Vector3(lowestX, player.transform.position.y, player.transform.position.z);
                         //Debug.Log("Right: " + highestX);
                         break;
                     case 2:
                     case -2:
                         playerScript.forward = new Vector3(-1, 0, 0);
+                        playerScript.side = 2;
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, highestZ);
                         //Debug.Log("Back: " + lowestZ);
                         break;
                     case -1:
                     case 3:
                         playerScript.forward = new Vector3(0, 0, 1);
+                        playerScript.side = 1;
                         newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
                         //Debug.Log("left: " + lowestX);
                         break;

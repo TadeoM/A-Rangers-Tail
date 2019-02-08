@@ -268,10 +268,10 @@ public class GameManager : MonoBehaviour
         {
             currentRotationStep %= 4;
             yTime = 1;
+            xTime = 1;
             rotateNeeded = false;
             swapped = false;
-            xStart = OGxStart;
-            xEnd = OGxEnd;
+            
             playerScript.notRotating = true;
 
             if (rotateQue.Count == 0)
@@ -313,6 +313,14 @@ public class GameManager : MonoBehaviour
                         //Debug.Log("Default because: " + currentRotationStep % 4);
                         break;
                 }
+
+                pos = new Vector3(/*15 * Mathf.Sin(yTime * Mathf.PI)*/Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
+                cameraPivot.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+                player.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+
+                xStart = OGxStart;
+                xEnd = OGxEnd;
+
                 playerScript.SetPosition(newPlayerPos);
             }
             

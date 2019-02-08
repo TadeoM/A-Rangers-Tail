@@ -60,17 +60,22 @@ public class CentipedeAI : Enemy {
             if (player.GetComponent<Player_v2>().side == side)
                 PerformAttack();
         }
-        else
+        else if (player.GetComponent<Player_v2>().side == side)
         {
             AdjustColliders();
         }
+        else
+        {
+            StopEverything();
+        }
+
         if(attackTimer <= 0)
         {
-            animator.SetInteger("State", 0);
-            inAttackState = false;
+            StopEverything();
         }
 
         attackTimer -= Time.deltaTime;
+        CheckPlayer();
     }
 
     protected override void PerformAttack()
@@ -140,26 +145,34 @@ public class CentipedeAI : Enemy {
                     switch (side)
                     {
                         case 0:
+                            // player on right
                             if (leftOrRight.x > position.x)
                                 direction = forward;
+                            // player on left
                             else
                                 direction = -forward;
                             break;
                         case 1:
+                            // player on right
                             if (leftOrRight.z > position.z)
                                 direction = forward;
+                            //  player on left
                             else
                                 direction = -forward;
                             break;
                         case 2:
+                            // player on right 
                             if (leftOrRight.x < position.x)
                                 direction = forward;
+                            // player on left
                             else
                                 direction = -forward;
                             break;
                         case 3:
+                            // player on right
                             if (leftOrRight.z < position.z)
                                 direction = forward;
+                            // player on left
                             else
                                 direction = -forward;
                             break;
@@ -184,8 +197,13 @@ public class CentipedeAI : Enemy {
         }
         if(attackTimer < 0.575)
             currTime += animSpeed;
+    }
 
-        
-        
+    void StopEverything()
+    {
+        animator.SetInteger("State", 0);
+        inAttackState = false;
+        direction = forward;
+        velocity.x = 0;
     }
 }

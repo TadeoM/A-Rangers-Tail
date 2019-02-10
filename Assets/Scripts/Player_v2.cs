@@ -169,7 +169,6 @@ public class Player_v2 : Creature_v2 {
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.layer);
         
     }
     private void OnTriggerEnter(Collider other)

@@ -7,16 +7,6 @@ public abstract class Enemy : Creature_v2 {
     protected bool foundTarget;
     public GameObject player;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     protected void CheckPlayer()
     {
         Vector3 leftOrRight = player.transform.position - transform.position;
@@ -24,35 +14,35 @@ public abstract class Enemy : Creature_v2 {
         {
             case 0:
                 // player on right
-                if (leftOrRight.x > position.x)
-                    GetComponent<SpriteRenderer>().flipX = true;
+                if (leftOrRight.x > 0)
+                    transform.localScale = new Vector3(-1, 1, 1);
                 // player on left
-                else
-                    GetComponent<SpriteRenderer>().flipX = false;
+                else if (leftOrRight.x < transform.position.x)
+                    transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 1:
                 // player on right
-                if (leftOrRight.z > position.z)
-                    GetComponent<SpriteRenderer>().flipX = true;
+                if (leftOrRight.z > 0)
+                    transform.localScale = new Vector3(1, 1, 1);
                 //  player on left
-                else
-                    GetComponent<SpriteRenderer>().flipX = false;
+                else if (leftOrRight.z < 0)
+                    transform.localScale = new Vector3(-1, 1, 1);
                 break;
             case 2:
                 // player on right 
-                if (leftOrRight.x < position.x)
-                    GetComponent<SpriteRenderer>().flipX = true;
+                if (leftOrRight.x < 0)
+                    transform.localScale = new Vector3(-1, 1, 1);
                 // player on left
-                else
-                    GetComponent<SpriteRenderer>().flipX = false;
+                else if (leftOrRight.x > 0)
+                    transform.localScale = new Vector3(1, 1, 1);
                 break;
             case 3:
                 // player on right
-                if (leftOrRight.z < position.z)
-                    GetComponent<SpriteRenderer>().flipX = true;
+                if (leftOrRight.z < 0)
+                    transform.localScale = new Vector3(1, 1, 1);
                 // player on left
-                else
-                    GetComponent<SpriteRenderer>().flipX = false;
+                else if (leftOrRight.z > 0)
+                    transform.localScale = new Vector3(-1, 1, 1);
                 break;
             default:
                 Debug.Log("Boyyyy, you snuffed up");

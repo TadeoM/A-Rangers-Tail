@@ -9,7 +9,6 @@ public class CentipedeAI : Enemy {
         Lunge, Charge
     }
     private Attacks attackChosen;
-    public GameObject player;
     public GameObject lungeCollider;
     public GameObject chargeCollider;
     public GameObject attackCollider;
@@ -90,8 +89,62 @@ public class CentipedeAI : Enemy {
             attackTimer = 80 * Time.deltaTime;
             attackCollider = lungeCollider;
             attackCollider.SetActive(true);
-            startAttackPos = new Vector3(-0.14f, 0, 0);
-            endAttackPos = new Vector3(-0.8f, -0.3f, 0);
+
+            Vector3 leftOrRight = player.transform.position - transform.position;
+            switch (side)
+            {
+                case 0:
+                    startAttackPos = new Vector3(-0.14f, 0, 0);
+                    endAttackPos = new Vector3(-0.8f, -0.3f, 0);
+                    break;
+                case 1:
+                    // player on right
+                    if (leftOrRight.z > 0)
+                    {
+                        startAttackPos = new Vector3(0, 0, 0.14f);
+                        endAttackPos = new Vector3(0, -0.3f, 0.8f);
+                    }
+                    //  player on left
+                    else if (leftOrRight.z < 0)
+                    {
+                        startAttackPos = new Vector3(0, 0, -0.14f);
+                        endAttackPos = new Vector3(0, -0.3f, -0.8f);
+                    }
+                    break;
+                case 2:
+                    // player on right 
+                    if (leftOrRight.x < 0)
+                    {
+                        startAttackPos = new Vector3(-0.14f, 0, 0);
+                        endAttackPos = new Vector3(-0.8f, -0.3f, 0);
+                    }
+                    // player on left
+                    else if (leftOrRight.x > 0)
+                    {
+                        startAttackPos = new Vector3(0.14f, 0, 0);
+                        endAttackPos = new Vector3(0.8f, -0.3f, 0);
+                    }
+                    break;
+                case 3:
+                    // player on right
+                    if (leftOrRight.z < 0)
+                    {
+                        startAttackPos = new Vector3(0, 0, -0.14f);
+                        endAttackPos = new Vector3(0, -0.3f, -0.8f);
+                    }
+                    // player on left
+                    else if (leftOrRight.z > transform.position.z)
+                    {
+                        startAttackPos = new Vector3(0, 0, 0.14f);
+                        endAttackPos = new Vector3(0, -0.3f, 0.8f);
+                    }
+                    break;
+                default:
+                    Debug.Log("Boyyyy, you snuffed up");
+                    break;
+            }
+
+            
             startHeight = 0.7f;
             endHeight = 2;
             animSpeed = 5f * Time.deltaTime;
@@ -101,7 +154,7 @@ public class CentipedeAI : Enemy {
         }
         else
         {
-            Debug.Log("DOING THE CHARGE");
+            Debug.Log("Charging");
             inAttackState = true;
             attackChosen = Attacks.Charge;
             animator.SetInteger("State", 1);
@@ -140,21 +193,20 @@ public class CentipedeAI : Enemy {
                 if(Vector3.Distance(player.transform.position, transform.position) > 3f)
                 {
                     attackTimer = 0;
-                    Debug.Log(Vector3.Distance(player.transform.position, transform.position));
                     Vector3 leftOrRight = player.transform.position - transform.position;
                     switch (side)
                     {
                         case 0:
                             // player on right
-                            if (leftOrRight.x > position.x)
+                            if (leftOrRight.x > 0)
                                 direction = forward;
                             // player on left
-                            else
-                                direction = -forward;
+                            else if (leftOrRight.x < 0)
+                                direction = -forward;                                
                             break;
                         case 1:
                             // player on right
-                            if (leftOrRight.z > position.z)
+                            if (leftOrRight.z > 0)
                                 direction = forward;
                             //  player on left
                             else
@@ -162,7 +214,7 @@ public class CentipedeAI : Enemy {
                             break;
                         case 2:
                             // player on right 
-                            if (leftOrRight.x < position.x)
+                            if (leftOrRight.x < 0)
                                 direction = forward;
                             // player on left
                             else
@@ -170,24 +222,16 @@ public class CentipedeAI : Enemy {
                             break;
                         case 3:
                             // player on right
-                            if (leftOrRight.z < position.z)
+                            if (leftOrRight.z < 0)
                                 direction = forward;
                             // player on left
                             else
                                 direction = -forward;
+                            //Debug.Log("Here");
                             break;
                         default:
                             Debug.Log("Boyyyy, you snuffed up");
                             break;
-                    }
-                    if (Mathf.Round(direction.x) != 0)
-                    {
-                        velocity.z = 0;
-                    }
-                    else
-                    {
-                        direction = forward;
-                        velocity.x = 0;
                     }
                     Move(false);
                 }

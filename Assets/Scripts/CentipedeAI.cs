@@ -89,62 +89,8 @@ public class CentipedeAI : Enemy {
             attackTimer = 80 * Time.deltaTime;
             attackCollider = lungeCollider;
             attackCollider.SetActive(true);
-
-            Vector3 leftOrRight = player.transform.position - transform.position;
-            switch (side)
-            {
-                case 0:
-                    startAttackPos = new Vector3(-0.14f, 0, 0);
-                    endAttackPos = new Vector3(-0.8f, -0.3f, 0);
-                    break;
-                case 1:
-                    // player on right
-                    if (leftOrRight.z > 0)
-                    {
-                        startAttackPos = new Vector3(0, 0, 0.14f);
-                        endAttackPos = new Vector3(0, -0.3f, 0.8f);
-                    }
-                    //  player on left
-                    else if (leftOrRight.z < 0)
-                    {
-                        startAttackPos = new Vector3(0, 0, -0.14f);
-                        endAttackPos = new Vector3(0, -0.3f, -0.8f);
-                    }
-                    break;
-                case 2:
-                    // player on right 
-                    if (leftOrRight.x < 0)
-                    {
-                        startAttackPos = new Vector3(-0.14f, 0, 0);
-                        endAttackPos = new Vector3(-0.8f, -0.3f, 0);
-                    }
-                    // player on left
-                    else if (leftOrRight.x > 0)
-                    {
-                        startAttackPos = new Vector3(0.14f, 0, 0);
-                        endAttackPos = new Vector3(0.8f, -0.3f, 0);
-                    }
-                    break;
-                case 3:
-                    // player on right
-                    if (leftOrRight.z < 0)
-                    {
-                        startAttackPos = new Vector3(0, 0, -0.14f);
-                        endAttackPos = new Vector3(0, -0.3f, -0.8f);
-                    }
-                    // player on left
-                    else if (leftOrRight.z > transform.position.z)
-                    {
-                        startAttackPos = new Vector3(0, 0, 0.14f);
-                        endAttackPos = new Vector3(0, -0.3f, 0.8f);
-                    }
-                    break;
-                default:
-                    Debug.Log("Boyyyy, you snuffed up");
-                    break;
-            }
-
-            
+            startAttackPos = new Vector3(-0.14f, 0, 0);
+            endAttackPos = new Vector3(-0.8f, -0.3f, 0);
             startHeight = 0.7f;
             endHeight = 2;
             animSpeed = 5f * Time.deltaTime;

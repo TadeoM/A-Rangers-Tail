@@ -9,7 +9,6 @@ public class CentipedeAI : Enemy {
         Lunge, Charge
     }
     private Attacks attackChosen;
-    public GameObject player;
     public GameObject lungeCollider;
     public GameObject chargeCollider;
     public GameObject attackCollider;
@@ -60,17 +59,22 @@ public class CentipedeAI : Enemy {
             if (player.GetComponent<Player_v2>().side == side)
                 PerformAttack();
         }
-        else
+        else if (player.GetComponent<Player_v2>().side == side)
         {
             AdjustColliders();
         }
+        else
+        {
+            StopEverything();
+        }
+
         if(attackTimer <= 0)
         {
-            animator.SetInteger("State", 0);
-            inAttackState = false;
+            StopEverything();
         }
 
         attackTimer -= Time.deltaTime;
+        CheckPlayer();
     }
 
     protected override void PerformAttack()
@@ -96,7 +100,7 @@ public class CentipedeAI : Enemy {
         }
         else
         {
-            Debug.Log("DOING THE CHARGE");
+            Debug.Log("Charging");
             inAttackState = true;
             attackChosen = Attacks.Charge;
             animator.SetInteger("State", 1);
@@ -135,46 +139,45 @@ public class CentipedeAI : Enemy {
                 if(Vector3.Distance(player.transform.position, transform.position) > 3f)
                 {
                     attackTimer = 0;
-                    Debug.Log(Vector3.Distance(player.transform.position, transform.position));
                     Vector3 leftOrRight = player.transform.position - transform.position;
                     switch (side)
                     {
                         case 0:
-                            if (leftOrRight.x > position.x)
+                            // player on right
+                            if (leftOrRight.x > 0)
                                 direction = forward;
-                            else
-                                direction = -forward;
+                            // player on left
+                            else if (leftOrRight.x < 0)
+                                direction = -forward;                                
                             break;
                         case 1:
-                            if (leftOrRight.z > position.z)
+                            // player on right
+                            if (leftOrRight.z > 0)
                                 direction = forward;
+                            //  player on left
                             else
                                 direction = -forward;
                             break;
                         case 2:
-                            if (leftOrRight.x < position.x)
+                            // player on right 
+                            if (leftOrRight.x < 0)
                                 direction = forward;
+                            // player on left
                             else
                                 direction = -forward;
                             break;
                         case 3:
-                            if (leftOrRight.z < position.z)
+                            // player on right
+                            if (leftOrRight.z < 0)
                                 direction = forward;
+                            // player on left
                             else
                                 direction = -forward;
+                            //Debug.Log("Here");
                             break;
                         default:
                             Debug.Log("Boyyyy, you snuffed up");
                             break;
-                    }
-                    if (Mathf.Round(direction.x) != 0)
-                    {
-                        velocity.z = 0;
-                    }
-                    else
-                    {
-                        direction = forward;
-                        velocity.x = 0;
                     }
                     Move(false);
                 }
@@ -184,8 +187,13 @@ public class CentipedeAI : Enemy {
         }
         if(attackTimer < 0.575)
             currTime += animSpeed;
+    }
 
-        
-        
+    void StopEverything()
+    {
+        animator.SetInteger("State", 0);
+        inAttackState = false;
+        direction = forward;
+        velocity.x = 0;
     }
 }

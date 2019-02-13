@@ -12,7 +12,6 @@ public class Creature_v2 : MonoBehaviour {
     protected Rigidbody m_Rigidbody;
     protected Transform m_GroundCheck;
     protected Transform m_CeilingCheck;   // A position marking where to check for ceilings
-    public Vector3 position;
     public Vector3 velocity;
     public Vector3 direction;
     public Vector3 axis;
@@ -64,7 +63,6 @@ public class Creature_v2 : MonoBehaviour {
         gravity = 0.01f;
         grounded = false;
         jumpStrength = 0;
-        position = transform.position;
         m_Rigidbody = GetComponent<Rigidbody>();
     }
 	

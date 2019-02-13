@@ -268,17 +268,17 @@ public class GameManager : MonoBehaviour
         {
             currentRotationStep %= 4;
             yTime = 1;
+            xTime = 1;
             rotateNeeded = false;
             swapped = false;
-            xStart = OGxStart;
-            xEnd = OGxEnd;
+            
             playerScript.notRotating = true;
 
             if (rotateQue.Count == 0)
             {
                 Vector3 newPlayerPos = new Vector3();
                 newPlayerPos = player.transform.position;
-
+                Debug.Log(currentRotationStep);
                 // changes what direction is to the right
                 switch (currentRotationStep % 4)
                 {
@@ -288,11 +288,11 @@ public class GameManager : MonoBehaviour
                         playerScript.side = 0;
                         //Debug.Log("Front: " + highestZ);
                         break;
-                    case 1:
-                    case -3:
-                        playerScript.forward = new Vector3(0, 0, -1);
+                    case -1:
+                    case 3:
+                        playerScript.forward = new Vector3(0, 0, 1);
                         playerScript.side = 1;
-                        newPlayerPos = new Vector3(lowestX, player.transform.position.y, player.transform.position.z);
+                        newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
                         //Debug.Log("Right: " + highestX);
                         break;
                     case 2:
@@ -302,17 +302,24 @@ public class GameManager : MonoBehaviour
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, highestZ);
                         //Debug.Log("Back: " + lowestZ);
                         break;
-                    case -1:
-                    case 3:
-                        playerScript.forward = new Vector3(0, 0, 1);
-                        playerScript.side = 1;
-                        newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
-                        //Debug.Log("left: " + lowestX);
+                    case 1:
+                    case -3:
+                        playerScript.forward = new Vector3(0, 0, -1);
+                        playerScript.side = 3;
+                        newPlayerPos = new Vector3(lowestX, player.transform.position.y, player.transform.position.z);
                         break;
                     default:
-                        //Debug.Log("Default because: " + currentRotationStep % 4);
+                        Debug.Log("Default because: " + currentRotationStep % 4);
                         break;
                 }
+
+                pos = new Vector3(/*15 * Mathf.Sin(yTime * Mathf.PI)*/Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
+                cameraPivot.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+                player.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+
+                xStart = OGxStart;
+                xEnd = OGxEnd;
+
                 playerScript.SetPosition(newPlayerPos);
             }
             

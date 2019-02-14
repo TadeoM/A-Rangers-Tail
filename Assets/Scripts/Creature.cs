@@ -8,20 +8,22 @@ public class Creature : MonoBehaviour {
     public enum CreatureType { };
 
     public CreatureType creatureType;
+    public LayerMask whatIsGround = 9;
 
     // set attributes
+    public Rigidbody creature;
     public Vector3 position;
     public Vector3 velocity;
     public Vector3 direction;
     public Vector3 axis;
     public Vector3 forward;
-    private float gravity;
     public Vector3 acceleration;
     public float accelRate;
     private float maxSpeed;
+    private float gravity;
     private float jumpStrength;
     private int health;
-    private bool inAir;
+    private bool m_Grounded;
 
     public float Gravity
     {
@@ -43,10 +45,10 @@ public class Creature : MonoBehaviour {
         get { return health; }
         set { health = value; }
     }
-    public bool InAir
+    public bool M_Grounded
     {
-        get { return inAir; }
-        set { inAir = value; }
+        get { return m_Grounded; }
+        set { m_Grounded = value; }
     }
 
     // Use this for initialization
@@ -58,7 +60,7 @@ public class Creature : MonoBehaviour {
         jumpStrength = 0;
         maxSpeed = 0.0f;
         gravity = 0.01f;
-        inAir = false;
+        m_Grounded = false;
         jumpStrength = 0;
         position = transform.position;
     }
@@ -66,7 +68,7 @@ public class Creature : MonoBehaviour {
     // Update is called once per frame
     public virtual void Update()
     {
-        Move();
+        //Move();
         GetComponent<Rigidbody>().MovePosition(position);
         //Debug.Log(velocity);
     }
@@ -79,7 +81,7 @@ public class Creature : MonoBehaviour {
     /// <param name="direction"></param>
     public void Accelerate(int slowDown = 1)
     {
-        acceleration = accelRate * direction * slowDown;
+        /*(acceleration = accelRate * direction * slowDown;
         // if the creature is slowing down, make it slow down faster
         if ((velocity + acceleration).sqrMagnitude < velocity.sqrMagnitude && slowDown > 0)
         {
@@ -91,21 +93,48 @@ public class Creature : MonoBehaviour {
         
         // clamp speed to max speed
         if (velocity.magnitude > MaxSpeed)
-            velocity = MaxSpeed * direction;
+            velocity = MaxSpeed * direction;*/
+        Move();
     }
 
     /// <summary>
     /// called every frame
     /// Check if falling, and increase position by the velocity
     /// </summary>
-    void Move()
+    public virtual void Move()
     {
         Falling();
         position += velocity;
-        if(InAir)
+        if(M_Grounded)
         {
             //position.y -= 0.05f;
         }
+
+        if (m_Grounded)
+        {
+            // Reduce the speed if crouching by the crouchSpeed multiplier
+
+            // The Speed animator parameter is set to the absolute value of the horizontal input.
+           // m_Anim.SetFloat("Speed", Mathf.Abs(move));
+
+            // Move the character
+            creature.velocity = new Vector3( direction.x * maxSpeed, creature.velocity.y, direction.z * maxSpeed);
+
+            // If the input is moving the player right and the player is facing left...
+            //if (direction.x > 0 && !m_FacingRight)
+            //{
+            //    // ... flip the player.
+            //    Flip();
+            //}
+            // Otherwise if the input is moving the player left and the player is facing right...
+            //else if (move < 0 && m_FacingRight)
+            //{
+            //    // ... flip the player.
+            //    Flip();
+            //}
+        }
+        // If the player should jump...
+        
     }
 
     /// <summary>
@@ -114,7 +143,7 @@ public class Creature : MonoBehaviour {
     public void Jump()
     {
         velocity.y = JumpStrength;
-        InAir = true;
+        M_Grounded = true;
     }
 
     /// <summary>
@@ -123,14 +152,14 @@ public class Creature : MonoBehaviour {
     public void Falling()
     {
        
-        if (InAir) {
+        if (!M_Grounded) {
             
             velocity.y -= gravity;
             //velocity.y -= Mathf.Pow(gravity, 2); ;
             if (velocity.y < -0.2f)
                 velocity.y = -0.2f;
         }
-        if(!InAir) { velocity.y = 0.0f; }
+        if(M_Grounded) { velocity.y = 0.0f; }
           
     }
 

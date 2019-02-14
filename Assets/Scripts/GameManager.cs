@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public float yEnd;
     public int currentRotationStep;
     private List<char> rotateQue = new List<char>();
-    private Player playerScript;
+    private Player_v2 playerScript;
     private int desiredRotation;    // where we should be rotating to 
     private int highestX;
     private int lowestX;
@@ -38,11 +38,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        playerScript = player.GetComponent<Player>();
+        playerScript = player.GetComponent<Player_v2>();
         currentRotationStep = 0;
         unCheckedlatforms = GameObject.FindGameObjectsWithTag("ground");
         Vector3 firstObject = transform.TransformPoint(unCheckedlatforms[0].GetComponent<Transform>().position);
-        Debug.Log(player.layer);
         // set all highest and lowest points to first box
         highestX = (int)firstObject.x;
         lowestX = (int)firstObject.x;
@@ -97,7 +96,6 @@ public class GameManager : MonoBehaviour
             RaycastHit hit;
             Vector3 origin;
             Vector3 direction;
-
             switch (angle)
             {
                 case 0:
@@ -122,7 +120,6 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 1:
-                    Debug.Log(lowestZ);
                     for (int z = lowestZ; z <= highestZ; z++)
                     {
                         for (int y = lowestY; y <= highestY; y++)
@@ -207,7 +204,7 @@ public class GameManager : MonoBehaviour
             // add to the que of rotations
             if(Input.GetKeyDown(KeyCode.Q)) { rotateQue.Add('Q'); }
             else { rotateQue.Add('E'); }
-            
+            playerScript.notRotating = false;
         }
     }
 
@@ -271,43 +268,58 @@ public class GameManager : MonoBehaviour
         {
             currentRotationStep %= 4;
             yTime = 1;
+            xTime = 1;
             rotateNeeded = false;
             swapped = false;
-            xStart = OGxStart;
-            xEnd = OGxEnd;
+            
+            playerScript.notRotating = true;
 
             if (rotateQue.Count == 0)
             {
                 Vector3 newPlayerPos = new Vector3();
                 newPlayerPos = player.transform.position;
-
+                Debug.Log(currentRotationStep);
                 // changes what direction is to the right
-                switch (Mathf.Abs(currentRotationStep % 4))
+                switch (currentRotationStep % 4)
                 {
                     case 0:
                         playerScript.forward = new Vector3(1, 0, 0);
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, lowestZ);
-                        Debug.Log("Front: " + highestZ);
+                        playerScript.side = 0;
+                        //Debug.Log("Front: " + highestZ);
                         break;
-                    case 1:
+                    case -1:
+                    case 3:
                         playerScript.forward = new Vector3(0, 0, 1);
+                        playerScript.side = 1;
                         newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
-                        Debug.Log("Right: " + highestX);
+                        //Debug.Log("Right: " + highestX);
                         break;
                     case 2:
+                    case -2:
                         playerScript.forward = new Vector3(-1, 0, 0);
+                        playerScript.side = 2;
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, highestZ);
-                        Debug.Log("Back: " + lowestZ);
+                        //Debug.Log("Back: " + lowestZ);
                         break;
-                    case 3:
+                    case 1:
+                    case -3:
                         playerScript.forward = new Vector3(0, 0, -1);
+                        playerScript.side = 3;
                         newPlayerPos = new Vector3(lowestX, player.transform.position.y, player.transform.position.z);
-                        Debug.Log("left: " + lowestX);
                         break;
                     default:
                         Debug.Log("Default because: " + currentRotationStep % 4);
                         break;
                 }
+
+                pos = new Vector3(/*15 * Mathf.Sin(yTime * Mathf.PI)*/Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
+                cameraPivot.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+                player.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+
+                xStart = OGxStart;
+                xEnd = OGxEnd;
+
                 playerScript.SetPosition(newPlayerPos);
             }
             

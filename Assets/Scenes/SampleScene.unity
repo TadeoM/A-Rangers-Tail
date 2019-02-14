@@ -122,7 +122,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -3.836
       objectReference: {fileID: 0}
     - target: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.y
@@ -166,15 +166,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4017204231988446, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.026
       objectReference: {fileID: 0}
     - target: {fileID: 4017204231988446, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.784
+      value: 0.847
       objectReference: {fileID: 0}
     - target: {fileID: 4017204231988446, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalScale.y
       value: 0.30093747
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205394094959506, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
+      propertyPath: m_TagString
+      value: playerweapon
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61123939385561826, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
@@ -765,12 +769,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168705e98a658b44ba8c6ac30b2881ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmg: 0
   swordHitBox: {fileID: 1163702168}
 --- !u!4 &447426025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20,
     type: 2}
   m_PrefabInternal: {fileID: 32404863}
+--- !u!95 &447426029
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 447426021}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2425d2ae5a2946c4b983ea3b74602ea3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &506140810
 GameObject:
   m_ObjectHideFlags: 0
@@ -3080,6 +3103,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1163702169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163702167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2f33671129fe429282bdbe5f63185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1165890340
 GameObject:
   m_ObjectHideFlags: 0
@@ -4122,6 +4156,10 @@ Prefab:
         type: 2}
       propertyPath: side
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803849109929790, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}
+      propertyPath: m_TagString
+      value: bug
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 135083265352931278, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}

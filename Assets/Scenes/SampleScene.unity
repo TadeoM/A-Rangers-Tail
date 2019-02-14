@@ -168,7 +168,17 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4017204231988446, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.784
+      objectReference: {fileID: 0}
+    - target: {fileID: 4017204231988446, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.30093747
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 61123939385561826, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
+    - {fileID: 114337602812895466, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &123185939
@@ -744,6 +754,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1082809082097170, guid: e9784d4e888bc48419c38d02d1f42d20,
     type: 2}
   m_PrefabInternal: {fileID: 32404863}
+--- !u!114 &447426022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 447426021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168705e98a658b44ba8c6ac30b2881ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordHitBox: {fileID: 1163702168}
 --- !u!4 &447426025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20,
@@ -3041,6 +3063,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1134664474}
   m_Mesh: {fileID: 4300000, guid: 035aab59f93a01d49a958ff9f6fd0511, type: 3}
+--- !u!1 &1163702167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1205394094959506, guid: e9784d4e888bc48419c38d02d1f42d20,
+    type: 2}
+  m_PrefabInternal: {fileID: 32404863}
+--- !u!65 &1163702168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163702167}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1165890340
 GameObject:
   m_ObjectHideFlags: 0

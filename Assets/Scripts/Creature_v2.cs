@@ -9,7 +9,7 @@ public class Creature_v2 : MonoBehaviour {
     public CreatureType creatureType;
     public LayerMask whatIsGround = 9;
 
-    protected Rigidbody m_Rigidbody;
+    public Rigidbody m_Rigidbody;
     protected Transform m_GroundCheck;
     protected Transform m_CeilingCheck;   // A position marking where to check for ceilings
     public Vector3 velocity;
@@ -87,25 +87,25 @@ public class Creature_v2 : MonoBehaviour {
             if (colliders[i].gameObject != gameObject)
             {
                 
-                /*if (colliders[i].gameObject.name.Contains("oneway"))
+                if (colliders[i].gameObject.name.Contains("oneway"))
                 {
-                    Debug.Log("Collider: " + (colliders[i].gameObject.transform.position.y + 
-                        colliders[i].GetComponent<MeshRenderer>().bounds.extents.y) + 
-                        "\nGround Checker: " + m_GroundCheck.position.y);
-                    if (m_GroundCheck.position.y > colliders[i].gameObject.transform.position.y + (colliders[i].GetComponent<MeshRenderer>().bounds.extents.y)
+                    if (m_GroundCheck.position.y > -0.05f + colliders[i].gameObject.transform.position.y + (colliders[i].GetComponent<MeshRenderer>().bounds.extents.y))
                     {
-                        
+                        if (!grounded)
+                        {
+                            transform.position = new Vector3(transform.position.x, .02f + colliders[i].transform.position.y +
+                                (colliders[i].gameObject.GetComponent<BoxCollider>().bounds.extents.y * colliders[i].gameObject.transform.localScale.y), transform.position.z);
+                        }
                         grounded = true;
                         m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
                         m_Rigidbody.freezeRotation = true;
                     }
                 }
-                else*/
+                else
                 {
-                    if (!grounded)
-                    {
-                        //Debug.Log(colliders[i].gameObject.GetComponent<BoxCollider>().size.y * colliders[i].gameObject.transform.localScale.y);
-                        //transform.position = new Vector3(transform.position.x, -0.5f + colliders[i].transform.position.y + (colliders[i].gameObject.GetComponent<BoxCollider>().size.y * colliders[i].gameObject.transform.localScale.y), transform.position.z);
+                    if (!grounded) {
+                        transform.position = new Vector3(transform.position.x, .019f + colliders[i].transform.position.y + 
+                            (colliders[i].gameObject.GetComponent<BoxCollider>().bounds.extents.y * colliders[i].gameObject.transform.localScale.y), transform.position.z);
                     }
                     grounded = true;
                     m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;

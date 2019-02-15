@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public float yEnd;
     public int currentRotationStep;
     private List<char> rotateQue = new List<char>();
+    private int rotateCount;
     private Player_v2 playerScript;
     private int desiredRotation;    // where we should be rotating to 
     public int highestX;
@@ -168,7 +169,7 @@ public class GameManager : MonoBehaviour
                                     {
                                         //backPlatforms.Insert(0, hit.collider.gameObject);
                                         //backPlatforms.RemoveAt(backPlatforms.Count - 1);
-                                    }*/
+                                    } */
                                 }
                             }
                         }
@@ -209,7 +210,7 @@ public class GameManager : MonoBehaviour
         {
             float zPos = lowestZ - platform.transform.position.z;
             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
-            platformPos = new Vector3(0, 0, zPos / 100);
+            platformPos = new Vector3(0, 0, zPos);
             platform.GetComponent<BoxCollider>().center = platformPos;
         }
     }
@@ -226,12 +227,13 @@ public class GameManager : MonoBehaviour
     void KeyboardCheck()
     {
         // rotations are done one at a time
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
+        if ((Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E)) && rotateCount < 2) 
         {
             // add to the que of rotations
             if(Input.GetKeyDown(KeyCode.Q)) { rotateQue.Add('Q'); }
             else { rotateQue.Add('E'); }
             playerScript.notRotating = false;
+            rotateCount++;
         }
     }
 
@@ -309,21 +311,14 @@ public class GameManager : MonoBehaviour
             {
                 Vector3 newPlayerPos = new Vector3();
                 newPlayerPos = player.transform.position;
-                Debug.Log(currentRotationStep);
                 // changes what direction is to the right
                 switch (currentRotationStep % 4)
                 {
                     case 0:
+                        Debug.Log("Case 0");
                         playerScript.side = 0;
                         playerScript.forward = new Vector3(1, 0, 0);
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, lowestZ);
-                        foreach (var platform in frontPlatforms)
-                        {
-                            float zPos = lowestZ - platform.transform.position.z;
-                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
-                            platformPos = new Vector3(0, 0, zPos / 100);
-                            platform.GetComponent<BoxCollider>().center = platformPos;
-                        }
                         foreach (var platform in rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
@@ -336,9 +331,17 @@ public class GameManager : MonoBehaviour
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
+                        foreach (var platform in frontPlatforms)
+                        {
+                            float zPos = lowestZ - platform.transform.position.z;
+                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
+                            platformPos = new Vector3(0, 0, zPos);
+                            platform.GetComponent<BoxCollider>().center = platformPos;
+                        }
                         break;
                     case -1:
                     case 3:
+                        Debug.Log("Case -1 or 3");
                         playerScript.side = 1;
                         playerScript.forward = new Vector3(0, 0, 1);
                         newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
@@ -346,13 +349,6 @@ public class GameManager : MonoBehaviour
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in rightPlatforms)
-                        {
-                            float xPos = highestX - platform.transform.position.x;
-                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
-                            platformPos = new Vector3(-xPos / 100, 0, 0);
-                            platform.GetComponent<BoxCollider>().center = platformPos;
-                        }
                         foreach (var platform in backPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
@@ -360,25 +356,29 @@ public class GameManager : MonoBehaviour
                         foreach (var platform in leftPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
+                        }
+                        foreach (var platform in rightPlatforms)
+                        {
+                            Debug.Log("HighestX: " + highestX + "\nPlatform Pos: " + platform.transform.position.x);
+                            float xPos = highestX - platform.transform.position.x;
+                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
+                            platformPos = new Vector3(xPos, 0, 0);
+                            platform.GetComponent<BoxCollider>().center = platformPos;
+                            Debug.Log(platform.GetComponent<BoxCollider>().center);
                         }
                         break;
                     case 2:
                     case -2:
+                        Debug.Log("Case -2 or 2");
                         playerScript.side = 2;
                         playerScript.forward = new Vector3(-1, 0, 0);
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, highestZ);
-                        foreach (var platform in frontPlatforms)
-                        {
-                            float zPos = highestZ - platform.transform.position.z;
-                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
-                            platformPos = new Vector3(0, 0, zPos / 100);
-                            platform.GetComponent<BoxCollider>().center = platformPos;
-                        }
+                        
                         foreach (var platform in rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in backPlatforms)
+                        foreach (var platform in frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
@@ -386,9 +386,17 @@ public class GameManager : MonoBehaviour
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
+                        foreach (var platform in backPlatforms)
+                        {
+                            float zPos = highestZ - platform.transform.position.z;
+                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
+                            platformPos = new Vector3(0, 0, zPos);
+                            platform.GetComponent<BoxCollider>().center = platformPos;
+                        }
                         break;
                     case 1:
                     case -3:
+                        Debug.Log("Case 1 or -3");
                         playerScript.side = 3;
                         playerScript.forward = new Vector3(0, 0, -1);
                         newPlayerPos = new Vector3(lowestX, player.transform.position.y, player.transform.position.z);
@@ -396,13 +404,6 @@ public class GameManager : MonoBehaviour
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in rightPlatforms)
-                        {
-                            float xPos = lowestX - platform.transform.position.x;
-                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
-                            platformPos = new Vector3(xPos / 100, 0, 0);
-                            platform.GetComponent<BoxCollider>().center = platformPos;
-                        }
                         foreach (var platform in backPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
@@ -410,6 +411,13 @@ public class GameManager : MonoBehaviour
                         foreach (var platform in leftPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
+                        }
+                        foreach (var platform in rightPlatforms)
+                        {
+                            float xPos = lowestX - platform.transform.position.x;
+                            Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
+                            platformPos = new Vector3(xPos, 0, 0);
+                            platform.GetComponent<BoxCollider>().center = platformPos;
                         }
                         break;
                     default:
@@ -425,6 +433,7 @@ public class GameManager : MonoBehaviour
                 xEnd = OGxEnd;
 
                 playerScript.SetPosition(newPlayerPos);
+                rotateCount = 0;
             }
             
         }

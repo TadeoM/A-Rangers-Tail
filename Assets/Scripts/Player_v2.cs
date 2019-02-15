@@ -19,9 +19,9 @@ public class Player_v2 : Creature_v2 {
     public override void Start()
     {
         base.Start();
-        MaxSpeed = 5f;
+        MaxSpeed = 3f;
         direction = new Vector3(1, 0, 0);
-        JumpStrength = 400f;
+        JumpStrength = 230f;
         maxJumps = 1;
         timesJumped = 0;
         airControl = true;
@@ -90,12 +90,12 @@ public class Player_v2 : Creature_v2 {
             direction = forward;
             if (Mathf.Round(direction.x) != 0)
             {
-                velocity.z = 0;
+                m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_Rigidbody.velocity.y, 0);
             }
             else
             {
                 direction = forward;
-                velocity.x = 0;
+                m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z);
             }
             Move(false);
         }
@@ -104,17 +104,13 @@ public class Player_v2 : Creature_v2 {
             direction = -forward;
             if (Mathf.Round(direction.x) != 0)
             {
-                velocity.z = 0;
+                m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_Rigidbody.velocity.y, 0);
             }
             else
             {
-                velocity.x = 0;
+                m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z);
             }
             Move(false);
-        }
-        else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
-        {
-            Move(true);
         }
         /*else if (direction.x == 1 && velocity.x > 0.002f 
             || direction.z == 1 && velocity.z > 0.002f)
@@ -125,26 +121,31 @@ public class Player_v2 : Creature_v2 {
             || direction.z == -1 && velocity.z < -0.002f)
         {
             Move(false, false);
-        }
-        else if(velocity.magnitude != 0.0f)
-        {
-            velocity *= 0.0f;
         }*/
+        else
+        {
+            m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * 0.67f, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z * 0.67f);
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space) && timesJumped < maxJumps)
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Space))
+        {
+            Jump(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && timesJumped < maxJumps)
         {
             timesJumped++;
             jump = true;
             timesJumped++;
-            Jump();
+            Jump(false);
         }
+        
         //playerAnimator.SetFloat("Speed", velocity.x);
     }
 
-    public void Jump()
+    public void Jump(bool down)
     {
         // If the player should jump...
-        if (Grounded && jump) // && m_Anim.GetBool("Ground")
+        if (jump && !down) // && m_Anim.GetBool("Ground")
         {
             // Add a vertical force to the player.
             m_Rigidbody.constraints = RigidbodyConstraints.None;
@@ -152,6 +153,15 @@ public class Player_v2 : Creature_v2 {
             Grounded = false;
             //m_Anim.SetBool("Ground", false);
             m_Rigidbody.AddForce(new Vector3(0f, JumpStrength));
+            jump = false;
+        }
+        else if (Grounded && down)
+        {
+            m_Rigidbody.constraints = RigidbodyConstraints.None;
+            m_Rigidbody.freezeRotation = true;
+            Grounded = false;
+            //m_Anim.SetBool("Ground", false);
+            m_Rigidbody.AddForce(new Vector3(0f, -JumpStrength));
             jump = false;
         }
     }

@@ -49,7 +49,6 @@ public class CentipedeAI : Enemy {
         inAttackState = false;
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
-        //attackCollider = GetComponentInChildren<CapsuleCollider>();
     }
 	
 	// Update is called once per frame
@@ -82,7 +81,6 @@ public class CentipedeAI : Enemy {
 
     protected override void PerformAttack()
     {
-        Debug.Log(Vector3.Distance(player.transform.position, transform.position));
         if (Vector3.Distance(player.transform.position, transform.position) <= 3f)
         {
             // needs change

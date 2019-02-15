@@ -22,11 +22,9 @@ GameObject:
   - component: {fileID: 212005567854463974}
   - component: {fileID: 54254545375539246}
   - component: {fileID: 114897953849572938}
-  - component: {fileID: 65312947565491806}
-  - component: {fileID: 135669316239187066}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +39,7 @@ GameObject:
   - component: {fileID: 4017204231988446}
   - component: {fileID: 61123939385561826}
   - component: {fileID: 114337602812895466}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WeaponCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4565924304293140}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
@@ -71,8 +69,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4292781427702668}
-  m_Layer: 0
-  m_Name: CeilingCheck
+  - component: {fileID: 65933042605396050}
+  m_Layer: 10
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -85,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1205394094959506}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: -0.099, z: -3.876}
+  m_LocalPosition: {x: 0.7, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 0.225, z: 1}
   m_Children: []
   m_Father: {fileID: 4727415368106514}
@@ -98,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1599796963359844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.48, z: 0}
+  m_LocalPosition: {x: 0, y: 0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4727415368106514}
@@ -111,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1572858361504384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.48, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56448, y: 0.56448, z: 1}
   m_Children: []
   m_Father: {fileID: 4727415368106514}
@@ -124,7 +123,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1082809082097170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2, y: 0.977, z: 0}
+  m_LocalPosition: {x: -4, y: 0.5, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4017204231988446}
@@ -140,7 +139,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1082809082097170}
   serializedVersion: 2
-  m_Mass: 3
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -173,18 +172,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!65 &65312947565491806
+--- !u!65 &65933042605396050
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1082809082097170}
+  m_GameObject: {fileID: 1599796963359844}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.95153594, z: 0.2}
-  m_Center: {x: 0, y: 0.02423203, z: 0}
+  m_Size: {x: 0.8292546, y: 0.93014956, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114337602812895466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,29 +206,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30773c17653c9f04b9decaab934d4443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatureType: 0
+  creatureType: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
-  position: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
   forward: {x: 0, y: 0, z: 0}
+  side: 0
+  grounded: 0
   airControl: 0
   notRotating: 0
---- !u!135 &135669316239187066
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1082809082097170}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.099307775
-  m_Center: {x: 0, y: -0.38569224, z: 0}
 --- !u!212 &212005567854463974
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -7,7 +7,6 @@ public class Player_v2 : Creature_v2 {
     bool jump;
     int timesJumped;
     int maxJumps;
-    float jumpForce = 500;
     public bool notRotating;
     private int staminaPoints;
     private bool invincible;
@@ -22,16 +21,13 @@ public class Player_v2 : Creature_v2 {
         base.Start();
         MaxSpeed = 5f;
         direction = new Vector3(1, 0, 0);
-        JumpStrength = 1f;
+        JumpStrength = 400f;
         maxJumps = 1;
         timesJumped = 0;
         airControl = true;
         jump = false;
         notRotating = true;
         Health = 5;
-        //coolDown = 0.75f;
-        //playerRenderer = GetComponent<SpriteRenderer>();
-        //playerAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -141,7 +137,6 @@ public class Player_v2 : Creature_v2 {
             jump = true;
             timesJumped++;
             Jump();
-            //playerAnimator.SetBool("isPlayerJump", jump);
         }
         //playerAnimator.SetFloat("Speed", velocity.x);
     }
@@ -156,7 +151,7 @@ public class Player_v2 : Creature_v2 {
             m_Rigidbody.freezeRotation = true;
             Grounded = false;
             //m_Anim.SetBool("Ground", false);
-            m_Rigidbody.AddForce(new Vector3(0f, jumpForce));
+            m_Rigidbody.AddForce(new Vector3(0f, JumpStrength));
             jump = false;
         }
     }

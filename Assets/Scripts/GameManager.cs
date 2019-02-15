@@ -426,7 +426,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 pos = new Vector3(/*15 * Mathf.Sin(yTime * Mathf.PI)*/Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
-                cameraPivot.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+                cameraPivot.transform.rotation = Quaternion.Euler(Mathf.Round(pos.x), Mathf.Round(pos.y), 0);
                 player.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
 
                 xStart = OGxStart;

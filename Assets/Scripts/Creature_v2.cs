@@ -123,26 +123,10 @@ public class Creature_v2 : MonoBehaviour {
 
     public virtual void Move(bool slowDown)
     {
-        // If crouching, check to see if the character can stand up
-        //if (!crouch && m_Anim.GetBool("Crouch"))
-        /*{
-            // If the character has a ceiling preventing them from standing up, keep them crouching
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-            {
-                crouch = true;
-            }
-        }*/
-
         // Set whether or not the character is crouching in the animator
         // only control the player if grounded or airControl is turned on
         if (grounded||airControl) // || m_AirControl
         {
-            // Reduce the speed if crouching by the crouchSpeed multiplier
-            //move = (crouch ? move * m_CrouchSpeed : move);
-
-            // The Speed animator parameter is set to the absolute value of the horizontal input.
-            //m_Anim.SetFloat("Speed", Mathf.Abs(move));
-
             // Move the character
             m_Rigidbody.velocity = new Vector3(direction.x * MaxSpeed, m_Rigidbody.velocity.y, direction.z * MaxSpeed);
             if(slowDown)
@@ -170,11 +154,6 @@ public class Creature_v2 : MonoBehaviour {
     {
         // Switch the way the player is labelled as facing.
         facingRight = !facingRight;
-
-        // Multiply the player's x local scale by -1.
-        //Vector3 theScale = transform.localScale;
-        //theScale.x *= -1;
-        //transform.localScale = theScale;
     }
     public void SetPosition(Vector3 newPos)
     {

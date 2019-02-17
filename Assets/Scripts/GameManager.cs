@@ -61,7 +61,12 @@ public class GameManager : MonoBehaviour
         // go through each tile to check if it is the highest in the X and Z or the lowest
         for (int i = 1; i < uncheckedPlatforms.Length; i++)
         {
-            // transform.TransformPoint()
+            while (uncheckedPlatforms[i].layer != 10)
+            {
+                i++;
+                if (i >= uncheckedPlatforms.Length) return;
+            }
+
             Vector3 currentLoc = uncheckedPlatforms[i].transform.position;
             if (currentLoc.x > highestX)
             {

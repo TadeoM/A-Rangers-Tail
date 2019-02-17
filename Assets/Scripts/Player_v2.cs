@@ -75,16 +75,7 @@ public class Player_v2 : Creature_v2 {
     }
 
     void KeyboardCheck()
-    {
-        /*
-        bool flipSprite = (playerRenderer.flipX ? (velocity.x > 0.01f) : (velocity.x < 0.01f));
-        if(flipSprite)
-        {
-            playerRenderer.flipX = !playerRenderer.flipX;
-        }
-        */
-        // direction = new Vector3(-direction.x, direction.y, -direction.z);
-        
+    {        
         if (Input.GetKey(KeyCode.D))
         {
             direction = forward;
@@ -112,16 +103,6 @@ public class Player_v2 : Creature_v2 {
             }
             Move(false);
         }
-        /*else if (direction.x == 1 && velocity.x > 0.002f 
-            || direction.z == 1 && velocity.z > 0.002f)
-        {
-            Move(false, false);
-        }
-        else if (direction.x == -1 && velocity.x < -0.002f
-            || direction.z == -1 && velocity.z < -0.002f)
-        {
-            Move(false, false);
-        }*/
         else
         {
             m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * 0.67f, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z * 0.67f);

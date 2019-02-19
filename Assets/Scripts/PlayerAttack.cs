@@ -21,6 +21,8 @@ public class PlayerAttack : MonoBehaviour {
     Vector3 swordInitialPos;
     Vector3 swordDist;
     float travelSpeed = 1.0f;
+    private int timesSwapped;
+    private float currTime;
     // Use this for initialization
     void Awake ()
     {
@@ -96,6 +98,14 @@ public class PlayerAttack : MonoBehaviour {
 
         swordHitBox.transform.position = Vector3.Lerp(this.gameObject.transform.GetChild(0).transform.localPosition, swordDist, fracJourney);
         swordHitBox.enabled = true;
+        if (currTime > 1 && timesSwapped < 1)
+        {
+            currTime = 0;
+            Vector3 tempStartPos = swordInitialPos;
+            swordInitialPos = swordDist;
+            swordDist = tempStartPos;
+            timesSwapped++;
+        }
         if (special==false)
         {
             swordHitBox.transform.localPosition = swordInitialPos;

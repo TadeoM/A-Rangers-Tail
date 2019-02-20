@@ -34,6 +34,12 @@ public class GameManager : MonoBehaviour
     public float OGxEnd;
     public bool swapped;
 
+    // make a script in each area
+    // each area will calculate its children and check which ones would be on what side
+    // this script will grab all the areas and make sure the player is rotating through the area they are in.
+    // disable any area that the player is not in
+    // 
+
     // Use this for initialization
     void Start()
     {
@@ -58,157 +64,8 @@ public class GameManager : MonoBehaviour
         OGxStart = 0.0f;
         OGxEnd = 15.0f;
 
-        // go through each tile to check if it is the highest in the X and Z or the lowest
-        for (int i = 1; i < uncheckedPlatforms.Length; i++)
-        {
-            while (uncheckedPlatforms[i].layer != 10)
-            {
-                i++;
-                if (i >= uncheckedPlatforms.Length) return;
-            }
-
-            Vector3 currentLoc = uncheckedPlatforms[i].transform.position;
-            if (currentLoc.x > highestX)
-            {
-                highestX = (int)uncheckedPlatforms[i].transform.position.x;
-            }
-            else if (currentLoc.x < lowestX)
-            {
-                lowestX = (int)uncheckedPlatforms[i].transform.position.x;
-            }
-            if (currentLoc.z > highestZ)
-            {
-                highestZ = (int)uncheckedPlatforms[i].transform.position.z;
-            }
-            else if (currentLoc.z < lowestZ)
-            {
-                lowestZ = (int)uncheckedPlatforms[i].transform.position.z;
-            }
-            if (currentLoc.y > highestY)
-            {
-                highestY = (int)uncheckedPlatforms[i].transform.position.y;
-            }
-            else if (currentLoc.y < lowestY)
-            {
-                lowestY = (int)uncheckedPlatforms[i].transform.position.y;
-            }
-        }
-        float currentY = lowestY;
-        // go through the four different views and assign which platforms on which side view
-        for (int angle = 0; angle < 4; angle++)
-        {
-            RaycastHit hit;
-            Vector3 origin;
-            Vector3 direction;
-            switch (angle)
-            {
-                // front
-                case 0:
-                    // checks for which tiles are in the front
-                    for (int x = lowestX; x <= highestX; x++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(x, y, lowestZ - 1);
-                            direction = Vector3.forward;
-
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    frontPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (frontPlatforms[0].transform.position.z < hit.collider.gameObject.transform.position.z)
-                                    {
-                                        //frontPlatforms.Insert(0, hit.collider.gameObject);
-                                        //frontPlatforms.RemoveAt(frontPlatforms.Count - 1);
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                    break;
-                // right
-                case 1:
-                    for (int z = lowestZ; z <= highestZ; z++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(highestX + 1, y, z);
-                            direction = Vector3.left;
-
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    rightPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (rightPlatforms[0].transform.position.x < hit.collider.gameObject.transform.position.x)
-                                    {
-                                        //rightPlatforms.Insert(0, hit.collider.gameObject);
-                                        //rightPlatforms.RemoveAt(rightPlatforms.Count - 1);
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                    break;
-                // back
-                case 2:
-                    for (int x = lowestX; x <= highestX; x++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(x, y, highestZ + 1);
-                            direction = Vector3.back;
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    backPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (backPlatforms[0].transform.position.z > hit.collider.gameObject.transform.position.z)
-                                    {
-                                        //backPlatforms.Insert(0, hit.collider.gameObject);
-                                        //backPlatforms.RemoveAt(backPlatforms.Count - 1);
-                                    } */
-                                }
-                            }
-                        }
-                    }
-                    break;
-                // left
-                case 3:
-                    for (int z = lowestZ; z <= highestZ; z++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(lowestX - 1, y, z);
-                            direction = Vector3.right;
-
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    leftPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*if (leftPlatforms[0].transform.position.x > hit.collider.gameObject.transform.position.x)
-                                    {
-                                        leftPlatforms.Insert(0, hit.collider.gameObject);
-                                        leftPlatforms.RemoveAt(leftPlatforms.Count - 1);
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+        GetExtremities();
+        PopulatePlatforms();
 
         //grab the front platforms and move them to the front
         foreach (var platform in frontPlatforms)
@@ -444,6 +301,166 @@ public class GameManager : MonoBehaviour
         }
 
 
+    }
+
+    void GetExtremities()
+    {
+        // go through each tile to check if it is the highest in the X and Z or the lowest
+        for (int i = 1; i < uncheckedPlatforms.Length; i++)
+        {
+            while (uncheckedPlatforms[i].layer != 10)
+            {
+                i++;
+                if (i >= uncheckedPlatforms.Length) return;
+            }
+
+            Vector3 currentLoc = uncheckedPlatforms[i].transform.position;
+            if (currentLoc.x > highestX)
+            {
+                highestX = (int)uncheckedPlatforms[i].transform.position.x;
+            }
+            else if (currentLoc.x < lowestX)
+            {
+                lowestX = (int)uncheckedPlatforms[i].transform.position.x;
+            }
+            if (currentLoc.z > highestZ)
+            {
+                highestZ = (int)uncheckedPlatforms[i].transform.position.z;
+            }
+            else if (currentLoc.z < lowestZ)
+            {
+                lowestZ = (int)uncheckedPlatforms[i].transform.position.z;
+            }
+            if (currentLoc.y > highestY)
+            {
+                highestY = (int)uncheckedPlatforms[i].transform.position.y;
+            }
+            else if (currentLoc.y < lowestY)
+            {
+                lowestY = (int)uncheckedPlatforms[i].transform.position.y;
+            }
+        }
+    }
+
+    void PopulatePlatforms()
+    {
+        float currentY = lowestY;
+
+        // go through the four different views and assign which platforms on which side view
+        for (int angle = 0; angle < 4; angle++)
+        {
+            RaycastHit hit;
+            Vector3 origin;
+            Vector3 direction;
+            switch (angle)
+            {
+                // front
+                case 0:
+                    // checks for which tiles are in the front
+                    for (int x = lowestX; x <= highestX; x++)
+                    {
+                        for (int y = lowestY; y <= highestY; y++)
+                        {
+                            origin = new Vector3(x, y, lowestZ - 1);
+                            direction = Vector3.forward;
+
+                            if (Physics.Raycast(origin, direction, out hit, 100))
+                            {
+                                if (hit.transform.gameObject.layer == 9)
+                                {
+                                    frontPlatforms.Add(hit.collider.gameObject);
+                                    // not sure what this did, but doesn't do anything useful so far so eh
+                                    /*
+                                    if (frontPlatforms[0].transform.position.z < hit.collider.gameObject.transform.position.z)
+                                    {
+                                        //frontPlatforms.Insert(0, hit.collider.gameObject);
+                                        //frontPlatforms.RemoveAt(frontPlatforms.Count - 1);
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                    break;
+                // right
+                case 1:
+                    for (int z = lowestZ; z <= highestZ; z++)
+                    {
+                        for (int y = lowestY; y <= highestY; y++)
+                        {
+                            origin = new Vector3(highestX + 1, y, z);
+                            direction = Vector3.left;
+
+                            if (Physics.Raycast(origin, direction, out hit, 100))
+                            {
+                                if (hit.transform.gameObject.layer == 9)
+                                {
+                                    rightPlatforms.Add(hit.collider.gameObject);
+                                    // not sure what this did, but doesn't do anything useful so far so eh
+                                    /*
+                                    if (rightPlatforms[0].transform.position.x < hit.collider.gameObject.transform.position.x)
+                                    {
+                                        //rightPlatforms.Insert(0, hit.collider.gameObject);
+                                        //rightPlatforms.RemoveAt(rightPlatforms.Count - 1);
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                    break;
+                // back
+                case 2:
+                    for (int x = lowestX; x <= highestX; x++)
+                    {
+                        for (int y = lowestY; y <= highestY; y++)
+                        {
+                            origin = new Vector3(x, y, highestZ + 1);
+                            direction = Vector3.back;
+                            if (Physics.Raycast(origin, direction, out hit, 100))
+                            {
+                                if (hit.transform.gameObject.layer == 9)
+                                {
+                                    backPlatforms.Add(hit.collider.gameObject);
+                                    // not sure what this did, but doesn't do anything useful so far so eh
+                                    /*
+                                    if (backPlatforms[0].transform.position.z > hit.collider.gameObject.transform.position.z)
+                                    {
+                                        //backPlatforms.Insert(0, hit.collider.gameObject);
+                                        //backPlatforms.RemoveAt(backPlatforms.Count - 1);
+                                    } */
+                                }
+                            }
+                        }
+                    }
+                    break;
+                // left
+                case 3:
+                    for (int z = lowestZ; z <= highestZ; z++)
+                    {
+                        for (int y = lowestY; y <= highestY; y++)
+                        {
+                            origin = new Vector3(lowestX - 1, y, z);
+                            direction = Vector3.right;
+
+                            if (Physics.Raycast(origin, direction, out hit, 100))
+                            {
+                                if (hit.transform.gameObject.layer == 9)
+                                {
+                                    leftPlatforms.Add(hit.collider.gameObject);
+                                    // not sure what this did, but doesn't do anything useful so far so eh
+                                    /*if (leftPlatforms[0].transform.position.x > hit.collider.gameObject.transform.position.x)
+                                    {
+                                        leftPlatforms.Insert(0, hit.collider.gameObject);
+                                        leftPlatforms.RemoveAt(leftPlatforms.Count - 1);
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
 

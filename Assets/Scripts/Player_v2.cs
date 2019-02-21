@@ -8,7 +8,7 @@ public class Player_v2 : Creature_v2 {
     int timesJumped;
     int maxJumps;
     float jumpForce = 500;
-    float coolDown = 0.75f;
+    float coolDown = 0.15f;
     float specialTimer;
     float specialCD = 3.0f;
     public bool notRotating;
@@ -62,8 +62,9 @@ public class Player_v2 : Creature_v2 {
         base.FixedUpdate();
         if(notRotating)
         {
-            KeyboardCheck();
             MouseCheck();
+            KeyboardCheck();
+            
         }
         else
         {
@@ -113,24 +114,35 @@ public class Player_v2 : Creature_v2 {
         
         if (Input.GetKey(KeyCode.D))
         {
+          
             direction = forward;
+            if (!facingRight)
+            {
+                Flip();
+            }
             if (Mathf.Round(direction.x) != 0)
             {
                 velocity.z = 0;
-                transform.localScale = new Vector3(-1, 1, 1);
+             
             }
             else
             {
                 direction = forward;
                 velocity.x = 0;
             }
+            if (currentCharState != CharacterState.Attack)
+                ChangeState(CharacterState.Run);
             Move(false);
-            ChangeState(CharacterState.Run);
+           
         }
         else if (Input.GetKey(KeyCode.A))
         {
             direction = -forward;
-            transform.localScale = new Vector3(-1, 1, 1);
+
+           if(facingRight)
+            {
+                Flip();
+            }
             if (Mathf.Round(direction.x) != 0)
             {
                 velocity.z = 0;
@@ -140,14 +152,18 @@ public class Player_v2 : Creature_v2 {
             {
                 velocity.x = 0;
             }
+            if (currentCharState != CharacterState.Attack)
+                ChangeState(CharacterState.Run);
             Move(false);
-            ChangeState(CharacterState.Run);
+           
 
         }
         else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
         {
+            if (currentCharState != CharacterState.Attack)
+                ChangeState(CharacterState.Idle);
             Move(true);
-            ChangeState(CharacterState.Idle);
+           
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && timesJumped < maxJumps)
@@ -159,14 +175,14 @@ public class Player_v2 : Creature_v2 {
             ChangeState(CharacterState.Jump);
            
         }
-
-     
+        
+    
 
     }
     void MouseCheck()
     {
         //Attacking
-        if (Input.GetMouseButtonDown(0) && !attacking && !special)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !attacking && !special)
         {
             attacking = true;
             attkTimer = coolDown;
@@ -295,7 +311,7 @@ public class Player_v2 : Creature_v2 {
         while (currentCharState == CharacterState.Attack)
         {
             playerAnimator.SetInteger("State", 4);
-            yield return new WaitForSeconds(0.85f);
+            yield return new WaitForSeconds(0.45f);
             ChangeState(CharacterState.Idle);
         }
     }

@@ -23,7 +23,7 @@ public class Creature_v2 : MonoBehaviour {
     private int health;
     public bool grounded;
     public bool airControl;
-    private bool facingRight = true;  // For determining which way the player is currently facing.
+    protected bool facingRight = true;  // For determining which way the player is currently facing.
 
     public float Gravity
     {
@@ -145,11 +145,19 @@ public class Creature_v2 : MonoBehaviour {
     }
 
 
-    private void Flip()
+    protected void Flip()
     {
         // Switch the way the player is labelled as facing.
         facingRight = !facingRight;
-
+        if(facingRight)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        
         // Multiply the player's x local scale by -1.
         //Vector3 theScale = transform.localScale;
         //theScale.x *= -1;

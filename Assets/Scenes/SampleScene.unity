@@ -126,7 +126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.954
       objectReference: {fileID: 0}
     - target: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.z
@@ -170,7 +170,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4017204231988446, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.847
+      value: 0.893
       objectReference: {fileID: 0}
     - target: {fileID: 4017204231988446, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalScale.y
@@ -189,6 +189,40 @@ Prefab:
         type: 2}
       propertyPath: m_Center.x
       value: 0.035048664
+      objectReference: {fileID: 0}
+    - target: {fileID: 114897953849572938, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: swordHitBox
+      value: 
+      objectReference: {fileID: 1163702168}
+    - target: {fileID: 1205394094959506, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
+      propertyPath: m_Name
+      value: WeaponCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 135669316239187066, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Radius
+      value: 0.099307775
+      objectReference: {fileID: 0}
+    - target: {fileID: 135669316239187066, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65312947565491806, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.95153594
+      objectReference: {fileID: 0}
+    - target: {fileID: 65312947565491806, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.y
+      value: 0.02423203
+      objectReference: {fileID: 0}
+    - target: {fileID: 135669316239187066, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.y
+      value: -0.38569224
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61123939385561826, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
@@ -768,19 +802,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1082809082097170, guid: e9784d4e888bc48419c38d02d1f42d20,
     type: 2}
   m_PrefabInternal: {fileID: 32404863}
---- !u!114 &447426022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 447426021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 168705e98a658b44ba8c6ac30b2881ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmg: 0
-  swordHitBox: {fileID: 1163702168}
 --- !u!4 &447426025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20,
@@ -3111,8 +3132,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8773291, y: 1, z: 1}
-  m_Center: {x: -0.1197499, y: 0, z: 0}
+  m_Size: {x: 0.89831424, y: 0.58160865, z: 1}
+  m_Center: {x: -0.13024247, y: -0.19524993, z: 0}
 --- !u!114 &1163702169
 MonoBehaviour:
   m_ObjectHideFlags: 0

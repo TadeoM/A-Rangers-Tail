@@ -196,7 +196,7 @@ public class Player_v2 : Creature_v2 {
         {
             attacking = true;
             attkTimer = coolDown;
-            swordHitBox.enabled = true;
+           
             ChangeState(CharacterState.Attack);
         }
 
@@ -209,7 +209,7 @@ public class Player_v2 : Creature_v2 {
             else
             {
                 attacking = false;
-                swordHitBox.enabled = false;
+               
             }
         }
 
@@ -331,8 +331,10 @@ public class Player_v2 : Creature_v2 {
         while (currentCharState == CharacterState.Attack)
         {
             playerAnimator.SetInteger("State", 4);
+            swordHitBox.enabled = true;
             yield return new WaitForSeconds(0.45f);
             ChangeState(CharacterState.Idle);
+            swordHitBox.enabled = false;
         }
     }
     IEnumerator DeathState()

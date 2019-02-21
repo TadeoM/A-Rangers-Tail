@@ -101,7 +101,7 @@ public class Creature_v2 : MonoBehaviour {
                         m_Rigidbody.freezeRotation = true;
                     }
                 }
-                else
+                else if (!colliders[i].gameObject.name.Contains("Door"))
                 {
                     if (!grounded) {
                         transform.position = new Vector3(transform.position.x, .019f + colliders[i].transform.position.y + 

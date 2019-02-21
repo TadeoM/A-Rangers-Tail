@@ -225,10 +225,10 @@ public class CentipedeAI : Enemy {
         if (col.gameObject.CompareTag("playerweapon")&&invincible!=true)
         {
             TakeDamage(15);
-            Debug.Log(Health);
+            
         }
         
-        Debug.Log("Hello?");
+        
     }
     void StopEverything()
     {
@@ -240,6 +240,7 @@ public class CentipedeAI : Enemy {
 
     public override void TakeDamage(int dmg)
     {
+        Debug.Log(Health);
         base.TakeDamage(dmg);
         invincible = true;
         invisTimer = 1.25f;

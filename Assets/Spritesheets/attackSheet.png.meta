@@ -1,18 +1,14 @@
 fileFormatVersion: 2
-guid: 448826dd8828fe242885f27bd92b536a
+guid: 07a43cabb1851c844adb2dbd7883138b
 TextureImporter:
   fileIDToRecycleName:
-    21300000: IdleClementine_0
-    21300002: IdleClementine_1
-    21300004: IdleClementine_4
-    21300006: IdleClementine_5
-    21300008: IdleClementine_6
-    21300010: IdleClementine_7
-    21300012: IdleClementine_9
-    21300014: IdleClementine_11
-    21300016: IdleClementine_13
-    21300018: IdleClementine_14
-    21300020: IdleClementine_15
+    21300000: attackSheet_0
+    21300002: attackSheet_1
+    21300004: attackSheet_2
+    21300006: attackSheet_3
+    21300008: attackSheet_4
+    21300010: attackSheet_5
+    21300012: attackSheet_6
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -71,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -82,7 +78,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -93,7 +89,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -104,7 +100,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Windows Store Apps
-    maxTextureSize: 1024
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -117,201 +113,141 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IdleClementine_0
+      name: attackSheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 3
-        width: 53
-        height: 58
+        y: 1
+        width: 79
+        height: 63
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4d06b80730b1384ca7c8aee7af665e7
+      spriteID: 9c7864f404d79314881ee119c883a40a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleClementine_1
-      rect:
-        serializedVersion: 2
-        x: 66
-        y: 0
-        width: 52
-        height: 59
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf2722a7c58be0b4fac759dfca938e93
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IdleClementine_4
+      name: attackSheet_1
       rect:
         serializedVersion: 2
         x: 132
-        y: 3
-        width: 50
-        height: 58
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a96e18bbe29ea5d429af2f13ceed0bdb
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IdleClementine_5
-      rect:
-        serializedVersion: 2
-        x: 201
-        y: 3
-        width: 45
-        height: 56
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1c221916b9d38a84292857becfbf4aed
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IdleClementine_6
-      rect:
-        serializedVersion: 2
-        x: 259
-        y: 3
-        width: 50
-        height: 58
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce25637d209655f489090983266b5ab0
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IdleClementine_7
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 54
+        y: 1
+        width: 92
         height: 59
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b1d8a8a3c1bb884d90e9166e46ed2e4
+      spriteID: c22f4a3fb3c2a8746955ec4bfec06fef
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleClementine_9
+      name: attackSheet_2
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 1
+        width: 114
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0755f144143de34bbe2de6b7a1274ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attackSheet_3
       rect:
         serializedVersion: 2
         x: 385
-        y: 0
-        width: 52
-        height: 61
+        y: 1
+        width: 126
+        height: 54
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf573ccd49bcb1142a426cadd50170e1
+      spriteID: 34de138c698bf6a479dbaeed3637c375
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleClementine_11
+      name: attackSheet_4
       rect:
         serializedVersion: 2
-        x: 448
+        x: 513
         y: 0
-        width: 54
+        width: 127
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd3bd42ce6bc8ac49afa414b9a4d87d1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attackSheet_5
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 1
+        width: 114
         height: 59
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b4edd84e8805214dbb10bbaaf6bbdb0
+      spriteID: 93ff86578701b284f989aa3935c8e411
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IdleClementine_13
+      name: attackSheet_6
       rect:
         serializedVersion: 2
-        x: 512
-        y: 3
-        width: 53
-        height: 58
+        x: 760
+        y: 0
+        width: 136
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00937988a6bc10c4a8d0a05edbe50821
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IdleClementine_14
-      rect:
-        serializedVersion: 2
-        x: 577
-        y: 3
-        width: 53
-        height: 56
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 438fb0806a2862f4c83cb72798c78fd9
+      spriteID: f6034a3657b609b4f80db79762c49f53
       vertices: []
       indices: 
       edges: []
@@ -319,7 +255,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 760f20a9fc8d4e342bde115a3bbda81b
+    spriteID: fbcae148e05f53a4cbe8a5cbf45c2e23
     vertices: []
     indices: 
     edges: []

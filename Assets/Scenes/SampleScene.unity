@@ -180,6 +180,16 @@ Prefab:
       propertyPath: m_TagString
       value: playerweapon
       objectReference: {fileID: 0}
+    - target: {fileID: 65312947565491806, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.7700974
+      objectReference: {fileID: 0}
+    - target: {fileID: 65312947565491806, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 0.035048664
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61123939385561826, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
     - {fileID: 114337602812895466, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
@@ -3101,8 +3111,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.8773291, y: 1, z: 1}
+  m_Center: {x: -0.1197499, y: 0, z: 0}
 --- !u!114 &1163702169
 MonoBehaviour:
   m_ObjectHideFlags: 0

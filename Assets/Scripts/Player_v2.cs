@@ -8,14 +8,33 @@ public class Player_v2 : Creature_v2 {
     int timesJumped;
     int maxJumps;
     float jumpForce = 500;
+    float coolDown = 0.75f;
+    float specialTimer;
+    float specialCD = 3.0f;
     public bool notRotating;
+    public Collider swordHitBox;
     private int staminaPoints;
     private bool invincible;
+    private bool attacking;
+    private float attkTimer;
+    private bool special;
     private float invisTimer;
     private float lerpTime;
     int iStart = 0;
     int iEnd = 1;
+    Animator playerAnimator;
+    Rigidbody rbdy;
+    public enum CharacterState
+    {
+        Idle,
+        Run,
+        Attack,
+        Jump,
+        Fall,
+        Death
+    }
 
+    public CharacterState currentCharState;
     // Use this for initialization
     public override void Start()
     {
@@ -29,9 +48,12 @@ public class Player_v2 : Creature_v2 {
         jump = false;
         notRotating = true;
         Health = 5;
+        ChangeState(CharacterState.Idle);
         //coolDown = 0.75f;
-        //playerRenderer = GetComponent<SpriteRenderer>();
-        //playerAnimator = GetComponent<Animator>();
+        swordHitBox.enabled = false;
+        playerAnimator = GetComponent<Animator>();
+        rbdy = GetComponent<Rigidbody>();
+        attacking = false;
     }
 
     // Update is called once per frame
@@ -41,6 +63,7 @@ public class Player_v2 : Creature_v2 {
         if(notRotating)
         {
             KeyboardCheck();
+            MouseCheck();
         }
         else
         {
@@ -76,18 +99,17 @@ public class Player_v2 : Creature_v2 {
             newColor = new Color(newColor.r, newColor.g, newColor.b, 1);
             gameObject.GetComponent<SpriteRenderer>().color = newColor;
         }
+
+        if (rbdy.velocity.y < 0)
+        {
+            ChangeState(CharacterState.Fall);
+        }
+
     }
 
     void KeyboardCheck()
     {
-        /*
-        bool flipSprite = (playerRenderer.flipX ? (velocity.x > 0.01f) : (velocity.x < 0.01f));
-        if(flipSprite)
-        {
-            playerRenderer.flipX = !playerRenderer.flipX;
-        }
-        */
-        // direction = new Vector3(-direction.x, direction.y, -direction.z);
+        
         
         if (Input.GetKey(KeyCode.D))
         {
@@ -95,6 +117,7 @@ public class Player_v2 : Creature_v2 {
             if (Mathf.Round(direction.x) != 0)
             {
                 velocity.z = 0;
+                transform.localScale = new Vector3(-1, 1, 1);
             }
             else
             {
@@ -102,38 +125,30 @@ public class Player_v2 : Creature_v2 {
                 velocity.x = 0;
             }
             Move(false);
+            ChangeState(CharacterState.Run);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             direction = -forward;
+            transform.localScale = new Vector3(-1, 1, 1);
             if (Mathf.Round(direction.x) != 0)
             {
                 velocity.z = 0;
+                
             }
             else
             {
                 velocity.x = 0;
             }
             Move(false);
+            ChangeState(CharacterState.Run);
+
         }
         else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
         {
             Move(true);
+            ChangeState(CharacterState.Idle);
         }
-        /*else if (direction.x == 1 && velocity.x > 0.002f 
-            || direction.z == 1 && velocity.z > 0.002f)
-        {
-            Move(false, false);
-        }
-        else if (direction.x == -1 && velocity.x < -0.002f
-            || direction.z == -1 && velocity.z < -0.002f)
-        {
-            Move(false, false);
-        }
-        else if(velocity.magnitude != 0.0f)
-        {
-            velocity *= 0.0f;
-        }*/
 
         if (Input.GetKeyDown(KeyCode.Space) && timesJumped < maxJumps)
         {
@@ -141,21 +156,67 @@ public class Player_v2 : Creature_v2 {
             jump = true;
             timesJumped++;
             Jump();
-            //playerAnimator.SetBool("isPlayerJump", jump);
+            ChangeState(CharacterState.Jump);
+           
         }
-        //playerAnimator.SetFloat("Speed", velocity.x);
+
+     
+
+    }
+    void MouseCheck()
+    {
+        //Attacking
+        if (Input.GetMouseButtonDown(0) && !attacking && !special)
+        {
+            attacking = true;
+            attkTimer = coolDown;
+            swordHitBox.enabled = true;
+            ChangeState(CharacterState.Attack);
+        }
+
+        if (attacking)
+        {
+            if (attkTimer > 0)
+            {
+                attkTimer -= Time.deltaTime;
+            }
+            else
+            {
+                attacking = false;
+                swordHitBox.enabled = false;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1) && !special)
+        {
+           
+        }
+
+        if (special)
+        {
+            if (specialCD > 0)
+            {
+                specialCD -= Time.deltaTime;
+            }
+            else
+            {
+                special = false;
+
+                swordHitBox.enabled = false;
+
+            }
+        }
     }
 
     public void Jump()
     {
         // If the player should jump...
-        if (Grounded && jump) // && m_Anim.GetBool("Ground")
+        if (Grounded && jump) 
         {
             // Add a vertical force to the player.
             m_Rigidbody.constraints = RigidbodyConstraints.None;
             m_Rigidbody.freezeRotation = true;
             Grounded = false;
-            //m_Anim.SetBool("Ground", false);
             m_Rigidbody.AddForce(new Vector3(0f, jumpForce));
             jump = false;
         }
@@ -165,8 +226,18 @@ public class Player_v2 : Creature_v2 {
         base.TakeDamage(dmg);
         invincible = true;
         invisTimer = 3;
+        if (Health <= 0)
+        {
+            ChangeState(CharacterState.Death);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 
+    void ChangeState(CharacterState newState)
+    {
+        currentCharState = newState;
+        StartCoroutine(newState.ToString() + "State");
+    }
     private void OnCollisionEnter(Collision collision)
     {
         
@@ -177,6 +248,63 @@ public class Player_v2 : Creature_v2 {
         {
             TakeDamage(1);
             invisTimer = 60 * Time.deltaTime;
+        }
+    }
+
+    IEnumerator IdleState()
+    {
+        while(currentCharState == CharacterState.Idle)
+        {
+            playerAnimator.SetInteger("State", 0);
+            yield return null;
+        }
+    }
+
+    IEnumerator RunState()
+    {
+        while (currentCharState == CharacterState.Run)
+        {
+            playerAnimator.SetInteger("State", 1);
+            yield return null;
+        }
+    }
+
+    IEnumerator JumpState()
+    {
+        while (currentCharState == CharacterState.Jump)
+        {
+            playerAnimator.SetInteger("State", 2);
+            yield return null;
+        }
+    }
+
+    IEnumerator FallState()
+    {
+        while (currentCharState == CharacterState.Fall)
+        {
+            playerAnimator.SetInteger("State", 3);
+            if(grounded)
+            {
+                ChangeState(CharacterState.Idle);
+            }
+            yield return null;
+        }
+    }
+    IEnumerator AttackState()
+    {
+        while (currentCharState == CharacterState.Attack)
+        {
+            playerAnimator.SetInteger("State", 4);
+            yield return new WaitForSeconds(0.85f);
+            ChangeState(CharacterState.Idle);
+        }
+    }
+    IEnumerator DeathState()
+    {
+        while (currentCharState == CharacterState.Death)
+        {
+            playerAnimator.SetInteger("State", 5);
+            yield return null;
         }
     }
 }

@@ -22,7 +22,7 @@ public class CentipedeAI : Enemy {
     private float startHeight;
     private float endHeight;
     private bool inAttackState;
-
+    private bool attacking;
     private bool invincible;
     private float invisTimer;
     private float lerpTime;
@@ -221,12 +221,13 @@ public class CentipedeAI : Enemy {
 
     private void OnTriggerEnter(Collider col)
     {
-       int dmg = player.GetComponent<PlayerAttack>().dmg;
+       
         if (col.gameObject.CompareTag("playerweapon")&&invincible!=true)
         {
             TakeDamage(15);
+            Debug.Log(Health);
         }
-        Debug.Log(Health);
+        
         Debug.Log("Hello?");
     }
     void StopEverything()
@@ -242,5 +243,9 @@ public class CentipedeAI : Enemy {
         base.TakeDamage(dmg);
         invincible = true;
         invisTimer = 1.25f;
+        if (Health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

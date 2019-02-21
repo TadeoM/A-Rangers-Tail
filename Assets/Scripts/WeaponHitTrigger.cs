@@ -10,7 +10,7 @@ public class WeaponHitTrigger : MonoBehaviour
 
     private void Awake()
     {
-        dmg = gameObject.GetComponentInParent<PlayerAttack>().dmg;
+
     }
     // Use this for initialization
     private void OnTriggerEnter(Collider other)

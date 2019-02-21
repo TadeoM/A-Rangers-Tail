@@ -56,7 +56,6 @@ public class PlayerAttack : MonoBehaviour {
                 swordHitBox.enabled = false;
             }
         }
-        playerAnimator.SetBool("isPlayerAttacking", attacking);
         if(Input.GetMouseButtonDown(1) && !special)
         {
             FlurryThrow();
@@ -105,10 +104,6 @@ public class PlayerAttack : MonoBehaviour {
             swordInitialPos = swordDist;
             swordDist = tempStartPos;
             timesSwapped++;
-        }
-        if (special==false)
-        {
-            swordHitBox.transform.localPosition = swordInitialPos;
         }
        
     }

@@ -114,9 +114,12 @@ public class Player_v2 : Creature_v2 {
         
         if (Input.GetKey(KeyCode.D))
         {
-          
             direction = forward;
-            if (!facingRight)
+            if (!facingRight && (side == 0 || side == 1))
+            {
+                Flip();
+            }
+            else if(!facingRight && (side == 2 || side == 3))
             {
                 Flip();
             }
@@ -138,7 +141,11 @@ public class Player_v2 : Creature_v2 {
         {
             direction = -forward;
 
-           if(facingRight)
+           if(facingRight && (side == 0 || side == 1))
+            {
+                Flip();
+            }
+            else if (facingRight && (side == 2 || side ==3))
             {
                 Flip();
             }
@@ -180,14 +187,6 @@ public class Player_v2 : Creature_v2 {
             Jump(false);
             ChangeState(CharacterState.Jump);
         }
-<<<<<<<
-        
-    
-
-=======
-        
-        //playerAnimator.SetFloat("Speed", velocity.x);
->>>>>>>
     }
     void MouseCheck()
     {
@@ -234,7 +233,6 @@ public class Player_v2 : Creature_v2 {
         }
     }
 
-    public void Jump()
     public void Jump(bool down)
     {
         // If the player should jump...

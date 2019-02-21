@@ -154,13 +154,13 @@ public class Creature_v2 : MonoBehaviour {
             if (direction.x > 0 && !facingRight || direction.z > 0 && !facingRight)
             {
                 // ... flip the player.
-                Flip();
+                //Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if (direction.x < 0 && facingRight || direction.z < 0 && facingRight)
             {
                 // ... flip the player.
-                Flip();
+                //Flip();
             }
         }
     }
@@ -170,15 +170,8 @@ public class Creature_v2 : MonoBehaviour {
     {
         // Switch the way the player is labelled as facing.
         facingRight = !facingRight;
-        if(facingRight)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        
+        transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
+
         // Multiply the player's x local scale by -1.
         //Vector3 theScale = transform.localScale;
         //theScale.x *= -1;

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212005567854463974}
   - component: {fileID: 54254545375539246}
   - component: {fileID: 114897953849572938}
+  - component: {fileID: 65312947565491806}
   m_Layer: 10
   m_Name: Player 1
   m_TagString: Player
@@ -37,8 +38,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4017204231988446}
-  - component: {fileID: 61123939385561826}
   - component: {fileID: 114337602812895466}
+  - component: {fileID: 65965119899067946}
   m_Layer: 10
   m_Name: WeaponCollider
   m_TagString: playerweapon
@@ -54,7 +55,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4774734944239762}
-  - component: {fileID: 108831056727359256}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -118,7 +118,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4917961663570764}
   - component: {fileID: 20970870503412832}
-  - component: {fileID: 81005745869523320}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -280,7 +279,7 @@ Rigidbody:
   m_CollisionDetection: 1
 --- !u!65 &65312947565491806
 BoxCollider:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1082809082097170}
@@ -290,18 +289,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7700974, y: 0.95153594, z: 0.2}
   m_Center: {x: 0.035048664, y: 0.02423203, z: 0}
---- !u!65 &65965119899067946
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1205394094959506}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!65 &65933042605396050
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -313,6 +300,18 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.8292546, y: 0.93014956, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65965119899067946
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205394094959506}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114337602812895466
 MonoBehaviour:
@@ -356,6 +355,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
+  m_Rigidbody: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
@@ -364,6 +364,8 @@ MonoBehaviour:
   grounded: 0
   airControl: 0
   notRotating: 0
+  swordHitBox: {fileID: 0}
+  currentCharState: 0
 --- !u!212 &212005567854463974
 SpriteRenderer:
   m_ObjectHideFlags: 1

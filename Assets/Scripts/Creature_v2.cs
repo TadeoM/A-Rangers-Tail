@@ -9,7 +9,7 @@ public class Creature_v2 : MonoBehaviour {
     public CreatureType creatureType;
     public LayerMask whatIsGround = 9;
 
-    protected Rigidbody m_Rigidbody;
+    public Rigidbody m_Rigidbody;
     protected Transform m_GroundCheck;
     protected Transform m_CeilingCheck;   // A position marking where to check for ceilings
     public Vector3 velocity;
@@ -86,11 +86,34 @@ public class Creature_v2 : MonoBehaviour {
         {
             if (colliders[i].gameObject != gameObject)
             {
-                grounded = true;
-                m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
-                m_Rigidbody.freezeRotation = true;
-            }
                 
+                if (colliders[i].gameObject.name.Contains("oneway"))
+                {
+                    if (m_GroundCheck.position.y > -0.05f + colliders[i].gameObject.transform.position.y + (colliders[i].GetComponent<MeshRenderer>().bounds.extents.y))
+                    {
+                        if (!grounded)
+                        {
+                            transform.position = new Vector3(transform.position.x, .02f + colliders[i].transform.position.y +
+                                (colliders[i].gameObject.GetComponent<BoxCollider>().bounds.extents.y * colliders[i].gameObject.transform.localScale.y), transform.position.z);
+                        }
+                        grounded = true;
+                        m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
+                        m_Rigidbody.freezeRotation = true;
+                    }
+                }
+                else
+                {
+                    if (!grounded) {
+                        transform.position = new Vector3(transform.position.x, .019f + colliders[i].transform.position.y + 
+                            (colliders[i].gameObject.GetComponent<BoxCollider>().bounds.extents.y * colliders[i].gameObject.transform.localScale.y), transform.position.z);
+                    }
+                    grounded = true;
+                    m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
+                    m_Rigidbody.freezeRotation = true;
+                    
+                    
+                }
+            }
         }
         //m_Anim.SetBool("Ground", m_Grounded);
 
@@ -102,17 +125,16 @@ public class Creature_v2 : MonoBehaviour {
     {
         // If crouching, check to see if the character can stand up
         //if (!crouch && m_Anim.GetBool("Crouch"))
-        {
-            /* If the character has a ceiling preventing them from standing up, keep them crouching
+        /*{
+            // If the character has a ceiling preventing them from standing up, keep them crouching
             if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
             {
                 crouch = true;
-            }*/
-        }
+            }
+        }*/
 
         // Set whether or not the character is crouching in the animator
-        //m_Anim.SetBool("Crouch", crouch);
-        //only control the player if grounded or airControl is turned on
+        // only control the player if grounded or airControl is turned on
         if (grounded||airControl) // || m_AirControl
         {
             // Reduce the speed if crouching by the crouchSpeed multiplier
@@ -127,7 +149,6 @@ public class Creature_v2 : MonoBehaviour {
             {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
             }
-            //Debug.Log(m_Rigidbody.velocity);
 
             // If the input is moving the player right and the player is facing left...
             if (direction.x > 0 && !facingRight || direction.z > 0 && !facingRight)

@@ -60,23 +60,29 @@ public class CentipedeAI : Enemy {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!inAttackState && attackTimer < -(Time.deltaTime * 60))
+        if(player != null)
         {
-            if (player.GetComponent<Player_v2>().side == side)
-                PerformAttack();
-        }
-        else if (player.GetComponent<Player_v2>().side == side)
-        {
-            AdjustColliders();
-        }
-        else
-        {
-            StopEverything();
-        }
+            if (!inAttackState && attackTimer < -(Time.deltaTime * 60))
+            {
+                if (player.GetComponent<Player_v2>().side == side)
+                    PerformAttack();
+            }
+            else if (player.GetComponent<Player_v2>().side == side)
+            {
+                AdjustColliders();
+            }
+            else
+            {
+                StopEverything();
+            }
 
-        if(attackTimer <= 0)
-        {
-            StopEverything();
+            if (attackTimer <= 0)
+            {
+                StopEverything();
+            }
+
+            attackTimer -= Time.deltaTime;
+            CheckPlayer();
         }
 
         attackTimer -= Time.deltaTime;
@@ -109,7 +115,6 @@ public class CentipedeAI : Enemy {
 
     protected override void PerformAttack()
     {
-        Debug.Log(Vector3.Distance(player.transform.position, transform.position));
         if (Vector3.Distance(player.transform.position, transform.position) <= 3f)
         {
             // needs change

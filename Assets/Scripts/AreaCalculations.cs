@@ -10,22 +10,29 @@ public class AreaCalculations : MonoBehaviour {
     public List<GameObject> backPlatforms;
     public List<GameObject> leftPlatforms;
 
-    public int highestX;
-    public int lowestX;
-    public int highestZ;
-    public int lowestZ;
-    public int lowestY;
-    public int highestY;
+    public int  highestX;
+    public int  lowestX;
+    public int  highestZ;
+    public int  lowestZ;
+    public int  lowestY;
+    public int  highestY;
 
     // Use this for initialization
     void Start () {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        foreach (Transform child in transform)
+        {
+            uncheckedPlatforms.Add(child);
+        };
+        highestX = (int)uncheckedPlatforms[0].position.x;
+        lowestX  = (int)uncheckedPlatforms[0].position.x;
+        highestZ = (int)uncheckedPlatforms[0].position.z;
+        lowestZ  = (int)uncheckedPlatforms[0].position.z;
+        lowestY  = (int)uncheckedPlatforms[0].position.y;
+        highestY = (int)uncheckedPlatforms[0].position.y;
+
+        GetExtremities();
+        PopulatePlatforms();
+    }
 
     public void GetExtremities()
     {
@@ -84,16 +91,19 @@ public class AreaCalculations : MonoBehaviour {
 
                             if (Physics.Raycast(origin, direction, out hit, 100))
                             {
-                                if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
+                                if (uncheckedPlatforms.Contains(hit.transform))
                                 {
-                                    frontPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (frontPlatforms[0].transform.position.z < hit.collider.gameObject.transform.position.z)
+                                    if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
-                                        //frontPlatforms.Insert(0, hit.collider.gameObject);
-                                        //frontPlatforms.RemoveAt(frontPlatforms.Count - 1);
-                                    }*/
+                                        frontPlatforms.Add(hit.collider.gameObject);
+                                        // not sure what this did, but doesn't do anything useful so far so eh
+                                        /*
+                                        if (frontPlatforms[0].transform.position.z < hit.collider.gameObject.transform.position.z)
+                                        {
+                                            //frontPlatforms.Insert(0, hit.collider.gameObject);
+                                            //frontPlatforms.RemoveAt(frontPlatforms.Count - 1);
+                                        }*/
+                                    }
                                 }
                             }
                         }
@@ -110,17 +120,21 @@ public class AreaCalculations : MonoBehaviour {
 
                             if (Physics.Raycast(origin, direction, out hit, 100))
                             {
-                                if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
+                                if(uncheckedPlatforms.Contains(hit.transform))
                                 {
-                                    rightPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (rightPlatforms[0].transform.position.x < hit.collider.gameObject.transform.position.x)
+                                    if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
-                                        //rightPlatforms.Insert(0, hit.collider.gameObject);
-                                        //rightPlatforms.RemoveAt(rightPlatforms.Count - 1);
-                                    }*/
+                                        rightPlatforms.Add(hit.collider.gameObject);
+                                        // not sure what this did, but doesn't do anything useful so far so eh
+                                        /*
+                                        if (rightPlatforms[0].transform.position.x < hit.collider.gameObject.transform.position.x)
+                                        {
+                                            //rightPlatforms.Insert(0, hit.collider.gameObject);
+                                            //rightPlatforms.RemoveAt(rightPlatforms.Count - 1);
+                                        }*/
+                                    }
                                 }
+                                
                             }
                         }
                     }
@@ -135,16 +149,19 @@ public class AreaCalculations : MonoBehaviour {
                             direction = Vector3.back;
                             if (Physics.Raycast(origin, direction, out hit, 100))
                             {
-                                if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
+                                if (uncheckedPlatforms.Contains(hit.transform))
                                 {
-                                    backPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (backPlatforms[0].transform.position.z > hit.collider.gameObject.transform.position.z)
+                                    if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
-                                        //backPlatforms.Insert(0, hit.collider.gameObject);
-                                        //backPlatforms.RemoveAt(backPlatforms.Count - 1);
-                                    } */
+                                        backPlatforms.Add(hit.collider.gameObject);
+                                        // not sure what this did, but doesn't do anything useful so far so eh
+                                        /*
+                                        if (backPlatforms[0].transform.position.z > hit.collider.gameObject.transform.position.z)
+                                        {
+                                            //backPlatforms.Insert(0, hit.collider.gameObject);
+                                            //backPlatforms.RemoveAt(backPlatforms.Count - 1);
+                                        } */
+                                    }
                                 }
                             }
                         }
@@ -161,15 +178,18 @@ public class AreaCalculations : MonoBehaviour {
 
                             if (Physics.Raycast(origin, direction, out hit, 100))
                             {
-                                if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
+                                if (uncheckedPlatforms.Contains(hit.transform))
                                 {
-                                    leftPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*if (leftPlatforms[0].transform.position.x > hit.collider.gameObject.transform.position.x)
+                                    if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
-                                        leftPlatforms.Insert(0, hit.collider.gameObject);
-                                        leftPlatforms.RemoveAt(leftPlatforms.Count - 1);
-                                    }*/
+                                        leftPlatforms.Add(hit.collider.gameObject);
+                                        // not sure what this did, but doesn't do anything useful so far so eh
+                                        /*if (leftPlatforms[0].transform.position.x > hit.collider.gameObject.transform.position.x)
+                                        {
+                                            leftPlatforms.Insert(0, hit.collider.gameObject);
+                                            leftPlatforms.RemoveAt(leftPlatforms.Count - 1);
+                                        }*/
+                                    }
                                 }
                             }
                         }

@@ -29,14 +29,13 @@ public class GameManager : MonoBehaviour
         // each area will calculate its children and check which ones would be on what side
     // this script will grab all the areas and make sure the player is rotating through the area they are in.
         // disable any area that the player is not in
-    // 
 
     // Use this for initialization
     void Start()
     {
         playerScript = player.GetComponent<Player_v2>();
         currentRotationStep = 0;
-        // set all highest and lowest points to first box
+
         yStart = 0.0f;
         yEnd = 0.0f;
         rotateNeeded = false;
@@ -46,21 +45,6 @@ public class GameManager : MonoBehaviour
         xEnd = 15.0f;
         OGxStart = 0.0f;
         OGxEnd = 15.0f;
-
-        foreach (var area in areaScripts)
-        {
-            foreach (var notAreas in areaScripts)
-            {
-                area.enabled = false;
-            }
-            area.enabled = true;
-            foreach (Transform child in area.transform)
-            {
-                area.uncheckedPlatforms.Add(child);
-            };
-            area.GetExtremities();
-            area.PopulatePlatforms();
-        }
 
         areaScripts[currentArea].enabled = true;
 
@@ -297,10 +281,10 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeArea(int newArea)
     {
-        areaScripts[currentArea].enabled = false;
+        areaScripts[currentArea].gameObject.SetActive(false);
         currentArea = newArea;
-        areaScripts[currentArea].enabled = true;
-        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ);
+        areaScripts[currentArea].gameObject.SetActive(true);
+        playerScript.SetPosition(new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ));
     }
 }
 

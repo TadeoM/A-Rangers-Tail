@@ -205,14 +205,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //grab the front platforms and move them to the front
+        /*grab the front platforms and move them to the front
         foreach (var platform in frontPlatforms)
         {
             float zPos = lowestZ - platform.transform.position.z;
             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
             platformPos = new Vector3(0, 0, zPos);
             platform.GetComponent<BoxCollider>().center = platformPos;
-        }
+        }*/
     }
 
     // Update is called once per frame

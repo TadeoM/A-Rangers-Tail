@@ -122,7 +122,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -3.836
       objectReference: {fileID: 0}
     - target: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
       propertyPath: m_LocalPosition.y
@@ -183,7 +183,52 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114897953849572938, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Rigidbody
+      value: 
+      objectReference: {fileID: 447426024}
+    - target: {fileID: 114897953849572938, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: swordHitBox
+      value: 
+      objectReference: {fileID: 685200248}
+    - target: {fileID: 4578919660349800, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 65965119899067946, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 65965119899067946, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65965119899067946, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 65965119899067946, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65933042605396050, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65933042605396050, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 2}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 65312947565491806, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e9784d4e888bc48419c38d02d1f42d20, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &83567543
@@ -1303,11 +1348,34 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1082809082097170, guid: e9784d4e888bc48419c38d02d1f42d20,
     type: 2}
   m_PrefabInternal: {fileID: 32404863}
+--- !u!54 &447426024 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 54254545375539246, guid: e9784d4e888bc48419c38d02d1f42d20,
+    type: 2}
+  m_PrefabInternal: {fileID: 32404863}
 --- !u!4 &447426025 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4727415368106514, guid: e9784d4e888bc48419c38d02d1f42d20,
     type: 2}
   m_PrefabInternal: {fileID: 32404863}
+--- !u!95 &447426027
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 447426021}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2425d2ae5a2946c4b983ea3b74602ea3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &465582635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1758,6 +1826,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 651043082}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &685200248 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 65965119899067946, guid: e9784d4e888bc48419c38d02d1f42d20,
+    type: 2}
+  m_PrefabInternal: {fileID: 32404863}
 --- !u!1 &695323771
 GameObject:
   m_ObjectHideFlags: 0
@@ -3579,6 +3652,10 @@ Prefab:
         type: 2}
       propertyPath: side
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1803849109929790, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}
+      propertyPath: m_TagString
+      value: bug
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 135083265352931278, guid: ae71fb21bce396d4a86feaaf653e0544, type: 2}

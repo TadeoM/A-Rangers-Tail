@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
-{
+public class Sword : Weapons {
 
 	// Use this for initialization
 	void Awake ()
@@ -12,8 +11,7 @@ public class Weapon : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update ()
-    {
+	void Update () {
 		
 	}
 }

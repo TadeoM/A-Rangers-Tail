@@ -22,9 +22,14 @@ public class CentipedeAI : Enemy {
     private float startHeight;
     private float endHeight;
     private bool inAttackState;
-
-	// Use this for initialization
-	public override void Start () {
+    private bool attacking;
+    private bool invincible;
+    private float invisTimer;
+    private float lerpTime;
+    int iStart = 0;
+    int iEnd = 1;
+    // Use this for initialization
+    public override void Start () {
         base.Start();
         MaxSpeed = 2f;
         switch (side)
@@ -49,6 +54,8 @@ public class CentipedeAI : Enemy {
         inAttackState = false;
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
+        Health = 100;
+        //attackCollider = GetComponentInChildren<CapsuleCollider>();
     }
 	
 	// Update is called once per frame
@@ -76,6 +83,33 @@ public class CentipedeAI : Enemy {
 
             attackTimer -= Time.deltaTime;
             CheckPlayer();
+        }
+
+        attackTimer -= Time.deltaTime;
+        CheckPlayer();
+
+        if (invisTimer > 0)
+        {
+            invisTimer -= Time.deltaTime;
+            lerpTime += 4 * (Time.deltaTime);
+            Color newColor = gameObject.GetComponent<SpriteRenderer>().color;
+
+            if (lerpTime > 1)
+            {
+                lerpTime = 0;
+                int temp = iStart;
+                iStart = iEnd;
+                iEnd = temp;
+            }
+            newColor = new Color(newColor.r, newColor.g, newColor.b, Mathf.Lerp(iStart, iEnd, lerpTime));
+            gameObject.GetComponent<SpriteRenderer>().color = newColor;
+        }
+        else
+        {
+            invincible = false;
+            Color newColor = gameObject.GetComponent<SpriteRenderer>().color;
+            newColor = new Color(newColor.r, newColor.g, newColor.b, 1);
+            gameObject.GetComponent<SpriteRenderer>().color = newColor;
         }
     }
 
@@ -190,11 +224,34 @@ public class CentipedeAI : Enemy {
             currTime += animSpeed;
     }
 
+    private void OnTriggerEnter(Collider col)
+    {
+       
+        if (col.gameObject.CompareTag("playerweapon")&&invincible!=true)
+        {
+            TakeDamage(25);
+            
+        }
+        
+        
+    }
     void StopEverything()
     {
         animator.SetInteger("State", 0);
         inAttackState = false;
         direction = forward;
         velocity.x = 0;
+    }
+
+    public override void TakeDamage(int dmg)
+    {
+        Debug.Log(Health);
+        base.TakeDamage(dmg);
+        invincible = true;
+        invisTimer = 1.25f;
+        if (Health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

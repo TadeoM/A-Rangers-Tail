@@ -230,7 +230,7 @@ public class CentipedeAI : Enemy {
         if (col.gameObject.CompareTag("playerweapon")&&invincible!=true)
         {
             TakeDamage(25);
-            
+            player.
         }
         
         

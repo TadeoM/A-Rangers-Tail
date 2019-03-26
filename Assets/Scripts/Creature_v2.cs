@@ -184,6 +184,7 @@ public class Creature_v2 : MonoBehaviour {
 
     public virtual void TakeDamage(int dmg)
     {
+        
         health -= dmg;
         
     }

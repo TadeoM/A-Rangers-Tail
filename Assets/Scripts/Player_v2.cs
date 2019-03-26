@@ -8,7 +8,7 @@ public class Player_v2 : Creature_v2 {
     int timesJumped;
     int maxJumps;
     float jumpForce = 500;
-    float coolDown = 0.15f;
+    float coolDown = 0.05f;
     float specialTimer;
     float specialCD = 3.0f;
     public bool notRotating;
@@ -22,6 +22,7 @@ public class Player_v2 : Creature_v2 {
     private float lerpTime;
     int iStart = 0;
     int iEnd = 1;
+    int combo = 0;
     Animator playerAnimator;
     Rigidbody rbdy;
     public enum CharacterState
@@ -195,7 +196,8 @@ public class Player_v2 : Creature_v2 {
         {
             attacking = true;
             attkTimer = coolDown;
-           
+
+            
             ChangeState(CharacterState.Attack);
         }
 
@@ -267,6 +269,10 @@ public class Player_v2 : Creature_v2 {
         }
     }
 
+    public void comboCounter()
+    {
+
+    }
     void ChangeState(CharacterState newState)
     {
         currentCharState = newState;

@@ -15,10 +15,10 @@ public abstract class Enemy : Creature_v2 {
             case 0:
                 // player on right
                 if (leftOrRight.x > 0)
-                    transform.localScale = new Vector3(-1, 1, 1);
+                    transform.localScale = new Vector3(1, 1, 1);
                 // player on left
                 else if (leftOrRight.x < transform.position.x)
-                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = new Vector3(-1, 1, 1);
                 break;
             case 1:
                 // player on right

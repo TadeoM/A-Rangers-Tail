@@ -81,7 +81,7 @@ public class Creature_v2 : MonoBehaviour {
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider[] colliders;
         colliders = Physics.OverlapSphere(m_GroundCheck.position, .02f, whatIsGround);
-
+        Debug.Log("Num of Colliders: "+colliders.Length);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)

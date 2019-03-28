@@ -8,8 +8,19 @@ public class CentipedeAI : Enemy {
     {
         Lunge, Charge
     }
+    public enum CharacterState
+    {
+        Idle,
+        Run,
+        Lunge,
+        Charge,
+        Jump,
+        Fall,
+        Death
+    }
+    public CharacterState currentCharState;
+    public GameObject floatingText;
     private Attacks attackChosen;
-    public GameObject lungeCollider;
     public GameObject chargeCollider;
     public GameObject attackCollider;
     public float attackTimer;
@@ -230,7 +241,7 @@ public class CentipedeAI : Enemy {
         if (col.gameObject.CompareTag("playerweapon")&&invincible!=true)
         {
             TakeDamage(25);
-            player.
+           
         }
         
         
@@ -242,16 +253,63 @@ public class CentipedeAI : Enemy {
         direction = forward;
         velocity.x = 0;
     }
-
+    public void ShowFloatingText()
+    {
+       
+        Instantiate(floatingText, transform.position, (Quaternion.identity*Quaternion.Euler(0,-90,0)), transform);
+    }
     public override void TakeDamage(int dmg)
     {
         Debug.Log(Health);
         base.TakeDamage(dmg);
         invincible = true;
         invisTimer = 1.25f;
+        if (floatingText)
+            ShowFloatingText();
         if (Health <= 0)
         {
             Destroy(this.gameObject);
+        }
+    }
+    void ChangeState(CharacterState newState)
+    {
+        currentCharState = newState;
+        StartCoroutine(newState.ToString() + "State");
+    }
+    IEnumerator IdleState()
+    {
+        while (currentCharState == CharacterState.Idle)
+        {
+            animator.SetInteger("State", 0);
+            yield return null;
+        }
+    }
+
+    IEnumerator RunState()
+    {
+        while (currentCharState == CharacterState.Run)
+        {
+            animator.SetInteger("State", 1);
+            yield return null;
+        }
+    }
+    IEnumerator LungeState()
+    {
+        while (currentCharState == CharacterState.Lunge)
+        {
+            animator.SetInteger("State", 3);
+            yield return new WaitForSeconds(0.45f);
+            ChangeState(CharacterState.Idle);
+           
+        }
+    }
+    IEnumerator ChargeState()
+    {
+        while (currentCharState == CharacterState.Charge)
+        {
+            animator.SetInteger("State", 4);
+            yield return new WaitForSeconds(0.45f);
+            ChangeState(CharacterState.Idle);
         }
     }
 }

@@ -182,10 +182,14 @@ public class Creature_v2 : MonoBehaviour {
         transform.position = newPos;
     }
 
+    
     public virtual void TakeDamage(int dmg)
     {
         
         health -= dmg;
+       
         
     }
+
+  
 }

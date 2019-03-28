@@ -13,6 +13,7 @@ public class Player_v2 : Creature_v2 {
     float specialCD = 3.0f;
     public bool notRotating;
     public Collider swordHitBox;
+    public Collider bodyHitBox;
     private int staminaPoints;
     private bool invincible;
     private bool attacking;
@@ -49,7 +50,7 @@ public class Player_v2 : Creature_v2 {
         jump = false;
         notRotating = true;
         Health = 5;
-        ChangeState(CharacterState.Idle);
+        currentCharState = CharacterState.Idle;
         //coolDown = 0.75f;
         swordHitBox.enabled = false;
         playerAnimator = GetComponent<Animator>();
@@ -166,8 +167,6 @@ public class Player_v2 : Creature_v2 {
         }
         else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
         {
-            if (currentCharState != CharacterState.Attack)
-                ChangeState(CharacterState.Idle);
             Move(true);
            
         }
@@ -187,6 +186,11 @@ public class Player_v2 : Creature_v2 {
             timesJumped++;
             Jump(false);
             ChangeState(CharacterState.Jump);
+        }
+        if(new Vector3(0.01f,0.01f,0.01f).magnitude>m_Rigidbody.velocity.magnitude)
+        {
+            if (currentCharState != CharacterState.Attack)
+                ChangeState(CharacterState.Idle);
         }
     }
     void MouseCheck()

@@ -43,6 +43,8 @@ public class CentipedeAI : Enemy {
     public override void Start () {
         base.Start();
         MaxSpeed = 2f;
+        
+
         switch (side)
         {
             case 0:
@@ -60,8 +62,10 @@ public class CentipedeAI : Enemy {
             default:
                 break;
         }
-        
+
+        Debug.Log(gameObject.transform.forward);
         creatureType = CreatureType.Bug;
+        currentCharState = CharacterState.Idle;
         inAttackState = false;
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -73,32 +77,73 @@ public class CentipedeAI : Enemy {
 	void Update () {
         if(player != null)
         {
-            if (!inAttackState && attackTimer < -(Time.deltaTime * 60))
+            
+            Vector3 leftOrRight = player.transform.position - transform.position;
+            switch (side)
             {
-                if (player.GetComponent<Player_v2>().side == side)
-                    PerformAttack();
+                case 0:
+                    // player on right
+                    if (leftOrRight.x > 0)
+                        direction = forward;
+                    // player on left
+                    else if (leftOrRight.x < 0)
+                        direction = -forward;
+                    
+                    break;
+                case 1:
+                    // player on right
+                    if (leftOrRight.z > 0)
+                        direction = forward;
+                    //  player on left
+                    else
+                        direction = -forward;
+                    break;
+                case 2:
+                    // player on right 
+                    if (leftOrRight.x < 0)
+                        direction = forward;
+                    // player on left
+                    else
+                        direction = -forward;
+                    break;
+                case 3:
+                    // player on right
+                    if (leftOrRight.z < 0)
+                        direction = forward;
+                    // player on left
+                    else
+                        direction = -forward;
+                    //Debug.Log("Here");
+                    break;
+                default:
+                    Debug.Log("Boyyyy, you snuffed up");
+                    break;
             }
-            else if (player.GetComponent<Player_v2>().side == side)
+            CheckPlayer();
+            if (Vector3.Distance(player.transform.position, transform.position) <= 3f && player.GetComponent<Player_v2>().side == side)
             {
-                AdjustColliders();
+                Move(true);
+                if (!inAttackState && attackTimer < -(Time.deltaTime * 60))
+                {
+                    Debug.Log("At Attack Call");
+                        PerformLunge();
+                }
+
+            }
+            else if (player.GetComponent<Player_v2>().side == side && Vector3.Distance(player.transform.position,transform.position)>=3f)
+            {
+                ChangeState(CharacterState.Run);
+                Move(false);
             }
             else
             {
                 StopEverything();
             }
 
-            if (attackTimer <= 0)
-            {
-                StopEverything();
-            }
-
             attackTimer -= Time.deltaTime;
-            CheckPlayer();
+            
         }
-
         attackTimer -= Time.deltaTime;
-        CheckPlayer();
-
         if (invisTimer > 0)
         {
             invisTimer -= Time.deltaTime;
@@ -124,39 +169,34 @@ public class CentipedeAI : Enemy {
         }
     }
 
-    protected override void PerformAttack()
+    protected override void PerformLunge()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) <= 3f)
-        {
-            // needs change
-            inAttackState = true;
+
+        Debug.Log("attack");
+        Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+        ChangeState(CharacterState.Lunge);
+        // needs change
+        inAttackState = true;
             attackChosen = Attacks.Lunge;
-            animator.SetInteger("State", 2);
-            attackTimer = 80 * Time.deltaTime;
-            attackCollider = lungeCollider;
-            attackCollider.SetActive(true);
-            startAttackPos = new Vector3(-0.14f, 0, 0);
-            endAttackPos = new Vector3(-0.8f, -0.3f, 0);
-            startHeight = 0.7f;
-            endHeight = 2;
-            animSpeed = 5f * Time.deltaTime;
-            currTime = 0;
-            timesSwapped = 0;
-            AdjustColliders();
-        }
+             
+     
+        
+        /*
         else
         {
             Debug.Log("Charging");
+            Debug.Log(Vector3.Distance(player.transform.position, transform.position));
             inAttackState = true;
             attackChosen = Attacks.Charge;
             animator.SetInteger("State", 1);
-            attackTimer = 38f * Time.deltaTime;
+            
             attackCollider = chargeCollider;
             attackCollider.SetActive(true);
-            animSpeed = 5f * Time.deltaTime;
+            ChangeState(CharacterState.Lunge);
         }
+        */
     }
-
+    /*
     private void AdjustColliders()
     {
         m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
@@ -234,11 +274,11 @@ public class CentipedeAI : Enemy {
         if(attackTimer < 0.575)
             currTime += animSpeed;
     }
-
+    */
     private void OnTriggerEnter(Collider col)
     {
        
-        if (col.gameObject.CompareTag("playerweapon")&&invincible!=true)
+        if (col.gameObject.CompareTag("playerweapon")&&!invincible)
         {
             TakeDamage(25);
            
@@ -255,8 +295,30 @@ public class CentipedeAI : Enemy {
     }
     public void ShowFloatingText()
     {
-       
-        Instantiate(floatingText, transform.position, (Quaternion.identity*Quaternion.Euler(0,-90,0)), transform);
+        GameObject hpText;
+            if (side==0)
+        {
+
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity , transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+            else if (side==1)
+        {
+            Debug.Log("Here");
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+            else if(side==2)
+        {
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+            else if(side==3)
+        {
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+        
     }
     public override void TakeDamage(int dmg)
     {
@@ -264,7 +326,7 @@ public class CentipedeAI : Enemy {
         base.TakeDamage(dmg);
         invincible = true;
         invisTimer = 1.25f;
-        if (floatingText)
+        if (floatingText && Health>0)
             ShowFloatingText();
         if (Health <= 0)
         {
@@ -295,21 +357,14 @@ public class CentipedeAI : Enemy {
     }
     IEnumerator LungeState()
     {
+   
         while (currentCharState == CharacterState.Lunge)
         {
-            animator.SetInteger("State", 3);
-            yield return new WaitForSeconds(0.45f);
-            ChangeState(CharacterState.Idle);
-           
+            attackTimer = 0;
+            animator.SetInteger("State", 2);
+            yield return new WaitForSeconds(1.5f);
+            ChangeState(CharacterState.Run);
         }
     }
-    IEnumerator ChargeState()
-    {
-        while (currentCharState == CharacterState.Charge)
-        {
-            animator.SetInteger("State", 4);
-            yield return new WaitForSeconds(0.45f);
-            ChangeState(CharacterState.Idle);
-        }
-    }
+    
 }

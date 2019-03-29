@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217901066020704}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56448, y: 0.56448, z: 1}
   m_Children: []
   m_Father: {fileID: 4715759292340054}
@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353532187287358}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.961, y: 0.49999994, z: 0}
+  m_LocalPosition: {x: -1, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4715759292340054}
@@ -72,8 +72,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 1.15, z: 1}
-  m_Center: {x: 0.05, y: 0.06, z: 0}
+  m_Size: {x: 0.836596, y: 0.5770627, z: 0.2}
+  m_Center: {x: -0.08894992, y: 0.40645176, z: -0.02256991}
 --- !u!1 &1803849109929790
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,14 +85,12 @@ GameObject:
   - component: {fileID: 4715759292340054}
   - component: {fileID: 212706523480703220}
   - component: {fileID: 65244481537073148}
-  - component: {fileID: 135083265352931278}
-  - component: {fileID: 135200645815131146}
   - component: {fileID: 95283783875338674}
   - component: {fileID: 114705031147512956}
   - component: {fileID: 54451578626907270}
   m_Layer: 8
   m_Name: Centipede
-  m_TagString: Untagged
+  m_TagString: bug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,34 +170,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9747314, y: 1.1, z: 0.2}
-  m_Center: {x: 0.39407635, y: 0.55, z: 0}
---- !u!135 &135083265352931278
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1803849109929790}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.06
-  m_Center: {x: -1, y: 0, z: 0}
---- !u!135 &135200645815131146
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1803849109929790}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.06
-  m_Center: {x: -2.5, y: 0, z: 0}
+  m_Size: {x: 2.6577513, y: 0.5979516, z: 0.2}
+  m_Center: {x: 0.058749795, y: 0.2989758, z: 0}
 --- !u!95 &95283783875338674
 Animator:
   serializedVersion: 3
@@ -240,13 +212,13 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
   forward: {x: 0, y: 0, z: 0}
-  side: 0
+  side: 3
   grounded: 0
   airControl: 0
   player: {fileID: 0}
   currentCharState: 0
-  floatingText: {fileID: 0}
-  lungeCollider: {fileID: 0}
+  floatingText: {fileID: 2175909171243692768, guid: e942996ac61eb9544af759b2fc58a1e3,
+    type: 3}
   chargeCollider: {fileID: 1353532187287358}
   attackCollider: {fileID: 0}
   attackTimer: 0

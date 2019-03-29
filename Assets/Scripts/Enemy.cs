@@ -50,5 +50,5 @@ public abstract class Enemy : Creature_v2 {
         }
     }
 
-    protected abstract void PerformAttack();
+    protected abstract void PerformLunge();
 }

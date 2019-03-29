@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        /// food for thought
+        // we have a public 2D Array, [gameObject,vec3]
+            // we instantiate each object in the array with their side variable equal to whatever array they're on
+            // their position is decided how
         playerScript = player.GetComponent<Player_v2>();
         currentRotationStep = 0;
         uncheckedPlatforms = GameObject.FindGameObjectsWithTag("platform");

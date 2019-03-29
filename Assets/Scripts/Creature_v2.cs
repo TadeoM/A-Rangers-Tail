@@ -150,18 +150,7 @@ public class Creature_v2 : MonoBehaviour {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
             }
 
-            // If the input is moving the player right and the player is facing left...
-            if (direction.x > 0 && !facingRight || direction.z > 0 && !facingRight)
-            {
-                // ... flip the player.
-                //Flip();
-            }
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if (direction.x < 0 && facingRight || direction.z < 0 && facingRight)
-            {
-                // ... flip the player.
-                //Flip();
-            }
+     
         }
     }
 

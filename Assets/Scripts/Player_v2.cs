@@ -7,7 +7,7 @@ public class Player_v2 : Creature_v2 {
     bool jump;
     int timesJumped;
     int maxJumps;
-    float jumpForce = 500;
+    public float dbljumpForce = 150;
     float coolDown = 0.05f;
     float specialTimer;
     float specialCD = 3.0f;
@@ -18,12 +18,16 @@ public class Player_v2 : Creature_v2 {
     private bool invincible;
     private bool attacking;
     private float attkTimer;
+    public float waitTimer;
     private bool special;
     private float invisTimer;
     private float lerpTime;
     int iStart = 0;
     int iEnd = 1;
-    int combo = 0;
+    public int combo = 0;
+    public int chainedHits;
+    public float[] attackDuration;
+    public int comboIndex;
     Animator playerAnimator;
     Rigidbody rbdy;
     public enum CharacterState
@@ -36,6 +40,14 @@ public class Player_v2 : Creature_v2 {
         Death
     }
 
+    public enum attack
+    {
+       Idle,
+       Attacking,
+       Waiting
+    }
+
+    public attack currAttackstate;
     public CharacterState currentCharState;
     // Use this for initialization
     public override void Start()
@@ -44,13 +56,16 @@ public class Player_v2 : Creature_v2 {
         MaxSpeed = 3f;
         direction = new Vector3(1, 0, 0);
         JumpStrength = 230f;
-        maxJumps = 1;
+        maxJumps = 2;
         timesJumped = 0;
         airControl = true;
         jump = false;
         notRotating = true;
         Health = 5;
+        combo = 0;
+        chainedHits = 0;
         currentCharState = CharacterState.Idle;
+        currAttackstate = attack.Idle;
         //coolDown = 0.75f;
         swordHitBox.enabled = false;
         playerAnimator = GetComponent<Animator>();
@@ -135,8 +150,11 @@ public class Player_v2 : Creature_v2 {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z);
             }
             if (currentCharState != CharacterState.Attack)
+            {
                 ChangeState(CharacterState.Run);
-            Move(false);
+                Move(false);
+            }
+                
            
         }
         else if (Input.GetKey(KeyCode.A))
@@ -160,8 +178,11 @@ public class Player_v2 : Creature_v2 {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z);
             }
             if (currentCharState != CharacterState.Attack)
+            {
                 ChangeState(CharacterState.Run);
-            Move(false);
+                Move(false);
+            }
+               
            
 
         }
@@ -183,7 +204,6 @@ public class Player_v2 : Creature_v2 {
         {
             timesJumped++;
             jump = true;
-            timesJumped++;
             Jump(false);
             ChangeState(CharacterState.Jump);
         }
@@ -196,14 +216,63 @@ public class Player_v2 : Creature_v2 {
     void MouseCheck()
     {
         //Attacking
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !attacking && !special)
+        switch(currAttackstate)
         {
-            attacking = true;
-            attkTimer = coolDown;
+            case attack.Idle:
+                if (Input.GetKeyDown(KeyCode.Mouse0) && !special)
+                {
+                    comboIndex = 0;
+                  
+                    attkTimer = coolDown;
 
-            
-            ChangeState(CharacterState.Attack);
+                    currAttackstate = attack.Attacking;
+                    ChangeState(CharacterState.Attack);
+                    chainedHits = 1;
+                }
+                break;
+            case attack.Attacking:
+                attkTimer -= Time.deltaTime;
+
+                if(attkTimer<0)
+                {
+                    attkTimer = waitTimer;
+                    currAttackstate = attack.Waiting;
+                }
+                break;
+
+            case attack.Waiting:
+                attkTimer -= Time.deltaTime;
+
+                if(attkTimer<0)//ran out of time to chain combo
+                {
+                    comboIndex = -1;
+                    currAttackstate = attack.Idle;
+                }
+
+                if(Input.GetMouseButton(0))//continue attacking
+                {
+                    comboIndex++;//Go to next attack animation
+
+                    if(comboIndex>=attackDuration.Length)//Check if the combo is over, start a new combo
+                    {
+                        comboIndex = -1;
+                        currAttackstate = attack.Idle;
+                        //Tell animation to play first attack
+                        chainedHits++;
+
+                    }
+
+                    else
+                        {
+                            currAttackstate = attack.Attacking;
+                            attkTimer = attackDuration[comboIndex];
+
+                            chainedHits++;
+                        }
+                }
+                break;
         }
+        
 
         if (attacking)
         {
@@ -248,7 +317,10 @@ public class Player_v2 : Creature_v2 {
             m_Rigidbody.constraints = RigidbodyConstraints.None;
             m_Rigidbody.freezeRotation = true;
             Grounded = false;
-            m_Rigidbody.AddForce(new Vector3(0f, JumpStrength));
+            if (timesJumped == maxJumps)
+                m_Rigidbody.AddForce(new Vector3(0, dbljumpForce));
+            else
+                m_Rigidbody.AddForce(new Vector3(0f, JumpStrength));
             jump = false;
         }
         else if (Grounded && down)

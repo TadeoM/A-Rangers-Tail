@@ -79,6 +79,7 @@ public class CentipedeAI : Enemy {
         {
             
             Vector3 leftOrRight = player.transform.position - transform.position;
+            CheckPlayer();
             switch (side)
             {
                 case 0:
@@ -119,31 +120,31 @@ public class CentipedeAI : Enemy {
                     Debug.Log("Boyyyy, you snuffed up");
                     break;
             }
-            CheckPlayer();
-            if (Vector3.Distance(player.transform.position, transform.position) <= 3f && player.GetComponent<Player_v2>().side == side)
+            
+            if (player.GetComponent<Player_v2>().side == side && Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) > 3f)
             {
+                Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+                ChangeState(CharacterState.Run);
+                Move(false);
+            }
+            else if (Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) < 3f && player.GetComponent<Player_v2>().side == side)
+            {
+                Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);
                 Move(true);
-                if (!inAttackState && attackTimer < -(Time.deltaTime * 60))
+                if (!inAttackState)
                 {
                     Debug.Log("At Attack Call");
                         PerformLunge();
                 }
 
             }
-            else if (player.GetComponent<Player_v2>().side == side && Vector3.Distance(player.transform.position,transform.position)>=3f)
+            if(player.GetComponent<Player_v2>().side !=side)
             {
-                ChangeState(CharacterState.Run);
-                Move(false);
+                Move(true);
             }
-            else
-            {
-                StopEverything();
-            }
-
-            attackTimer -= Time.deltaTime;
-            
+            Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);
         }
-        attackTimer -= Time.deltaTime;
+       
         if (invisTimer > 0)
         {
             invisTimer -= Time.deltaTime;
@@ -281,7 +282,7 @@ public class CentipedeAI : Enemy {
         if (col.gameObject.CompareTag("playerweapon")&&!invincible)
         {
             TakeDamage(25);
-           
+            player.GetComponent<Player_v2>().combo += 1;
         }
         
         
@@ -362,7 +363,8 @@ public class CentipedeAI : Enemy {
         {
             attackTimer = 0;
             animator.SetInteger("State", 2);
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.25f);
+            inAttackState = false;
             ChangeState(CharacterState.Run);
         }
     }

@@ -283,9 +283,9 @@ public class GameManager : MonoBehaviour
         yTime += 1.5f * (Time.deltaTime);
         xTime += 3.0f * (Time.deltaTime);
 
-        Vector3 pos = new Vector3(/*15 * Mathf.Sin(yTime * Mathf.PI)*/Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
-        cameraPivot.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
-        player.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+        Vector3 pos = new Vector3(Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
+        cameraPivot.transform.rotation = Quaternion.Euler(0, pos.y, 0);
+        player.transform.rotation = Quaternion.Euler(0, pos.y, 0);
 
         // if xtime is at .5, swap the start and end
         // if ytime
@@ -315,10 +315,9 @@ public class GameManager : MonoBehaviour
                 switch (currentRotationStep % 4)
                 {
                     case 0:
-                        Debug.Log("Case 0");
                         playerScript.side = 0;
                         playerScript.forward = new Vector3(1, 0, 0);
-                        newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, lowestZ);
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, lowestZ);
                         foreach (var platform in rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
@@ -344,7 +343,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Case -1 or 3");
                         playerScript.side = 1;
                         playerScript.forward = new Vector3(0, 0, 1);
-                        newPlayerPos = new Vector3(highestX, player.transform.position.y, player.transform.position.z);
+                        newPlayerPos = new Vector3(highestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
                         foreach (var platform in frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
@@ -359,20 +358,18 @@ public class GameManager : MonoBehaviour
                         }
                         foreach (var platform in rightPlatforms)
                         {
-                            Debug.Log("HighestX: " + highestX + "\nPlatform Pos: " + platform.transform.position.x);
+
                             float xPos = highestX - platform.transform.position.x;
                             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
                             platformPos = new Vector3(xPos, 0, 0);
                             platform.GetComponent<BoxCollider>().center = platformPos;
-                            Debug.Log(platform.GetComponent<BoxCollider>().center);
                         }
                         break;
                     case 2:
                     case -2:
-                        Debug.Log("Case -2 or 2");
                         playerScript.side = 2;
                         playerScript.forward = new Vector3(-1, 0, 0);
-                        newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, highestZ);
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, highestZ);
                         
                         foreach (var platform in rightPlatforms)
                         {
@@ -396,10 +393,9 @@ public class GameManager : MonoBehaviour
                         break;
                     case 1:
                     case -3:
-                        Debug.Log("Case 1 or -3");
                         playerScript.side = 3;
                         playerScript.forward = new Vector3(0, 0, -1);
-                        newPlayerPos = new Vector3(lowestX, player.transform.position.y, player.transform.position.z);
+                        newPlayerPos = new Vector3(lowestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
                         foreach (var platform in frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
@@ -408,11 +404,11 @@ public class GameManager : MonoBehaviour
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in leftPlatforms)
+                        foreach (var platform in rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in rightPlatforms)
+                        foreach (var platform in leftPlatforms)
                         {
                             float xPos = lowestX - platform.transform.position.x;
                             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;

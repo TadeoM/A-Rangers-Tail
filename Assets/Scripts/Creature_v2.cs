@@ -10,7 +10,9 @@ public class Creature_v2 : MonoBehaviour {
     public LayerMask whatIsGround = 9;
 
     public Rigidbody m_Rigidbody;
-    protected Transform m_GroundCheck;
+    public Collider[] colliders;
+    public Collider standingOn;
+    public Transform m_GroundCheck;
     protected Transform m_CeilingCheck;   // A position marking where to check for ceilings
     public Vector3 velocity;
     public Vector3 direction;
@@ -24,6 +26,7 @@ public class Creature_v2 : MonoBehaviour {
     public bool grounded;
     public bool airControl;
     protected bool facingRight = true;  // For determining which way the player is currently facing.
+    
 
     public float Gravity
     {
@@ -79,14 +82,12 @@ public class Creature_v2 : MonoBehaviour {
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider[] colliders;
         colliders = Physics.OverlapSphere(m_GroundCheck.position, .02f, whatIsGround);
-        Debug.Log("Num of Colliders: "+colliders.Length);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
             {
-                
+                // most platforms are oneways, but the bottom-most platforms are not, this is to not allow player to fall through the floor
                 if (colliders[i].gameObject.name.Contains("oneway"))
                 {
                     if (m_GroundCheck.position.y > -0.05f + colliders[i].gameObject.transform.position.y + (colliders[i].GetComponent<MeshRenderer>().bounds.extents.y))
@@ -99,6 +100,7 @@ public class Creature_v2 : MonoBehaviour {
                         grounded = true;
                         m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
                         m_Rigidbody.freezeRotation = true;
+                        standingOn = colliders[i];
                     }
                 }
                 else
@@ -110,57 +112,24 @@ public class Creature_v2 : MonoBehaviour {
                     grounded = true;
                     m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
                     m_Rigidbody.freezeRotation = true;
-                    
-                    
+                    standingOn = colliders[i];
                 }
             }
         }
-        //m_Anim.SetBool("Ground", m_Grounded);
-
-        // Set the vertical animation
-       // m_Anim.SetFloat("vSpeed", m_Rigidbody.velocity.y);
     }
 
     public virtual void Move(bool slowDown)
     {
-        // If crouching, check to see if the character can stand up
-        //if (!crouch && m_Anim.GetBool("Crouch"))
-        /*{
-            // If the character has a ceiling preventing them from standing up, keep them crouching
-            if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-            {
-                crouch = true;
-            }
-        }*/
-
         // Set whether or not the character is crouching in the animator
         // only control the player if grounded or airControl is turned on
         if (grounded||airControl) // || m_AirControl
         {
-            // Reduce the speed if crouching by the crouchSpeed multiplier
-            //move = (crouch ? move * m_CrouchSpeed : move);
-
-            // The Speed animator parameter is set to the absolute value of the horizontal input.
-            //m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
             // Move the character
             m_Rigidbody.velocity = new Vector3(direction.x * MaxSpeed, m_Rigidbody.velocity.y, direction.z * MaxSpeed);
             if(slowDown)
             {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
-            }
-
-            // If the input is moving the player right and the player is facing left...
-            if (direction.x > 0 && !facingRight || direction.z > 0 && !facingRight)
-            {
-                // ... flip the player.
-                //Flip();
-            }
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if (direction.x < 0 && facingRight || direction.z < 0 && facingRight)
-            {
-                // ... flip the player.
-                //Flip();
             }
         }
     }
@@ -171,11 +140,6 @@ public class Creature_v2 : MonoBehaviour {
         // Switch the way the player is labelled as facing.
         facingRight = !facingRight;
         transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
-
-        // Multiply the player's x local scale by -1.
-        //Vector3 theScale = transform.localScale;
-        //theScale.x *= -1;
-        //transform.localScale = theScale;
     }
     public void SetPosition(Vector3 newPos)
     {
@@ -185,6 +149,5 @@ public class Creature_v2 : MonoBehaviour {
     public virtual void TakeDamage(int dmg)
     {
         health -= dmg;
-        
     }
 }

@@ -57,5 +57,10 @@ public abstract class Enemy : Creature_v2 {
         }
     }
 
-    protected abstract void PerformLunge();
+    public virtual void DealDamage(GameObject player)
+    {
+        player.GetComponent<Player_v2>().TakeDamage(5);
+    }
+
+
 }

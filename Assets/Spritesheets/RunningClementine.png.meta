@@ -1,14 +1,18 @@
 fileFormatVersion: 2
-guid: 07a43cabb1851c844adb2dbd7883138b
+guid: 95f764e1f6b63054ca15ea7b416df84c
 TextureImporter:
   fileIDToRecycleName:
-    21300000: attackSheet_0
-    21300002: attackSheet_1
-    21300004: attackSheet_2
-    21300006: attackSheet_3
-    21300008: attackSheet_4
-    21300010: attackSheet_5
-    21300012: attackSheet_6
+    21300000: RunningClementine_0
+    21300002: RunningClementine_2
+    21300004: RunningClementine_3
+    21300006: RunningClementine_4
+    21300008: RunningClementine_6
+    21300010: RunningClementine_7
+    21300012: RunningClementine_8
+    21300014: RunningClementine_9
+    21300016: RunningClementine_11
+    21300018: RunningClementine_1
+    21300020: RunningClementine_5
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -98,156 +102,165 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: Windows Store Apps
-    maxTextureSize: 8192
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attackSheet_0
+      name: RunningClementine_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
-        width: 79
-        height: 63
-      alignment: 9
-      pivot: {x: 0.49367088, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9c7864f404d79314881ee119c883a40a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_1
-      rect:
-        serializedVersion: 2
-        x: 132
-        y: 1
-        width: 92
-        height: 59
-      alignment: 9
-      pivot: {x: 0.42391303, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c22f4a3fb3c2a8746955ec4bfec06fef
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_2
-      rect:
-        serializedVersion: 2
-        x: 257
-        y: 2
-        width: 114
-        height: 53
-      alignment: 9
-      pivot: {x: 0.34210527, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e0755f144143de34bbe2de6b7a1274ae
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_3
-      rect:
-        serializedVersion: 2
-        x: 385
-        y: 1
-        width: 126
-        height: 54
-      alignment: 9
-      pivot: {x: 0.30952382, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 34de138c698bf6a479dbaeed3637c375
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_4
-      rect:
-        serializedVersion: 2
-        x: 513
         y: 0
-        width: 127
-        height: 55
-      alignment: 9
-      pivot: {x: 0.30708662, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dd3bd42ce6bc8ac49afa414b9a4d87d1
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_5
-      rect:
-        serializedVersion: 2
-        x: 642
-        y: 1
-        width: 114
-        height: 59
-      alignment: 9
-      pivot: {x: 0.34210527, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 93ff86578701b284f989aa3935c8e411
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_6
-      rect:
-        serializedVersion: 2
-        x: 760
-        y: 0
-        width: 136
+        width: 128
         height: 64
-      alignment: 9
-      pivot: {x: 0.2867647, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6034a3657b609b4f80db79762c49f53
+      spriteID: f0e37d9ba0275644cac5af8e6fd1debf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningClementine_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cf60b104d69cec40a0238674b84681e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningClementine_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4a3736e165f9b944b7745127a365f6f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningClementine_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c24559e04beca0469f3c502c2597dad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningClementine_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55aabda4be4eb14aab76f6fcb15be8c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningClementine_5
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4b7e21bbddb8aa40be917b3ebf9feec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningClementine_6
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be6b7f4cf8228c54da5e122e6476b2a0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RunningClementine_7
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b689701411c9ff14f9cfd0f380a0a006
       vertices: []
       indices: 
       edges: []
@@ -255,7 +268,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: fbcae148e05f53a4cbe8a5cbf45c2e23
+    spriteID: 157c6ce3112299b4fb5c410b71cb760e
     vertices: []
     indices: 
     edges: []

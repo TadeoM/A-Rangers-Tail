@@ -8,10 +8,10 @@ public class Player_v2 : Creature_v2 {
     int timesJumped;
     int maxJumps;
     public float dbljumpForce = 150;
-    float coolDown = 0.05f;
     float specialTimer;
     float specialCD = 3.0f;
     public bool notRotating;
+    public float cooldown;
     public Collider swordHitBox;
     public Collider bodyHitBox;
     private int staminaPoints;
@@ -207,7 +207,7 @@ public class Player_v2 : Creature_v2 {
             Jump(false);
             ChangeState(CharacterState.Jump);
         }
-        if(new Vector3(0.01f,0.01f,0.01f).magnitude>m_Rigidbody.velocity.magnitude)
+        if(new Vector3(0.01f,0.01f,0.01f).magnitude>=m_Rigidbody.velocity.magnitude)
         {
             if (currentCharState != CharacterState.Attack)
                 ChangeState(CharacterState.Idle);
@@ -222,10 +222,8 @@ public class Player_v2 : Creature_v2 {
                 if (Input.GetKeyDown(KeyCode.Mouse0) && !special)
                 {
                     comboIndex = 0;
-                  
-                    attkTimer = coolDown;
-
                     currAttackstate = attack.Attacking;
+                    attkTimer = attackDuration[0];
                     ChangeState(CharacterState.Attack);
                     chainedHits = 1;
                 }
@@ -245,8 +243,9 @@ public class Player_v2 : Creature_v2 {
 
                 if(attkTimer<0)//ran out of time to chain combo
                 {
-                    comboIndex = -1;
+                    comboIndex = 0;
                     currAttackstate = attack.Idle;
+                    ChangeState(CharacterState.Idle);
                 }
 
                 if(Input.GetMouseButton(0))//continue attacking
@@ -255,9 +254,10 @@ public class Player_v2 : Creature_v2 {
 
                     if(comboIndex>=attackDuration.Length)//Check if the combo is over, start a new combo
                     {
-                        comboIndex = -1;
+                        comboIndex = 0;
                         currAttackstate = attack.Idle;
                         //Tell animation to play first attack
+                        ChangeState(CharacterState.Attack);
                         chainedHits++;
 
                     }
@@ -266,27 +266,13 @@ public class Player_v2 : Creature_v2 {
                         {
                             currAttackstate = attack.Attacking;
                             attkTimer = attackDuration[comboIndex];
-
+                        ChangeState(CharacterState.Attack);
                             chainedHits++;
                         }
+                    Debug.Log("In combo Attack, Index: "+comboIndex);
                 }
                 break;
         }
-        
-
-        if (attacking)
-        {
-            if (attkTimer > 0)
-            {
-                attkTimer -= Time.deltaTime;
-            }
-            else
-            {
-                attacking = false;
-               
-            }
-        }
-
         if (Input.GetMouseButtonDown(1) && !special)
         {
            
@@ -354,9 +340,9 @@ public class Player_v2 : Creature_v2 {
         currentCharState = newState;
         StartCoroutine(newState.ToString() + "State");
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision other)
     {
-        
+     
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -365,6 +351,14 @@ public class Player_v2 : Creature_v2 {
             TakeDamage(1);
             invisTimer = 60 * Time.deltaTime;
         }
+
+        /*
+        if (other.gameObject.layer == 11 && !invincible)
+        {
+            TakeDamage(1);
+            invisTimer = 60 * Time.deltaTime;
+        }
+        */
     }
 
     IEnumerator IdleState()
@@ -410,11 +404,31 @@ public class Player_v2 : Creature_v2 {
     {
         while (currentCharState == CharacterState.Attack)
         {
-            playerAnimator.SetInteger("State", 4);
-            swordHitBox.enabled = true;
-            yield return new WaitForSeconds(0.45f);
-            ChangeState(CharacterState.Idle);
-            swordHitBox.enabled = false;
+            if(comboIndex==0)
+            {
+                playerAnimator.SetInteger("State", 4);
+                swordHitBox.enabled = true;
+                yield return new WaitForSeconds(attkTimer);
+                swordHitBox.enabled = false;
+                Debug.Log("In Attack 1");
+            }
+            else if(comboIndex==1)
+            {
+                playerAnimator.SetInteger("State", 5);
+                swordHitBox.enabled = true;
+                yield return new WaitForSeconds(attkTimer);
+                swordHitBox.enabled = false;
+                Debug.Log("In Attack 2");
+            }
+            else if (comboIndex == 2)
+            {
+                playerAnimator.SetInteger("State", 6);
+                swordHitBox.enabled = true;
+                yield return new WaitForSeconds(attkTimer);
+                swordHitBox.enabled = false;
+                Debug.Log("In Attack 3");
+            }
+
         }
     }
     IEnumerator DeathState()
@@ -425,4 +439,5 @@ public class Player_v2 : Creature_v2 {
             yield return null;
         }
     }
+
 }

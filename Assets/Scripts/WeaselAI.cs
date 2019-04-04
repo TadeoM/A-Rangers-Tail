@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CentipedeAI : Enemy {
-
+public class WeaselAI : Enemy
+{
     enum Attacks
     {
-        Lunge, Charge
+        SwordSwing, Charge
     }
     public enum CharacterState
     {
         Idle,
         Run,
-        Lunge,
+        Attack,
         Charge,
         Jump,
         Fall,
@@ -40,15 +40,16 @@ public class CentipedeAI : Enemy {
     int iStart = 0;
     int iEnd = 1;
     // Use this for initialization
-    public override void Start () {
+    public override void Start()
+    {
         base.Start();
         MaxSpeed = 2f;
-        
+
 
         switch (side)
         {
             case 0:
-                forward  = new Vector3(1, 0, 0);
+                forward = new Vector3(1, 0, 0);
                 break;
             case 1:
                 forward = new Vector3(0, 0, 1);
@@ -72,12 +73,13 @@ public class CentipedeAI : Enemy {
         Health = 100;
         //attackCollider = GetComponentInChildren<CapsuleCollider>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if(player != null)
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (player != null)
         {
-            
+
             Vector3 leftOrRight = player.transform.position - transform.position;
             CheckPlayer();
             switch (side)
@@ -89,7 +91,7 @@ public class CentipedeAI : Enemy {
                     // player on left
                     else if (leftOrRight.x < 0)
                         direction = -forward;
-                    
+
                     break;
                 case 1:
                     // player on right
@@ -120,7 +122,7 @@ public class CentipedeAI : Enemy {
                     Debug.Log("Boyyyy, you snuffed up");
                     break;
             }
-            
+
             if (player.GetComponent<Player_v2>().side == side && Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) > 3f)
             {
                 Debug.Log(Vector3.Distance(player.transform.position, transform.position));
@@ -134,17 +136,17 @@ public class CentipedeAI : Enemy {
                 if (!inAttackState)
                 {
                     Debug.Log("At Attack Call");
-                        PerformLunge();
+                    PerformAttack();
                 }
 
             }
-            if(player.GetComponent<Player_v2>().side !=side)
+            if (player.GetComponent<Player_v2>().side != side)
             {
                 Move(true);
             }
             //Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);
         }
-       
+
         if (invisTimer > 0)
         {
             invisTimer -= Time.deltaTime;
@@ -170,109 +172,28 @@ public class CentipedeAI : Enemy {
         }
     }
 
-    protected void PerformLunge()
+    protected void PerformAttack()
     {
 
         Debug.Log("attack");
         Debug.Log(Vector3.Distance(player.transform.position, transform.position));
-        ChangeState(CharacterState.Lunge);
+        ChangeState(CharacterState.Attack);
         // needs change
         inAttackState = true;
-            attackChosen = Attacks.Lunge;
-    }
-    /*
-    private void AdjustColliders()
-    {
-        m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
-        switch (attackChosen)
-        {
-            case Attacks.Lunge:
-                if (attackTimer < 0.575)
-                    currTime += animSpeed;
+        attackChosen = Attacks.SwordSwing;
 
-                attackCollider.GetComponent<CapsuleCollider>().center = Vector3.Lerp(startAttackPos, endAttackPos, currTime);
-                attackCollider.GetComponent<CapsuleCollider>().height = Mathf.Lerp(startHeight, endHeight, currTime);
 
-                if (currTime > 1 && timesSwapped < 1)
-                {
-                    currTime = 0;
-                    Vector3 tempStartPos = startAttackPos;
-                    startAttackPos = endAttackPos;
-                    endAttackPos = tempStartPos;
-                    float tempStartHeight = startHeight;
-                    startHeight = endHeight;
-                    endHeight = tempStartHeight;
-                    timesSwapped++;
-                }
-                break;
-            case Attacks.Charge:
-                if(Vector3.Distance(player.transform.position, transform.position) > 3f)
-                {
-                    attackTimer = 0;
-                    Vector3 leftOrRight = player.transform.position - transform.position;
-                    switch (side)
-                    {
-                        case 0:
-                            // player on right
-                            if (leftOrRight.x > 0)
-                                direction = forward;
-                            // player on left
-                            else if (leftOrRight.x < 0)
-                                direction = -forward;                                
-                            break;
-                        case 1:
-                            // player on right
-                            if (leftOrRight.z > 0)
-                                direction = forward;
-                            //  player on left
-                            else
-                                direction = -forward;
-                            break;
-                        case 2:
-                            // player on right 
-                            if (leftOrRight.x < 0)
-                                direction = forward;
-                            // player on left
-                            else
-                                direction = -forward;
-                            break;
-                        case 3:
-                            // player on right
-                            if (leftOrRight.z < 0)
-                                direction = forward;
-                            // player on left
-                            else
-                                direction = -forward;
-                            //Debug.Log("Here");
-                            break;
-                        default:
-                            Debug.Log("Boyyyy, you snuffed up");
-                            break;
-                    }
-                    Move(false);
-                }
-                break;
-            default:
-                break;
-        }
-        if(attackTimer < 0.575)
-            currTime += animSpeed;
     }
-    */
     private void OnTriggerEnter(Collider col)
     {
-       
-        if (col.gameObject.CompareTag("playerweapon")&&!invincible)
+
+        if (col.gameObject.CompareTag("playerweapon") && !invincible)
         {
             TakeDamage(25);
             player.GetComponent<Player_v2>().combo += 1;
         }
-        
-        if(col.gameObject.CompareTag("playerhitbox")&&!invincible)
-        {
-            DealDamage(player);
-        }
-        
+
+
     }
     void StopEverything()
     {
@@ -285,29 +206,29 @@ public class CentipedeAI : Enemy {
     public void ShowFloatingText()
     {
         GameObject hpText;
-            if (side==0)
+        if (side == 0)
         {
 
-            hpText = Instantiate(floatingText, transform.position, Quaternion.identity , transform);
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
             hpText.GetComponent<TextMesh>().text = Health.ToString();
         }
-            else if (side==1)
+        else if (side == 1)
         {
             Debug.Log("Here");
             hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
             hpText.GetComponent<TextMesh>().text = Health.ToString();
         }
-            else if(side==2)
+        else if (side == 2)
         {
             hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
             hpText.GetComponent<TextMesh>().text = Health.ToString();
         }
-            else if(side==3)
+        else if (side == 3)
         {
             hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
             hpText.GetComponent<TextMesh>().text = Health.ToString();
         }
-        
+
     }
     */
     public override void TakeDamage(int dmg)
@@ -316,19 +237,11 @@ public class CentipedeAI : Enemy {
         base.TakeDamage(dmg);
         invincible = true;
         invisTimer = 1.25f;
-        /*
-        if (floatingText && Health>0)
-            ShowFloatingText();
-            */
+ 
         if (Health <= 0)
         {
             Destroy(this.gameObject);
         }
-    }
-
-    public override void DealDamage(GameObject player)
-    {
-
     }
     void ChangeState(CharacterState newState)
     {
@@ -354,8 +267,8 @@ public class CentipedeAI : Enemy {
     }
     IEnumerator LungeState()
     {
-   
-        while (currentCharState == CharacterState.Lunge)
+
+        while (currentCharState == CharacterState.Attack)
         {
             attackTimer = 0;
             animator.SetInteger("State", 2);
@@ -364,5 +277,4 @@ public class CentipedeAI : Enemy {
             ChangeState(CharacterState.Run);
         }
     }
-    
 }

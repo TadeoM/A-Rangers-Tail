@@ -1,14 +1,16 @@
 fileFormatVersion: 2
-guid: 07a43cabb1851c844adb2dbd7883138b
+guid: 7eadc1aba5491f643be155e530392a66
 TextureImporter:
   fileIDToRecycleName:
-    21300000: attackSheet_0
-    21300002: attackSheet_1
-    21300004: attackSheet_2
-    21300006: attackSheet_3
-    21300008: attackSheet_4
-    21300010: attackSheet_5
-    21300012: attackSheet_6
+    21300000: Weasel_AttackToAttack_0
+    21300002: Weasel_AttackToAttack_1
+    21300004: Weasel_AttackToAttack_2
+    21300006: Weasel_AttackToAttack_3
+    21300008: Weasel_AttackToAttack_4
+    21300010: Weasel_AttackToAttack_5
+    21300012: Weasel_AttackToAttack_6
+    21300014: Weasel_AttackToAttack_7
+    21300016: Weasel_AttackToAttack_8
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -52,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 63
+  spritePixelsToUnits: 40
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -78,7 +80,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -89,18 +91,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Android
-    maxTextureSize: 1024
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: Windows Store Apps
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 2
@@ -113,141 +104,181 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attackSheet_0
+      name: Weasel_AttackToAttack_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
-        width: 79
-        height: 63
-      alignment: 9
-      pivot: {x: 0.49367088, y: 0}
+        y: 1024
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c7864f404d79314881ee119c883a40a
+      spriteID: 6123b1601da8f0540b09f78fbf23add2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attackSheet_1
+      name: Weasel_AttackToAttack_1
       rect:
         serializedVersion: 2
-        x: 132
-        y: 1
-        width: 92
-        height: 59
-      alignment: 9
-      pivot: {x: 0.42391303, y: 0}
+        x: 0
+        y: 896
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c22f4a3fb3c2a8746955ec4bfec06fef
+      spriteID: 842a6fd45d8fd904785b4d937a3715db
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attackSheet_2
+      name: Weasel_AttackToAttack_2
       rect:
         serializedVersion: 2
-        x: 257
-        y: 2
-        width: 114
-        height: 53
-      alignment: 9
-      pivot: {x: 0.34210527, y: 0}
+        x: 0
+        y: 768
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0755f144143de34bbe2de6b7a1274ae
+      spriteID: aa9776bbb629b4b47a8cc0db4441edf4
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attackSheet_3
+      name: Weasel_AttackToAttack_3
       rect:
         serializedVersion: 2
-        x: 385
-        y: 1
-        width: 126
-        height: 54
-      alignment: 9
-      pivot: {x: 0.30952382, y: 0}
+        x: 0
+        y: 640
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34de138c698bf6a479dbaeed3637c375
+      spriteID: 0299b605cf5e70c4b94e5a57b5ec458d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attackSheet_4
+      name: Weasel_AttackToAttack_4
       rect:
         serializedVersion: 2
-        x: 513
+        x: 0
+        y: 512
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b9f97b17223524489fdd717037e34d2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weasel_AttackToAttack_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e4f78c5525f64f4bb28c99c42fe0c65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weasel_AttackToAttack_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 759bb6d40391f254c97388c0bd1baa65
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weasel_AttackToAttack_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 069216503fa22dd46a945a7d9edf3518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Weasel_AttackToAttack_8
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
-        width: 127
-        height: 55
-      alignment: 9
-      pivot: {x: 0.30708662, y: 0}
+        width: 128
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd3bd42ce6bc8ac49afa414b9a4d87d1
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_5
-      rect:
-        serializedVersion: 2
-        x: 642
-        y: 1
-        width: 114
-        height: 59
-      alignment: 9
-      pivot: {x: 0.34210527, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 93ff86578701b284f989aa3935c8e411
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: attackSheet_6
-      rect:
-        serializedVersion: 2
-        x: 760
-        y: 0
-        width: 136
-        height: 64
-      alignment: 9
-      pivot: {x: 0.2867647, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f6034a3657b609b4f80db79762c49f53
+      spriteID: a6d765785eadda04593d1467742e3cac
       vertices: []
       indices: 
       edges: []
@@ -255,7 +286,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: fbcae148e05f53a4cbe8a5cbf45c2e23
+    spriteID: 587428d0c240117439c8cfc7785fc6b1
     vertices: []
     indices: 
     edges: []

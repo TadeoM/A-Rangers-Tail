@@ -149,7 +149,7 @@ public class Player_v2 : Creature_v2 {
                 direction = forward;
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z);
             }
-            if (currentCharState != CharacterState.Attack)
+            if (currentCharState != CharacterState.Attack && currentCharState != CharacterState.Jump)
             {
                 ChangeState(CharacterState.Run);
                 Move(false);

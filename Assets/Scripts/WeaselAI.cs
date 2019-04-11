@@ -21,31 +21,23 @@ public class WeaselAI : Enemy
     public CharacterState currentCharState;
     public GameObject floatingText;
     private Attacks attackChosen;
-    public GameObject chargeCollider;
-    public GameObject attackCollider;
     public float attackTimer;
     private Animator animator;
-    private Vector3 startAttackPos;
-    private Vector3 endAttackPos;
-    private int timesSwapped;
-    private float currTime;
-    private float animSpeed;
-    private float startHeight;
-    private float endHeight;
     private bool inAttackState;
     private bool attacking;
     private bool invincible;
     private float invisTimer;
     private float lerpTime;
+    public bool firstAttack;
     int iStart = 0;
     int iEnd = 1;
     // Use this for initialization
     public override void Start()
     {
         base.Start();
-        MaxSpeed = 2f;
+        MaxSpeed = 1.5f;
 
-
+        firstAttack = false;
         switch (side)
         {
             case 0:
@@ -65,12 +57,12 @@ public class WeaselAI : Enemy
         }
 
         Debug.Log(gameObject.transform.forward);
-        creatureType = CreatureType.Bug;
+        creatureType = CreatureType.Weasel;
         currentCharState = CharacterState.Idle;
         inAttackState = false;
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
-        Health = 100;
+        Health = 75;
         //attackCollider = GetComponentInChildren<CapsuleCollider>();
     }
 
@@ -123,13 +115,13 @@ public class WeaselAI : Enemy
                     break;
             }
 
-            if (player.GetComponent<Player_v2>().side == side && Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) > 3f)
+            if (player.GetComponent<Player_v2>().side == side && Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) > 1f)
             {
-                Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+                Debug.Log("Weasel Running");
                 ChangeState(CharacterState.Run);
                 Move(false);
             }
-            else if (Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) < 3f && player.GetComponent<Player_v2>().side == side)
+            else if (Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) < 1f && player.GetComponent<Player_v2>().side == side)
             {
                 //Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);
                 Move(true);
@@ -179,7 +171,6 @@ public class WeaselAI : Enemy
         Debug.Log(Vector3.Distance(player.transform.position, transform.position));
         ChangeState(CharacterState.Attack);
         // needs change
-        inAttackState = true;
         attackChosen = Attacks.SwordSwing;
 
 
@@ -265,16 +256,35 @@ public class WeaselAI : Enemy
             yield return null;
         }
     }
-    IEnumerator LungeState()
+    IEnumerator AttackState()
     {
 
         while (currentCharState == CharacterState.Attack)
         {
+            firstAttack = true;
+            if(firstAttack)
+            {
+                animator.SetInteger("State", 2);
+                yield return new WaitForSeconds(0.9f);
+            }
             attackTimer = 0;
-            animator.SetInteger("State", 2);
-            yield return new WaitForSeconds(1.25f);
-            inAttackState = false;
-            ChangeState(CharacterState.Run);
+            firstAttack = false;
+            if (Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) < 1f)
+            {
+               
+                inAttackState = true;
+                animator.SetInteger("State", 3);
+                yield return new WaitForSeconds(0.65f);
+            }
+            else
+            {
+                inAttackState = false;
+                animator.SetInteger("State", 4);
+                ChangeState(CharacterState.Run);
+                yield return null;
+            }
+          
+            
         }
     }
 }

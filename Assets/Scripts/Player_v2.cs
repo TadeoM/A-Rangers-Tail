@@ -118,7 +118,7 @@ public class Player_v2 : Creature_v2 {
             gameObject.GetComponent<SpriteRenderer>().color = newColor;
         }
 
-        if (rbdy.velocity.y < 0)
+        if (m_Rigidbody.velocity.y < 0)
         {
             ChangeState(CharacterState.Fall);
         }
@@ -198,18 +198,20 @@ public class Player_v2 : Creature_v2 {
 
         if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Space))
         {
+            ChangeState(CharacterState.Fall);
             Jump(true);
         }
         else if (Input.GetKeyDown(KeyCode.Space) && timesJumped < maxJumps)
         {
+            ChangeState(CharacterState.Jump);
             timesJumped++;
             jump = true;
             Jump(false);
-            ChangeState(CharacterState.Jump);
+            
         }
-        if(new Vector3(0.01f,0.01f,0.01f).magnitude>=m_Rigidbody.velocity.magnitude)
+        if(new Vector3(0.01f,0.0f,0.01f).magnitude>=m_Rigidbody.velocity.magnitude)
         {
-            if (currentCharState != CharacterState.Attack)
+            if (currentCharState != CharacterState.Attack && Grounded == true) 
                 ChangeState(CharacterState.Idle);
         }
     }
@@ -299,10 +301,12 @@ public class Player_v2 : Creature_v2 {
         // If the player should jump...
         if (jump && !down) // && m_Anim.GetBool("Ground")
         {
+            
             // Add a vertical force to the player.
             m_Rigidbody.constraints = RigidbodyConstraints.None;
             m_Rigidbody.freezeRotation = true;
             Grounded = false;
+          
             if (timesJumped == maxJumps)
                 m_Rigidbody.AddForce(new Vector3(0, dbljumpForce));
             else
@@ -314,6 +318,7 @@ public class Player_v2 : Creature_v2 {
             m_Rigidbody.constraints = RigidbodyConstraints.None;
             m_Rigidbody.freezeRotation = true;
             Grounded = false;
+          
             //m_Anim.SetBool("Ground", false);
             m_Rigidbody.AddForce(new Vector3(0f, -JumpStrength));
             jump = false;
@@ -381,6 +386,7 @@ public class Player_v2 : Creature_v2 {
 
     IEnumerator JumpState()
     {
+  
         while (currentCharState == CharacterState.Jump)
         {
             playerAnimator.SetInteger("State", 2);

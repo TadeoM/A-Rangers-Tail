@@ -25,13 +25,6 @@ public class CentipedeAI : Enemy {
     public GameObject attackCollider;
     public float attackTimer;
     private Animator animator;
-    private Vector3 startAttackPos;
-    private Vector3 endAttackPos;
-    private int timesSwapped;
-    private float currTime;
-    private float animSpeed;
-    private float startHeight;
-    private float endHeight;
     private bool inAttackState;
     private bool attacking;
     private bool invincible;

@@ -79,8 +79,9 @@ public class Player_v2 : Creature_v2 {
         base.FixedUpdate();
         if(notRotating)
         {
-            MouseCheck();
             KeyboardCheck();
+            MouseCheck();
+            
             
         }
         else
@@ -118,7 +119,7 @@ public class Player_v2 : Creature_v2 {
             gameObject.GetComponent<SpriteRenderer>().color = newColor;
         }
 
-        if (m_Rigidbody.velocity.y < 0)
+        if (m_Rigidbody.velocity.y < 0 && currentCharState!=CharacterState.Jump)
         {
             ChangeState(CharacterState.Fall);
         }

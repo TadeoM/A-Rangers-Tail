@@ -8,6 +8,10 @@ public class Player_v2 : Creature_v2 {
     int timesJumped;
     int maxJumps;
     public float dbljumpForce = 150;
+    public float rollTime;
+    public float startRollTime;
+    public float rollSpeed;
+    public float rollCD;
     float specialTimer;
     float specialCD = 3.0f;
     public bool notRotating;
@@ -37,6 +41,7 @@ public class Player_v2 : Creature_v2 {
         Attack,
         Jump,
         Fall,
+        Roll,
         Death
     }
 
@@ -76,6 +81,7 @@ public class Player_v2 : Creature_v2 {
     // Update is called once per frame
     public override void FixedUpdate()
     {
+      
         base.FixedUpdate();
         if(notRotating)
         {
@@ -119,7 +125,7 @@ public class Player_v2 : Creature_v2 {
             gameObject.GetComponent<SpriteRenderer>().color = newColor;
         }
 
-        if (m_Rigidbody.velocity.y < 0 && currentCharState!=CharacterState.Jump)
+        if (m_Rigidbody.velocity.y < 0)
         {
             ChangeState(CharacterState.Fall);
         }
@@ -133,11 +139,7 @@ public class Player_v2 : Creature_v2 {
         if (Input.GetKey(KeyCode.D))
         {
             direction = forward;
-            if (!facingRight && (side == 0 || side == 1))
-            {
-                Flip();
-            }
-            else if(!facingRight && (side == 2 || side == 3))
+            if (!facingRight)
             {
                 Flip();
             }
@@ -155,18 +157,12 @@ public class Player_v2 : Creature_v2 {
                 ChangeState(CharacterState.Run);
                 Move(false);
             }
-                
-           
         }
         else if (Input.GetKey(KeyCode.A))
         {
             direction = -forward;
 
-           if(facingRight && (side == 0 || side == 1))
-            {
-                Flip();
-            }
-            else if (facingRight && (side == 2 || side ==3))
+           if(facingRight)
             {
                 Flip();
             }
@@ -183,20 +179,40 @@ public class Player_v2 : Creature_v2 {
                 ChangeState(CharacterState.Run);
                 Move(false);
             }
-               
-           
-
         }
         else if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
         {
             Move(true);
            
         }
+        
         else
         {
+           
             m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * 0.67f, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z * 0.67f);
         }
-
+        
+        if(Input.GetKeyDown(KeyCode.LeftShift) && Grounded && rollCD<0)
+        {
+            Debug.Log("I pressed shift question mark");
+           
+                if(direction == -forward)
+                {
+                    Debug.Log("Roll input");
+                  
+                    ChangeState(CharacterState.Roll);
+                    m_Rigidbody.velocity = new Vector3(0, 0, (m_Rigidbody.velocity.z * rollSpeed)+1.0f);
+                
+                }
+                else if(direction == forward)
+                {
+                    Debug.Log("Roll input");
+                
+                    ChangeState(CharacterState.Roll);
+                    m_Rigidbody.velocity = new Vector3((m_Rigidbody.velocity.x * rollSpeed)+1.0f, 0, 0);
+                }
+           
+        }
         if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.Space))
         {
             ChangeState(CharacterState.Fall);
@@ -210,11 +226,12 @@ public class Player_v2 : Creature_v2 {
             Jump(false);
             
         }
-        if(new Vector3(0.01f,0.0f,0.01f).magnitude>=m_Rigidbody.velocity.magnitude)
+        if(new Vector3(0.001f,0.0f,0.001f).magnitude>m_Rigidbody.velocity.magnitude)
         {
             if (currentCharState != CharacterState.Attack && Grounded == true) 
                 ChangeState(CharacterState.Idle);
         }
+        rollCD -= Time.deltaTime;
     }
     void MouseCheck()
     {
@@ -400,11 +417,21 @@ public class Player_v2 : Creature_v2 {
         while (currentCharState == CharacterState.Fall)
         {
             playerAnimator.SetInteger("State", 3);
-            if(grounded)
+            if(Grounded)
             {
                 ChangeState(CharacterState.Idle);
             }
             yield return null;
+        }
+    }
+    IEnumerator RollState()
+    {
+        while (currentCharState == CharacterState.Roll)
+        {
+            Debug.Log("Roll Duration");
+            playerAnimator.SetInteger("State", 7);
+            rollCD = 15.0f;
+            yield return new WaitForSeconds(0.7f);
         }
     }
     IEnumerator AttackState()

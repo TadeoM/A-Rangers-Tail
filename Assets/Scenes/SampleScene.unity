@@ -167,20 +167,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 65933042605396050, guid: e9784d4e888bc48419c38d02d1f42d20,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114897953849572938, guid: e9784d4e888bc48419c38d02d1f42d20,
-        type: 3}
-      propertyPath: bodyHitBox
-      value: 
-      objectReference: {fileID: 1017393543}
-    - target: {fileID: 1599796963359844, guid: e9784d4e888bc48419c38d02d1f42d20, type: 3}
-      propertyPath: m_TagString
-      value: playerhitbox
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9784d4e888bc48419c38d02d1f42d20, type: 3}
 --- !u!1 &83567543
@@ -2721,12 +2707,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011173018}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &1017393543 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 65933042605396050, guid: e9784d4e888bc48419c38d02d1f42d20,
-    type: 3}
-  m_PrefabInstance: {fileID: 32404863}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1093362117
 GameObject:
   m_ObjectHideFlags: 0

@@ -329,10 +329,14 @@ MonoBehaviour:
   grounded: 0
   airControl: 0
   dbljumpForce: 150
+  rollTime: 0
+  startRollTime: 0
+  rollSpeed: 3
+  rollCD: 0
   notRotating: 0
   cooldown: 0
   swordHitBox: {fileID: 65965119899067946}
-  bodyHitBox: {fileID: 0}
+  bodyHitBox: {fileID: 65933042605396050}
   waitTimer: 0.4
   combo: 0
   chainedHits: 0
@@ -491,7 +495,7 @@ GameObject:
   - component: {fileID: 65933042605396050}
   m_Layer: 10
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: playerhitbox
   m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -518,7 +522,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599796963359844}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.83, y: 0.9, z: 0.2}

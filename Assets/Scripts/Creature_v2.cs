@@ -10,7 +10,9 @@ public class Creature_v2 : MonoBehaviour {
     public LayerMask whatIsGround = 9;
 
     public Rigidbody m_Rigidbody;
-    protected Transform m_GroundCheck;
+    public Collider[] colliders;
+    public Collider standingOn;
+    public Transform m_GroundCheck;
     protected Transform m_CeilingCheck;   // A position marking where to check for ceilings
     public Vector3 velocity;
     public Vector3 direction;
@@ -23,7 +25,8 @@ public class Creature_v2 : MonoBehaviour {
     private int health;
     public bool grounded;
     public bool airControl;
-    private bool facingRight = true;  // For determining which way the player is currently facing.
+    protected bool facingRight = true;  // For determining which way the player is currently facing.
+    
 
     public float Gravity
     {
@@ -79,14 +82,12 @@ public class Creature_v2 : MonoBehaviour {
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider[] colliders;
         colliders = Physics.OverlapSphere(m_GroundCheck.position, .02f, whatIsGround);
-
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
             {
-                
+                // most platforms are oneways, but the bottom-most platforms are not, this is to not allow player to fall through the floor
                 if (colliders[i].gameObject.name.Contains("oneway"))
                 {
                     if (m_GroundCheck.position.y > -0.05f + colliders[i].gameObject.transform.position.y + (colliders[i].GetComponent<MeshRenderer>().bounds.extents.y))
@@ -99,6 +100,7 @@ public class Creature_v2 : MonoBehaviour {
                         grounded = true;
                         m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
                         m_Rigidbody.freezeRotation = true;
+                        standingOn = colliders[i];
                     }
                 }
                 else if (!colliders[i].gameObject.name.Contains("Door"))
@@ -110,15 +112,10 @@ public class Creature_v2 : MonoBehaviour {
                     grounded = true;
                     m_Rigidbody.constraints = RigidbodyConstraints.FreezePositionY;
                     m_Rigidbody.freezeRotation = true;
-                    
-                    
+                    standingOn = colliders[i];
                 }
             }
         }
-        //m_Anim.SetBool("Ground", m_Grounded);
-
-        // Set the vertical animation
-       // m_Anim.SetFloat("vSpeed", m_Rigidbody.velocity.y);
     }
 
     public virtual void Move(bool slowDown)
@@ -127,33 +124,22 @@ public class Creature_v2 : MonoBehaviour {
         // only control the player if grounded or airControl is turned on
         if (grounded||airControl) // || m_AirControl
         {
+
             // Move the character
             m_Rigidbody.velocity = new Vector3(direction.x * MaxSpeed, m_Rigidbody.velocity.y, direction.z * MaxSpeed);
             if(slowDown)
             {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
             }
-
-            // If the input is moving the player right and the player is facing left...
-            if (direction.x > 0 && !facingRight || direction.z > 0 && !facingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if (direction.x < 0 && facingRight || direction.z < 0 && facingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
         }
     }
 
 
-    private void Flip()
+    protected void Flip()
     {
         // Switch the way the player is labelled as facing.
         facingRight = !facingRight;
+        transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
     }
     public void SetPosition(Vector3 newPos)
     {
@@ -163,9 +149,5 @@ public class Creature_v2 : MonoBehaviour {
     public virtual void TakeDamage(int dmg)
     {
         health -= dmg;
-        if(health <= 0)
-        {
-            Destroy(this.gameObject);
-        }
     }
 }

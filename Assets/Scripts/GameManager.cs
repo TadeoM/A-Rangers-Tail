@@ -126,9 +126,9 @@ public class GameManager : MonoBehaviour
         yTime += 1.5f * (Time.deltaTime);
         xTime += 3.0f * (Time.deltaTime);
 
-        Vector3 pos = new Vector3(/*15 * Mathf.Sin(yTime * Mathf.PI)*/Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
-        cameraPivot.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
-        player.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+        Vector3 pos = new Vector3(Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
+        cameraPivot.transform.rotation = Quaternion.Euler(0, pos.y, 0);
+        player.transform.rotation = Quaternion.Euler(0, pos.y, 0);
 
         // if xtime is at .5, swap the start and end
         // if ytime
@@ -162,6 +162,8 @@ public class GameManager : MonoBehaviour
                         playerScript.forward = new Vector3(1, 0, 0);
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ);
                         foreach (var platform in areaScripts[currentArea].rightPlatforms)
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, lowestZ);
+                        foreach (var platform in rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
@@ -187,6 +189,8 @@ public class GameManager : MonoBehaviour
                         playerScript.forward = new Vector3(0, 0, 1);
                         newPlayerPos = new Vector3(areaScripts[currentArea].highestX, player.transform.position.y, player.transform.position.z);
                         foreach (var platform in areaScripts[currentArea].frontPlatforms)
+                        newPlayerPos = new Vector3(highestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
+                        foreach (var platform in frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
@@ -208,9 +212,9 @@ public class GameManager : MonoBehaviour
                         break;
                     case 2:
                     case -2:
-                        Debug.Log("Case -2 or 2");
                         playerScript.side = 2;
                         playerScript.forward = new Vector3(-1, 0, 0);
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, highestZ);
                         newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].highestZ);
                         
                         foreach (var platform in areaScripts[currentArea].rightPlatforms)
@@ -235,7 +239,6 @@ public class GameManager : MonoBehaviour
                         break;
                     case 1:
                     case -3:
-                        Debug.Log("Case 1 or -3");
                         playerScript.side = 3;
                         playerScript.forward = new Vector3(0, 0, -1);
                         newPlayerPos = new Vector3(areaScripts[currentArea].lowestX, player.transform.position.y, player.transform.position.z);
@@ -265,7 +268,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 pos = new Vector3(/*15 * Mathf.Sin(yTime * Mathf.PI)*/Mathf.Lerp(xStart, xEnd, xTime), Mathf.Lerp(yStart, yEnd, yTime), 0);
-                cameraPivot.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
+                cameraPivot.transform.rotation = Quaternion.Euler(Mathf.Round(pos.x), Mathf.Round(pos.y), 0);
                 player.transform.rotation = Quaternion.Euler(pos.x, pos.y, 0);
 
                 xStart = OGxStart;

@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponHitTrigger : MonoBehaviour
-{
-    public int dmg;
+{ 
+    int dmg;
+    PlayerAttack playerAttk;
+    GameObject hittarget;
 
-    // Use this for initialization
-    void OnTriggerEnter2D(Collider2D col)
+    private void Awake()
     {
-        if(col.isTrigger!=true && col.CompareTag("Enemy"))
+
+    }
+    // Use this for initialization
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("bug"))
         {
-            col.SendMessageUpwards("Damage", dmg);
+           
         }
     }
 }

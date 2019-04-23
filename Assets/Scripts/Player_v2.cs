@@ -33,7 +33,6 @@ public class Player_v2 : Creature_v2 {
     public float[] attackDuration;
     public int comboIndex;
     Animator playerAnimator;
-    Rigidbody rbdy;
     public enum CharacterState
     {
         Idle,
@@ -74,7 +73,6 @@ public class Player_v2 : Creature_v2 {
         //coolDown = 0.75f;
         swordHitBox.enabled = false;
         playerAnimator = GetComponent<Animator>();
-        rbdy = GetComponent<Rigidbody>();
         attacking = false;
     }
 
@@ -129,7 +127,10 @@ public class Player_v2 : Creature_v2 {
         {
             ChangeState(CharacterState.Fall);
         }
-
+        else if (currentCharState == CharacterState.Jump && grounded)
+        {
+            ChangeState(CharacterState.Idle);
+        }
     }
 
     void KeyboardCheck()

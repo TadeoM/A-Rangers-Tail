@@ -2296,9 +2296,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1599796963359844, guid: e9784d4e888bc48419c38d02d1f42d20, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
+    - target: {fileID: 4565924304293140, guid: e9784d4e888bc48419c38d02d1f42d20, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.108
+      objectReference: {fileID: 0}
+    - target: {fileID: 54254545375539246, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54254545375539246, guid: e9784d4e888bc48419c38d02d1f42d20,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114897953849572938, guid: e9784d4e888bc48419c38d02d1f42d20,
         type: 3}
@@ -2315,24 +2325,14 @@ PrefabInstance:
       propertyPath: m_GroundCheck
       value: 
       objectReference: {fileID: 1407551056}
-    - target: {fileID: 54254545375539246, guid: e9784d4e888bc48419c38d02d1f42d20,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 54254545375539246, guid: e9784d4e888bc48419c38d02d1f42d20,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4565924304293140, guid: e9784d4e888bc48419c38d02d1f42d20, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.108
-      objectReference: {fileID: 0}
     - target: {fileID: 65933042605396050, guid: e9784d4e888bc48419c38d02d1f42d20,
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599796963359844, guid: e9784d4e888bc48419c38d02d1f42d20, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9784d4e888bc48419c38d02d1f42d20, type: 3}

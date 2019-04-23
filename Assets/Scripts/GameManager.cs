@@ -160,10 +160,8 @@ public class GameManager : MonoBehaviour
                     case 0:
                         playerScript.side = 0;
                         playerScript.forward = new Vector3(1, 0, 0);
-                        newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ);
-                        foreach (var platform in areaScripts[currentArea].rightPlatforms)
-                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, lowestZ);
-                        foreach (var platform in rightPlatforms)
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ);
+                        foreach (var platform in areaScripts[currentArea].backPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
@@ -187,10 +185,8 @@ public class GameManager : MonoBehaviour
                     case 3:
                         playerScript.side = 1;
                         playerScript.forward = new Vector3(0, 0, 1);
-                        newPlayerPos = new Vector3(areaScripts[currentArea].highestX, player.transform.position.y, player.transform.position.z);
+                        newPlayerPos = new Vector3(areaScripts[currentArea].highestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
                         foreach (var platform in areaScripts[currentArea].frontPlatforms)
-                        newPlayerPos = new Vector3(highestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
-                        foreach (var platform in frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
@@ -214,8 +210,7 @@ public class GameManager : MonoBehaviour
                     case -2:
                         playerScript.side = 2;
                         playerScript.forward = new Vector3(-1, 0, 0);
-                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, highestZ);
-                        newPlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].highestZ);
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, areaScripts[currentArea].highestZ);
                         
                         foreach (var platform in areaScripts[currentArea].rightPlatforms)
                         {
@@ -241,7 +236,7 @@ public class GameManager : MonoBehaviour
                     case -3:
                         playerScript.side = 3;
                         playerScript.forward = new Vector3(0, 0, -1);
-                        newPlayerPos = new Vector3(areaScripts[currentArea].lowestX, player.transform.position.y, player.transform.position.z);
+                        newPlayerPos = new Vector3(areaScripts[currentArea].lowestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
                         foreach (var platform in areaScripts[currentArea].frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
@@ -250,11 +245,11 @@ public class GameManager : MonoBehaviour
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in areaScripts[currentArea].leftPlatforms)
+                        foreach (var platform in areaScripts[currentArea].rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in areaScripts[currentArea].rightPlatforms)
+                        foreach (var platform in areaScripts[currentArea].leftPlatforms)
                         {
                             float xPos = areaScripts[currentArea].lowestX - platform.transform.position.x;
                             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
@@ -282,12 +277,13 @@ public class GameManager : MonoBehaviour
 
 
     }
-    public void ChangeArea(int newArea)
+    public void ChangeArea(int newArea, int side)
     {
         areaScripts[currentArea].gameObject.SetActive(false);
         currentArea = newArea;
         areaScripts[currentArea].gameObject.SetActive(true);
-        playerScript.SetPosition(new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ));
+        //playerScript.SetPosition(new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ));
+        RotateScene();
     }
 }
 

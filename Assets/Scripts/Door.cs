@@ -12,7 +12,7 @@ public class Door : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().ChangeArea(areaEntrance);
+                GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().ChangeArea(areaEntrance, collision.GetComponentInParent<Player_v2>().side);
             }
         }
     }

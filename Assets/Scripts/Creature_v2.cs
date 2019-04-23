@@ -82,7 +82,7 @@ public class Creature_v2 : MonoBehaviour {
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        colliders = Physics.OverlapSphere(m_GroundCheck.position, .05f, whatIsGround);
+        colliders = Physics.OverlapSphere(m_GroundCheck.position, .1f, whatIsGround);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)

@@ -23,7 +23,6 @@ public class Player_v2 : Creature_v2 {
     int iStart = 0;
     int iEnd = 1;
     Animator playerAnimator;
-    Rigidbody rbdy;
     public enum CharacterState
     {
         Idle,
@@ -52,7 +51,6 @@ public class Player_v2 : Creature_v2 {
         //coolDown = 0.75f;
         swordHitBox.enabled = false;
         playerAnimator = GetComponent<Animator>();
-        rbdy = GetComponent<Rigidbody>();
         attacking = false;
     }
 
@@ -101,7 +99,7 @@ public class Player_v2 : Creature_v2 {
             gameObject.GetComponent<SpriteRenderer>().color = newColor;
         }
 
-        if (rbdy.velocity.y < 0)
+        if (m_Rigidbody.velocity.y < 0)
         {
             ChangeState(CharacterState.Fall);
         }

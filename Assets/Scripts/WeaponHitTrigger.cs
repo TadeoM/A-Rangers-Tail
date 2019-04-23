@@ -15,9 +15,6 @@ public class WeaponHitTrigger : MonoBehaviour
     // Use this for initialization
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("bug"))
-        {
-           
-        }
+        
     }
 }

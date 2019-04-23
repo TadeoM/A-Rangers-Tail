@@ -6,11 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject cameraPivot;
     public GameObject player;
-    public GameObject[] uncheckedPlatforms;    // [0] = rotation 0; [1] = rotation -90(90); [2] = rotation -180(180); [3] = rotation 90(270)
-    public List<GameObject> frontPlatforms;
-    public List<GameObject> rightPlatforms;
-    public List<GameObject> backPlatforms;
-    public List<GameObject> leftPlatforms;
+    public int currentArea;
+    public List<AreaCalculations> areaScripts;
     public float yStart;
     public float yEnd;
     public int currentRotationStep;
@@ -18,12 +15,6 @@ public class GameManager : MonoBehaviour
     private int rotateCount;
     private Player_v2 playerScript;
     private int desiredRotation;    // where we should be rotating to 
-    public int highestX;
-    public int lowestX;
-    public int highestZ;
-    public int lowestZ;
-    public int lowestY;
-    public int highestY;
     private bool rotateNeeded; // not used - how many rotations need to be done
     static private float yTime;
     static private float xTime;
@@ -34,20 +25,17 @@ public class GameManager : MonoBehaviour
     public float OGxEnd;
     public bool swapped;
 
+    // make a script in each area
+        // each area will calculate its children and check which ones would be on what side
+    // this script will grab all the areas and make sure the player is rotating through the area they are in.
+        // disable any area that the player is not in
+
     // Use this for initialization
     void Start()
     {
         playerScript = player.GetComponent<Player_v2>();
         currentRotationStep = 0;
-        uncheckedPlatforms = GameObject.FindGameObjectsWithTag("platform");
-        Vector3 firstObject = uncheckedPlatforms[0].GetComponent<Transform>().position;
-        // set all highest and lowest points to first box
-        highestX = (int)firstObject.x;
-        lowestX = (int)firstObject.x;
-        highestZ = (int)firstObject.z;
-        lowestZ = (int)firstObject.z;
-        lowestY = (int)firstObject.y;
-        highestY = (int)firstObject.y;
+
         yStart = 0.0f;
         yEnd = 0.0f;
         rotateNeeded = false;
@@ -58,157 +46,12 @@ public class GameManager : MonoBehaviour
         OGxStart = 0.0f;
         OGxEnd = 15.0f;
 
-        // go through each tile to check if it is the highest in the X and Z or the lowest
-        for (int i = 1; i < uncheckedPlatforms.Length; i++)
-        {
-            // transform.TransformPoint()
-            Vector3 currentLoc = uncheckedPlatforms[i].transform.position;
-            if (currentLoc.x > highestX)
-            {
-                highestX = (int)uncheckedPlatforms[i].transform.position.x;
-            }
-            else if (currentLoc.x < lowestX)
-            {
-                lowestX = (int)uncheckedPlatforms[i].transform.position.x;
-            }
-            if (currentLoc.z > highestZ)
-            {
-                highestZ = (int)uncheckedPlatforms[i].transform.position.z;
-            }
-            else if (currentLoc.z < lowestZ)
-            {
-                lowestZ = (int)uncheckedPlatforms[i].transform.position.z;
-            }
-            if (currentLoc.y > highestY)
-            {
-                highestY = (int)uncheckedPlatforms[i].transform.position.y;
-            }
-            else if (currentLoc.y < lowestY)
-            {
-                lowestY = (int)uncheckedPlatforms[i].transform.position.y;
-            }
-        }
-        float currentY = lowestY;
-        // go through the four different views and assign which platforms on which side view
-        for (int angle = 0; angle < 4; angle++)
-        {
-            RaycastHit hit;
-            Vector3 origin;
-            Vector3 direction;
-            switch (angle)
-            {
-                // front
-                case 0:
-                    // checks for which tiles are in the front
-                    for (int x = lowestX; x <= highestX; x++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(x, y, lowestZ - 1);
-                            direction = Vector3.forward;
-
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    frontPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (frontPlatforms[0].transform.position.z < hit.collider.gameObject.transform.position.z)
-                                    {
-                                        //frontPlatforms.Insert(0, hit.collider.gameObject);
-                                        //frontPlatforms.RemoveAt(frontPlatforms.Count - 1);
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                    break;
-                // right
-                case 1:
-                    for (int z = lowestZ; z <= highestZ; z++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(highestX + 1, y, z);
-                            direction = Vector3.left;
-
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    rightPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (rightPlatforms[0].transform.position.x < hit.collider.gameObject.transform.position.x)
-                                    {
-                                        //rightPlatforms.Insert(0, hit.collider.gameObject);
-                                        //rightPlatforms.RemoveAt(rightPlatforms.Count - 1);
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                    break;
-                // back
-                case 2:
-                    for (int x = lowestX; x <= highestX; x++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(x, y, highestZ + 1);
-                            direction = Vector3.back;
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    backPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*
-                                    if (backPlatforms[0].transform.position.z > hit.collider.gameObject.transform.position.z)
-                                    {
-                                        //backPlatforms.Insert(0, hit.collider.gameObject);
-                                        //backPlatforms.RemoveAt(backPlatforms.Count - 1);
-                                    } */
-                                }
-                            }
-                        }
-                    }
-                    break;
-                // left
-                case 3:
-                    for (int z = lowestZ; z <= highestZ; z++)
-                    {
-                        for (int y = lowestY; y <= highestY; y++)
-                        {
-                            origin = new Vector3(lowestX - 1, y, z);
-                            direction = Vector3.right;
-
-                            if (Physics.Raycast(origin, direction, out hit, 100))
-                            {
-                                if (hit.transform.gameObject.layer == 9)
-                                {
-                                    leftPlatforms.Add(hit.collider.gameObject);
-                                    // not sure what this did, but doesn't do anything useful so far so eh
-                                    /*if (leftPlatforms[0].transform.position.x > hit.collider.gameObject.transform.position.x)
-                                    {
-                                        leftPlatforms.Insert(0, hit.collider.gameObject);
-                                        leftPlatforms.RemoveAt(leftPlatforms.Count - 1);
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+        areaScripts[currentArea].enabled = true;
 
         //grab the front platforms and move them to the front
-        foreach (var platform in frontPlatforms)
+        foreach (var platform in areaScripts[currentArea].frontPlatforms)
         {
-            float zPos = lowestZ - platform.transform.position.z;
+            float zPos = areaScripts[currentArea].lowestZ - platform.transform.position.z;
             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
             platformPos = new Vector3(0, 0, zPos);
             platform.GetComponent<BoxCollider>().center = platformPos;
@@ -317,22 +160,22 @@ public class GameManager : MonoBehaviour
                     case 0:
                         playerScript.side = 0;
                         playerScript.forward = new Vector3(1, 0, 0);
-                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, lowestZ);
-                        foreach (var platform in rightPlatforms)
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ);
+                        foreach (var platform in areaScripts[currentArea].backPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in backPlatforms)
+                        foreach (var platform in areaScripts[currentArea].backPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in leftPlatforms)
+                        foreach (var platform in areaScripts[currentArea].leftPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in frontPlatforms)
+                        foreach (var platform in areaScripts[currentArea].frontPlatforms)
                         {
-                            float zPos = lowestZ - platform.transform.position.z;
+                            float zPos = areaScripts[currentArea].lowestZ - platform.transform.position.z;
                             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
                             platformPos = new Vector3(0, 0, zPos);
                             platform.GetComponent<BoxCollider>().center = platformPos;
@@ -340,26 +183,24 @@ public class GameManager : MonoBehaviour
                         break;
                     case -1:
                     case 3:
-                        Debug.Log("Case -1 or 3");
                         playerScript.side = 1;
                         playerScript.forward = new Vector3(0, 0, 1);
-                        newPlayerPos = new Vector3(highestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
-                        foreach (var platform in frontPlatforms)
+                        newPlayerPos = new Vector3(areaScripts[currentArea].highestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
+                        foreach (var platform in areaScripts[currentArea].frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in backPlatforms)
+                        foreach (var platform in areaScripts[currentArea].backPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in leftPlatforms)
+                        foreach (var platform in areaScripts[currentArea].leftPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in rightPlatforms)
+                        foreach (var platform in areaScripts[currentArea].rightPlatforms)
                         {
-
-                            float xPos = highestX - platform.transform.position.x;
+                            float xPos = areaScripts[currentArea].highestX - platform.transform.position.x;
                             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
                             platformPos = new Vector3(xPos, 0, 0);
                             platform.GetComponent<BoxCollider>().center = platformPos;
@@ -369,23 +210,23 @@ public class GameManager : MonoBehaviour
                     case -2:
                         playerScript.side = 2;
                         playerScript.forward = new Vector3(-1, 0, 0);
-                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, highestZ);
+                        newPlayerPos = new Vector3(playerScript.standingOn.transform.position.x, player.transform.position.y, areaScripts[currentArea].highestZ);
                         
-                        foreach (var platform in rightPlatforms)
+                        foreach (var platform in areaScripts[currentArea].rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in frontPlatforms)
+                        foreach (var platform in areaScripts[currentArea].frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in leftPlatforms)
+                        foreach (var platform in areaScripts[currentArea].leftPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in backPlatforms)
+                        foreach (var platform in areaScripts[currentArea].backPlatforms)
                         {
-                            float zPos = highestZ - platform.transform.position.z;
+                            float zPos = areaScripts[currentArea].highestZ - platform.transform.position.z;
                             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
                             platformPos = new Vector3(0, 0, zPos);
                             platform.GetComponent<BoxCollider>().center = platformPos;
@@ -395,22 +236,22 @@ public class GameManager : MonoBehaviour
                     case -3:
                         playerScript.side = 3;
                         playerScript.forward = new Vector3(0, 0, -1);
-                        newPlayerPos = new Vector3(lowestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
-                        foreach (var platform in frontPlatforms)
+                        newPlayerPos = new Vector3(areaScripts[currentArea].lowestX, player.transform.position.y, playerScript.standingOn.transform.position.z);
+                        foreach (var platform in areaScripts[currentArea].frontPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in backPlatforms)
+                        foreach (var platform in areaScripts[currentArea].backPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in rightPlatforms)
+                        foreach (var platform in areaScripts[currentArea].rightPlatforms)
                         {
                             platform.GetComponent<BoxCollider>().center = Vector3.zero;
                         }
-                        foreach (var platform in leftPlatforms)
+                        foreach (var platform in areaScripts[currentArea].leftPlatforms)
                         {
-                            float xPos = lowestX - platform.transform.position.x;
+                            float xPos = areaScripts[currentArea].lowestX - platform.transform.position.x;
                             Vector3 platformPos = platform.GetComponent<BoxCollider>().center;
                             platformPos = new Vector3(xPos, 0, 0);
                             platform.GetComponent<BoxCollider>().center = platformPos;
@@ -435,6 +276,14 @@ public class GameManager : MonoBehaviour
         }
 
 
+    }
+    public void ChangeArea(int newArea, int side)
+    {
+        areaScripts[currentArea].gameObject.SetActive(false);
+        currentArea = newArea;
+        areaScripts[currentArea].gameObject.SetActive(true);
+        //playerScript.SetPosition(new Vector3(player.transform.position.x, player.transform.position.y, areaScripts[currentArea].lowestZ));
+        RotateScene();
     }
 }
 

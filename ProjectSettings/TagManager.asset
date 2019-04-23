@@ -9,6 +9,7 @@ TagManager:
   - playerweapon
   - enemy
   - platform
+  - area
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - ground
   - Player
   - enemyHitbox
-  - 
+  - Door
   - 
   - 
   - 

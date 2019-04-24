@@ -113,16 +113,14 @@ public class CentipedeAI : Enemy {
                     Debug.Log("Boyyyy, you snuffed up");
                     break;
             }
-            
-            if (player.GetComponent<Player_v2>().side == side && Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) > 3f)
+            float distance = Mathf.Abs(Vector3.Distance(player.transform.position, transform.position));
+            if (player.GetComponent<Player_v2>().side == side && distance > 3f && distance < 6f)
             {
-                Debug.Log(Vector3.Distance(player.transform.position, transform.position));
                 ChangeState(CharacterState.Run);
                 Move(false);
             }
-            else if (Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) < 3f && player.GetComponent<Player_v2>().side == side)
+            else if (distance < 3f && player.GetComponent<Player_v2>().side == side)
             {
-                //Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);
                 Move(true);
                 if (!inAttackState)
                 {

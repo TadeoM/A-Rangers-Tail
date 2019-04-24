@@ -9,7 +9,10 @@ TagManager:
   - playerweapon
   - enemy
   - platform
+  - bug
+  - playerhitbox
   - area
+  - noBox
   layers:
   - Default
   - TransparentFX

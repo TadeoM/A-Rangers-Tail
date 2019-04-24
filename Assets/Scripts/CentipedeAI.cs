@@ -8,19 +8,23 @@ public class CentipedeAI : Enemy {
     {
         Lunge, Charge
     }
+    public enum CharacterState
+    {
+        Idle,
+        Run,
+        Lunge,
+        Charge,
+        Jump,
+        Fall,
+        Death
+    }
+    public CharacterState currentCharState;
+    public GameObject floatingText;
     private Attacks attackChosen;
-    public GameObject lungeCollider;
     public GameObject chargeCollider;
     public GameObject attackCollider;
     public float attackTimer;
     private Animator animator;
-    private Vector3 startAttackPos;
-    private Vector3 endAttackPos;
-    private int timesSwapped;
-    private float currTime;
-    private float animSpeed;
-    private float startHeight;
-    private float endHeight;
     private bool inAttackState;
     private bool attacking;
     private bool invincible;
@@ -32,6 +36,8 @@ public class CentipedeAI : Enemy {
     public override void Start () {
         base.Start();
         MaxSpeed = 2f;
+        
+
         switch (side)
         {
             case 0:
@@ -49,8 +55,10 @@ public class CentipedeAI : Enemy {
             default:
                 break;
         }
-        
+
+        Debug.Log(gameObject.transform.forward);
         creatureType = CreatureType.Bug;
+        currentCharState = CharacterState.Idle;
         inAttackState = false;
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -62,32 +70,74 @@ public class CentipedeAI : Enemy {
 	void Update () {
         if(player != null)
         {
-            if (!inAttackState && attackTimer < -(Time.deltaTime * 60))
-            {
-                if (player.GetComponent<Player_v2>().side == side)
-                    PerformAttack();
-            }
-            else if (player.GetComponent<Player_v2>().side == side)
-            {
-                AdjustColliders();
-            }
-            else
-            {
-                StopEverything();
-            }
-
-            if (attackTimer <= 0)
-            {
-                StopEverything();
-            }
-
-            attackTimer -= Time.deltaTime;
+            
+            Vector3 leftOrRight = player.transform.position - transform.position;
             CheckPlayer();
+            switch (side)
+            {
+                case 0:
+                    // player on right
+                    if (leftOrRight.x > 0)
+                        direction = forward;
+                    // player on left
+                    else if (leftOrRight.x < 0)
+                        direction = -forward;
+                    
+                    break;
+                case 1:
+                    // player on right
+                    if (leftOrRight.z > 0)
+                        direction = forward;
+                    //  player on left
+                    else
+                        direction = -forward;
+                    break;
+                case 2:
+                    // player on right 
+                    if (leftOrRight.x < 0)
+                        direction = forward;
+                    // player on left
+                    else
+                        direction = -forward;
+                    break;
+                case 3:
+                    // player on right
+                    if (leftOrRight.z < 0)
+                        direction = forward;
+                    // player on left
+                    else
+                        direction = -forward;
+                    //Debug.Log("Here");
+                    break;
+                default:
+                    Debug.Log("Boyyyy, you snuffed up");
+                    break;
+            }
+            
+            if (player.GetComponent<Player_v2>().side == side && Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) > 3f)
+            {
+                Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+                ChangeState(CharacterState.Run);
+                Move(false);
+            }
+            else if (Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) < 3f && player.GetComponent<Player_v2>().side == side)
+            {
+                //Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);
+                Move(true);
+                if (!inAttackState)
+                {
+                    Debug.Log("At Attack Call");
+                        PerformLunge();
+                }
+
+            }
+            if(player.GetComponent<Player_v2>().side !=side)
+            {
+                Move(true);
+            }
+            //Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);
         }
-
-        attackTimer -= Time.deltaTime;
-        CheckPlayer();
-
+       
         if (invisTimer > 0)
         {
             invisTimer -= Time.deltaTime;
@@ -113,39 +163,17 @@ public class CentipedeAI : Enemy {
         }
     }
 
-    protected override void PerformAttack()
+    protected void PerformLunge()
     {
-        if (Vector3.Distance(player.transform.position, transform.position) <= 3f)
-        {
-            // needs change
-            inAttackState = true;
-            attackChosen = Attacks.Lunge;
-            animator.SetInteger("State", 2);
-            attackTimer = 80 * Time.deltaTime;
-            attackCollider = lungeCollider;
-            attackCollider.SetActive(true);
-            startAttackPos = new Vector3(-0.14f, 0, 0);
-            endAttackPos = new Vector3(-0.8f, -0.3f, 0);
-            startHeight = 0.7f;
-            endHeight = 2;
-            animSpeed = 5f * Time.deltaTime;
-            currTime = 0;
-            timesSwapped = 0;
-            AdjustColliders();
-        }
-        else
-        {
-            Debug.Log("Charging");
-            inAttackState = true;
-            attackChosen = Attacks.Charge;
-            animator.SetInteger("State", 1);
-            attackTimer = 38f * Time.deltaTime;
-            attackCollider = chargeCollider;
-            attackCollider.SetActive(true);
-            animSpeed = 5f * Time.deltaTime;
-        }
-    }
 
+        Debug.Log("attack");
+        Debug.Log(Vector3.Distance(player.transform.position, transform.position));
+        ChangeState(CharacterState.Lunge);
+        // needs change
+        inAttackState = true;
+            attackChosen = Attacks.Lunge;
+    }
+    /*
     private void AdjustColliders()
     {
         m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, 0);
@@ -223,16 +251,20 @@ public class CentipedeAI : Enemy {
         if(attackTimer < 0.575)
             currTime += animSpeed;
     }
-
+    */
     private void OnTriggerEnter(Collider col)
     {
        
-        if (col.gameObject.CompareTag("playerweapon")&&invincible!=true)
+        if (col.gameObject.CompareTag("playerweapon")&&!invincible)
         {
             TakeDamage(25);
-            
+            player.GetComponent<Player_v2>().combo += 1;
         }
         
+        if(col.gameObject.CompareTag("playerhitbox")&&!invincible)
+        {
+            DealDamage(player);
+        }
         
     }
     void StopEverything()
@@ -242,16 +274,88 @@ public class CentipedeAI : Enemy {
         direction = forward;
         velocity.x = 0;
     }
+    /*
+    public void ShowFloatingText()
+    {
+        GameObject hpText;
+            if (side==0)
+        {
 
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity , transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+            else if (side==1)
+        {
+            Debug.Log("Here");
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+            else if(side==2)
+        {
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+            else if(side==3)
+        {
+            hpText = Instantiate(floatingText, transform.position, Quaternion.identity, transform);
+            hpText.GetComponent<TextMesh>().text = Health.ToString();
+        }
+        
+    }
+    */
     public override void TakeDamage(int dmg)
     {
         Debug.Log(Health);
         base.TakeDamage(dmg);
         invincible = true;
         invisTimer = 1.25f;
+        /*
+        if (floatingText && Health>0)
+            ShowFloatingText();
+            */
         if (Health <= 0)
         {
             Destroy(this.gameObject);
         }
     }
+
+    public override void DealDamage(GameObject player)
+    {
+
+    }
+    void ChangeState(CharacterState newState)
+    {
+        currentCharState = newState;
+        StartCoroutine(newState.ToString() + "State");
+    }
+    IEnumerator IdleState()
+    {
+        while (currentCharState == CharacterState.Idle)
+        {
+            animator.SetInteger("State", 0);
+            yield return null;
+        }
+    }
+
+    IEnumerator RunState()
+    {
+        while (currentCharState == CharacterState.Run)
+        {
+            animator.SetInteger("State", 1);
+            yield return null;
+        }
+    }
+    IEnumerator LungeState()
+    {
+   
+        while (currentCharState == CharacterState.Lunge)
+        {
+            attackTimer = 0;
+            animator.SetInteger("State", 2);
+            yield return new WaitForSeconds(1.25f);
+            inAttackState = false;
+            ChangeState(CharacterState.Run);
+        }
+    }
+    
 }

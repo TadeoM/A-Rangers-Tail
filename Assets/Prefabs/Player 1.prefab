@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 212005567854463974}
   - component: {fileID: 54254545375539246}
   - component: {fileID: 114897953849572938}
+  - component: {fileID: 447426027}
   m_Layer: 10
   m_Name: Player 1
   m_TagString: Player
@@ -26,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082809082097170}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4, y: 0.5, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4017204231988446}
-  - {fileID: 4565924304293140}
   - {fileID: 4292781427702668}
+  - {fileID: 4565924304293140}
   - {fileID: 4578919660349800}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -117,8 +118,10 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
-  m_Rigidbody: {fileID: 0}
+  m_Rigidbody: {fileID: 54254545375539246}
   colliders: []
+  standingOn: {fileID: 0}
+  m_GroundCheck: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
@@ -126,9 +129,44 @@ MonoBehaviour:
   side: 0
   grounded: 0
   airControl: 0
+  dbljumpForce: 150
+  rollTime: 0
+  startRollTime: 0
+  rollSpeed: 3
+  rollCD: 0
   notRotating: 0
-  swordHitBox: {fileID: 0}
+  cooldown: 0
+  swordHitBox: {fileID: 65965119899067946}
+  bodyHitBox: {fileID: 65933042605396050}
+  waitTimer: 0.4
+  combo: 0
+  chainedHits: 0
+  attackDuration:
+  - 0.4
+  - 0.35
+  - 0.35
+  comboIndex: 0
+  currAttackstate: 0
   currentCharState: 0
+--- !u!95 &447426027
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082809082097170}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2425d2ae5a2946c4b983ea3b74602ea3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1205394094959506
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,11 +248,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572858361504384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.097, y: 0, z: 0}
   m_LocalScale: {x: 0.56448, y: 0.56448, z: 1}
   m_Children: []
   m_Father: {fileID: 4727415368106514}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1599796963359844
 GameObject:
@@ -228,7 +266,7 @@ GameObject:
   - component: {fileID: 65933042605396050}
   m_Layer: 10
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: playerhitbox
   m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,11 +279,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599796963359844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.45, z: 0}
+  m_LocalPosition: {x: 0, y: 0.452, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4727415368106514}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &65933042605396050
 BoxCollider:
@@ -255,7 +293,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599796963359844}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.83, y: 0.9, z: 0.2}

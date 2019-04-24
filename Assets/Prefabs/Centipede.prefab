@@ -24,11 +24,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217901066020704}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.56448, y: 0.56448, z: 1}
   m_Children: []
   m_Father: {fileID: 4715759292340054}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1353532187287358
 GameObject:
@@ -40,7 +40,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4474491410487244}
   - component: {fileID: 65219886553893630}
-  - component: {fileID: 65675047880487244}
   m_Layer: 11
   m_Name: Charge
   m_TagString: Untagged
@@ -56,11 +55,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353532187287358}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0.49999994, z: 0}
+  m_LocalPosition: {x: -1, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4715759292340054}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &65219886553893630
 BoxCollider:
@@ -73,66 +72,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 1.15, z: 1}
-  m_Center: {x: 0.05, y: 0.06, z: 0}
---- !u!65 &65675047880487244
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353532187287358}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.6451545, y: 0.52192116, z: 1}
-  m_Center: {x: 1.1319222, y: -0.23903942, z: 0}
---- !u!1 &1792735197702822
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4483248792520832}
-  - component: {fileID: 136489946853768020}
-  m_Layer: 11
-  m_Name: Lunge
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4483248792520832
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792735197702822}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4715759292340054}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &136489946853768020
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792735197702822}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 0.7
-  m_Direction: 0
-  m_Center: {x: -0.14, y: 0, z: 0}
+  m_Size: {x: 0.836596, y: 0.5770627, z: 0.2}
+  m_Center: {x: -0.08894992, y: 0.40645176, z: -0.02256991}
 --- !u!1 &1803849109929790
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +90,7 @@ GameObject:
   - component: {fileID: 54451578626907270}
   m_Layer: 8
   m_Name: Centipede
-  m_TagString: Untagged
+  m_TagString: bug
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,7 +106,6 @@ Transform:
   m_LocalPosition: {x: -4, y: 0.5, z: -4.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4483248792520832}
   - {fileID: 4612789029019404}
   - {fileID: 4474491410487244}
   m_Father: {fileID: 0}
@@ -230,8 +170,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.4, y: 1.1, z: 0.2}
-  m_Center: {x: -1.6, y: 0.55, z: 0}
+  m_Size: {x: 2.6577513, y: 0.5979516, z: 0.2}
+  m_Center: {x: 0.058749795, y: 0.2989758, z: 0}
 --- !u!95 &95283783875338674
 Animator:
   serializedVersion: 3
@@ -272,11 +212,13 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
   forward: {x: 0, y: 0, z: 0}
-  side: 0
+  side: 3
   grounded: 0
   airControl: 0
   player: {fileID: 0}
-  lungeCollider: {fileID: 1792735197702822}
+  currentCharState: 0
+  floatingText: {fileID: 2175909171243692768, guid: e942996ac61eb9544af759b2fc58a1e3,
+    type: 3}
   chargeCollider: {fileID: 1353532187287358}
   attackCollider: {fileID: 1792735197702822}
   attackTimer: 0

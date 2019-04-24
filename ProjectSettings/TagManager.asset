@@ -11,6 +11,8 @@ TagManager:
   - platform
   - bug
   - playerhitbox
+  - area
+  - noBox
   layers:
   - Default
   - TransparentFX

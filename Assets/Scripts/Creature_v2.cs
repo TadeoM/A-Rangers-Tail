@@ -71,7 +71,8 @@ public class Creature_v2 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (health <= 0 || transform.position.y < -1)
+            OnDeath();
 	}
 
     public virtual void FixedUpdate()
@@ -103,7 +104,7 @@ public class Creature_v2 : MonoBehaviour {
                         standingOn = colliders[i];
                     }
                 }
-                else if (!colliders[i].gameObject.name.Contains("Door"))
+                else if (!colliders[i].gameObject.name.Contains("Door") && !colliders[i].gameObject.name.Contains("background"))
                 {
                     if (!grounded) {
                         transform.position = new Vector3(transform.position.x, .019f + colliders[i].transform.position.y + 
@@ -153,5 +154,8 @@ public class Creature_v2 : MonoBehaviour {
         health -= dmg;
     }
 
-  
+    protected virtual void OnDeath()
+    {
+        
+    }
 }

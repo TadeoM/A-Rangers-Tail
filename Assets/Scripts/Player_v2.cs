@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_v2 : Creature_v2 {
 
@@ -79,7 +80,6 @@ public class Player_v2 : Creature_v2 {
     // Update is called once per frame
     public override void FixedUpdate()
     {
-      
         base.FixedUpdate();
         if(notRotating)
         {
@@ -134,9 +134,7 @@ public class Player_v2 : Creature_v2 {
     }
 
     void KeyboardCheck()
-    {
-        
-        
+    {        
         if (Input.GetKey(KeyCode.D))
         {
             direction = forward;
@@ -353,6 +351,12 @@ public class Player_v2 : Creature_v2 {
             ChangeState(CharacterState.Death);
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
+    }
+
+    protected override void OnDeath()
+    {
+        int sceneNum = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(sceneNum);
     }
 
     public void comboCounter()

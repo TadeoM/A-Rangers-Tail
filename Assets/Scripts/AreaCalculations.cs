@@ -96,13 +96,6 @@ public class AreaCalculations : MonoBehaviour {
                                     if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
                                         frontPlatforms.Add(hit.collider.gameObject);
-                                        // not sure what this did, but doesn't do anything useful so far so eh
-                                        /*
-                                        if (frontPlatforms[0].transform.position.z < hit.collider.gameObject.transform.position.z)
-                                        {
-                                            //frontPlatforms.Insert(0, hit.collider.gameObject);
-                                            //frontPlatforms.RemoveAt(frontPlatforms.Count - 1);
-                                        }*/
                                     }
                                 }
                             }
@@ -125,13 +118,6 @@ public class AreaCalculations : MonoBehaviour {
                                     if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
                                         rightPlatforms.Add(hit.collider.gameObject);
-                                        // not sure what this did, but doesn't do anything useful so far so eh
-                                        /*
-                                        if (rightPlatforms[0].transform.position.x < hit.collider.gameObject.transform.position.x)
-                                        {
-                                            //rightPlatforms.Insert(0, hit.collider.gameObject);
-                                            //rightPlatforms.RemoveAt(rightPlatforms.Count - 1);
-                                        }*/
                                     }
                                 }
                                 
@@ -154,13 +140,6 @@ public class AreaCalculations : MonoBehaviour {
                                     if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
                                         backPlatforms.Add(hit.collider.gameObject);
-                                        // not sure what this did, but doesn't do anything useful so far so eh
-                                        /*
-                                        if (backPlatforms[0].transform.position.z > hit.collider.gameObject.transform.position.z)
-                                        {
-                                            //backPlatforms.Insert(0, hit.collider.gameObject);
-                                            //backPlatforms.RemoveAt(backPlatforms.Count - 1);
-                                        } */
                                     }
                                 }
                             }
@@ -183,12 +162,6 @@ public class AreaCalculations : MonoBehaviour {
                                     if (hit.transform.gameObject.layer == 9 || hit.transform.gameObject.layer == 12)
                                     {
                                         leftPlatforms.Add(hit.collider.gameObject);
-                                        // not sure what this did, but doesn't do anything useful so far so eh
-                                        /*if (leftPlatforms[0].transform.position.x > hit.collider.gameObject.transform.position.x)
-                                        {
-                                            leftPlatforms.Insert(0, hit.collider.gameObject);
-                                            leftPlatforms.RemoveAt(leftPlatforms.Count - 1);
-                                        }*/
                                     }
                                 }
                             }

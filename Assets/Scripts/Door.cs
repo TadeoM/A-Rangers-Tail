@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Door : MonoBehaviour {
-
     public int areaEntrance;
 
     private void OnTriggerStay(Collider collision)

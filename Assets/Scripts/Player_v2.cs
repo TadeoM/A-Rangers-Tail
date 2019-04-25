@@ -34,6 +34,7 @@ public class Player_v2 : Creature_v2 {
     public float[] attackDuration;
     public int comboIndex;
     Animator playerAnimator;
+    public int missionObj;
     public enum CharacterState
     {
         Idle,
@@ -131,6 +132,7 @@ public class Player_v2 : Creature_v2 {
         {
             ChangeState(CharacterState.Idle);
         }
+        ResetGame();
     }
 
     void KeyboardCheck()
@@ -151,7 +153,7 @@ public class Player_v2 : Creature_v2 {
                 direction = forward;
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z);
             }
-            if (currentCharState != CharacterState.Attack && currentCharState != CharacterState.Jump)
+            if (currentCharState != CharacterState.Attack && currentCharState != CharacterState.Jump && currentCharState != CharacterState.Fall)
             {
                 ChangeState(CharacterState.Run);
                 Move(false);
@@ -173,7 +175,7 @@ public class Player_v2 : Creature_v2 {
             {
                 m_Rigidbody.velocity = new Vector3(0, m_Rigidbody.velocity.y, m_Rigidbody.velocity.z);
             }
-            if (currentCharState != CharacterState.Attack)
+            if (currentCharState != CharacterState.Attack && currentCharState != CharacterState.Jump && currentCharState != CharacterState.Fall)
             {
                 ChangeState(CharacterState.Run);
                 Move(false);
@@ -381,6 +383,11 @@ public class Player_v2 : Creature_v2 {
             invisTimer = 60 * Time.deltaTime;
         }
 
+        if(other.gameObject.layer ==13)
+        {
+            Debug.Log("Collide with Object");
+            missionObj++;
+        }
         /*
         if (other.gameObject.layer == 11 && !invincible)
         {
@@ -390,6 +397,13 @@ public class Player_v2 : Creature_v2 {
         */
     }
 
+    private void ResetGame()
+    {
+        if(missionObj==3)
+        {
+            OnDeath();
+        }
+    }
     IEnumerator IdleState()
     {
         while(currentCharState == CharacterState.Idle)
@@ -479,5 +493,6 @@ public class Player_v2 : Creature_v2 {
             yield return null;
         }
     }
+
 
 }

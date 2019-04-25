@@ -131,6 +131,7 @@ public class CentipedeAI : Enemy {
             }
             if(player.GetComponent<Player_v2>().side !=side)
             {
+                
                 Move(true);
             }
             //Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);

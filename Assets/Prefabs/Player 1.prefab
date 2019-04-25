@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 212005567854463974}
   - component: {fileID: 54254545375539246}
   - component: {fileID: 114897953849572938}
-  - component: {fileID: 447426027}
+  - component: {fileID: 729712020}
   m_Layer: 10
   m_Name: Player 1
   m_TagString: Player
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Rigidbody: {fileID: 54254545375539246}
   colliders: []
   standingOn: {fileID: 0}
-  m_GroundCheck: {fileID: 0}
+  m_GroundCheck: {fileID: 4565924304293140}
   velocity: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
@@ -129,7 +129,7 @@ MonoBehaviour:
   side: 0
   grounded: 0
   airControl: 0
-  dbljumpForce: 150
+  dbljumpForce: 200
   rollTime: 0
   startRollTime: 0
   rollSpeed: 3
@@ -142,13 +142,14 @@ MonoBehaviour:
   combo: 0
   chainedHits: 0
   attackDuration:
-  - 0.4
+  - 0.3
   - 0.35
   - 0.35
   comboIndex: 0
+  missionObj: 0
   currAttackstate: 0
   currentCharState: 0
---- !u!95 &447426027
+--- !u!95 &729712020
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -248,7 +249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572858361504384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.097, y: 0, z: 0}
+  m_LocalPosition: {x: 0.108, y: 0, z: 0}
   m_LocalScale: {x: 0.56448, y: 0.56448, z: 1}
   m_Children: []
   m_Father: {fileID: 4727415368106514}
@@ -266,7 +267,7 @@ GameObject:
   - component: {fileID: 65933042605396050}
   m_Layer: 10
   m_Name: Body
-  m_TagString: playerhitbox
+  m_TagString: Untagged
   m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -293,7 +294,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1599796963359844}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.83, y: 0.9, z: 0.2}

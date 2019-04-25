@@ -114,13 +114,14 @@ public class WeaselAI : Enemy
                     Debug.Log("Boyyyy, you snuffed up");
                     break;
             }
-
-            if (player.GetComponent<Player_v2>().side == side && Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) > 1f)
+            float distance = Mathf.Abs(Vector3.Distance(player.transform.position, transform.position));
+            if (player.GetComponent<Player_v2>().side == side && distance > 1f && distance < 6f)
             {
                 Debug.Log("Weasel Running");
                 ChangeState(CharacterState.Run);
                 Move(false);
             }
+
             else if (Mathf.Abs(Vector3.Distance(player.transform.position, transform.position)) < 1f && player.GetComponent<Player_v2>().side == side)
             {
                 //Debug.Log("Player Side: " + player.GetComponent<Player_v2>().side + ", Centipede Side: " + side);

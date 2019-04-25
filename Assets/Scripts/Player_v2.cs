@@ -355,6 +355,7 @@ public class Player_v2 : Creature_v2 {
 
     protected override void OnDeath()
     {
+        //ChangeState(CharacterState.Death);
         int sceneNum = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(sceneNum);
     }
@@ -474,7 +475,7 @@ public class Player_v2 : Creature_v2 {
     {
         while (currentCharState == CharacterState.Death)
         {
-            playerAnimator.SetInteger("State", 5);
+            playerAnimator.SetInteger("State", 10);
             yield return null;
         }
     }

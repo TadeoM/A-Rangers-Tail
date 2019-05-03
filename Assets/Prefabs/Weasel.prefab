@@ -58,9 +58,9 @@ GameObject:
   - component: {fileID: 5921237370231773089}
   - component: {fileID: 7514732244496511810}
   - component: {fileID: 2697056423932759047}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Weasel
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,6 +114,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   m_Rigidbody: {fileID: 0}
+  colliders: []
+  standingOn: {fileID: 0}
+  m_GroundCheck: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
   axis: {x: 0, y: 0, z: 0}
@@ -124,9 +127,8 @@ MonoBehaviour:
   player: {fileID: 0}
   currentCharState: 0
   floatingText: {fileID: 0}
-  chargeCollider: {fileID: 0}
-  attackCollider: {fileID: 0}
   attackTimer: 0
+  firstAttack: 0
 --- !u!212 &5921237370231773089
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -205,8 +207,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0861673, y: 1.0493534, z: 0.2}
-  m_Center: {x: -0.0061410666, y: 0.795962, z: 0}
+  m_Size: {x: 1.0861673, y: 1.1156604, z: 0.2}
+  m_Center: {x: -0.0061410666, y: 0.76280844, z: 0}
 --- !u!1 &7983277027896172601
 GameObject:
   m_ObjectHideFlags: 0
